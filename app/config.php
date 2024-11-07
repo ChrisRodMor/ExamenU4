@@ -4,7 +4,7 @@
 	}
 	
 	if (!defined('BASE_PATH')) {
-      define('BASE_PATH','http://localhost:8888/ExamenU4/');
+      define('BASE_PATH','http://localhost/ExamenU4/');
    	}
 
 ?>
