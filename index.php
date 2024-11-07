@@ -71,36 +71,26 @@ include_once "app/config.php";
         <div class="card my-5 mx-3">
           <div class="card-body">
             <h4 class="f-w-500 mb-1">Login with your email</h4>
-            <p class="mb-3">Don't have an Account? <a href="register-v2.html" class="link-primary ms-1">Create Account</a></p>
-            
-            
-            
+            <p class="mb-3">Don't have an Account? <a href="register" class="link-primary ms-1">Create Account</a></p>
+
+
+
             <form method="POST" action="auth">
-  <input type="hidden" name="action" value="login">
-  
-  <div class="mb-3">
-    <label for="correo" class="form-label">Email Address</label>
-    <input type="email" class="form-control" id="correo" name="correo" placeholder="Email Address" required />
-  </div>
-  
-  <div class="mb-3">
-    <label for="contrasena" class="form-label">Password</label>
-    <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Password" required />
-  </div>
-  
- 
-  
-  <div class="d-grid mt-4">
-    <button type="submit" class="btn btn-primary">Login</button>
-  </div>
-  
-</form>
+              <input type="hidden" name="action" value="login">
 
+              <div class="mb-3">
+                <label for="correo" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="correo" name="correo" placeholder="Email Address" required />
+              </div>
 
-
-
-
-            
+              <div class="mb-3">
+                <label for="contrasena" class="form-label">Password</label>
+                <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Password" required />
+              </div>
+              <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-primary">Login</button>
+              </div>
+            </form>
             <div class="saprator my-3">
               <span>Or continue with</span>
             </div>
