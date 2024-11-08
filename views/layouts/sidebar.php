@@ -279,7 +279,7 @@
                 <span class="pc-mtext">Users</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span
               ></a>
               <ul class="pc-submenu">
-                <li class="pc-item"><a class="pc-link" href="profile">Account Profile</a></li>
+                <li class="pc-item"><a class="pc-link" href="profile">Perfil</a></li>
                 <li class="pc-item"><a class="pc-link" href="../application/social-media.html">Social media</a></li>
                 <li class="pc-item"><a class="pc-link" href="../application/user-card.html">User Card</a></li>
                 <li class="pc-item"><a class="pc-link" href="../application/user-list.html">User List</a></li>

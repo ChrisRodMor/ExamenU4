@@ -1,6 +1,6 @@
 Options +FollowSymLinks -MultiViews -Indexes
 RewriteEngine on
-
+RewriteBase  /ExamenU4/
 
 #páginas
 RewriteRule ^login?$ index.php
