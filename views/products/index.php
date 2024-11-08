@@ -60,8 +60,12 @@ include_once "../../app/config.php";
               <div class="p-0 sticky-xxl-top offcanvas-body"></div>
             </div>
             <div class="ecom-content">
+              
+            <a href="#" class="btn btn-primary btn-sm">Crear producto</a>
+            <br>
+            
               <div class="row">
-                <!-- TODO AGREGAR PRODUCTO -->
+                <!-- TODO: implementar productos -->
                 <div class="col-xl-4 col-sm-6">
                   <div class="product-card card">
                     <div class="card-img-top">
@@ -86,8 +90,8 @@ include_once "../../app/config.php";
                         Marca: Apple
                       </p>
                       <div class="d-grid gap-2">
-                        <a href="/application/ecom_product-details" class="btn btn-primary btn-sm">Ver detalle</a>
-                        <button type="button" class="btn btn-warning btn-sm">Editar</button>
+                        <a href="#" class="btn btn-primary btn-sm">Ver detalle</a>
+                        <a href="#" class="btn btn-warning btn-sm">Editar</a>
                         <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
                       </div>
                     </div>
