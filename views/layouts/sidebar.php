@@ -721,7 +721,7 @@
               </div>
               <div class="flex-grow-1 ms-3">
                 <div class="dropdown">
-                  <a href="#" class="arrow-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,20">
+                  <a href="profile" class="arrow-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,20">
                     <div class="d-flex align-items-center">
                       <div class="flex-grow-1 me-2">
                         <h6 class="mb-0">Jonh Smith</h6>
@@ -737,7 +737,7 @@
                   <div class="dropdown-menu">
                     <ul>
                       <li>
-                        <a class="pc-user-links">
+                        <a class="pc-user-links" href="profile">
                           <i class="ph-duotone ph-user"></i>
                           <span>My Account</span>
                         </a>

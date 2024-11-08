@@ -371,9 +371,11 @@
             <ul class="list-group list-group-flush w-100">
               <li class="list-group-item">
                 <div class="d-flex align-items-center">
-                  <div class="flex-shrink-0">
-                    <img src="<?= BASE_PATH ?>assets/images/user/avatar-2.jpg" alt="user-image" class="wid-50 rounded-circle" />
-                  </div>
+                  <a href="profile">
+                    <div class="flex-shrink-0">
+                      <img src="<?= BASE_PATH ?>assets/images/user/avatar-2.jpg" alt="user-image" class="wid-50 rounded-circle" />
+                    </div>
+                  </a>
                   <div class="flex-grow-1 mx-3">
                     <h5 class="mb-0">Carson Darrin</h5>
                     <a class="link-primary" href="mailto:carson.darrin@company.io">carson.darrin@company.io</a>
