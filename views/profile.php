@@ -1,5 +1,14 @@
 <?php
 include_once "../app/config.php";
+include_once '../app/authController.php';
+
+$AuthController = new AuthController();
+if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
+  $user = $AuthController->getUserByID($_SESSION['id']);
+} else {
+  header('Location: login');
+} 
+
 
 ?>
 <!doctype html>
@@ -7,30 +16,31 @@ include_once "../app/config.php";
 <!-- [Head] start -->
 
 <head>
-  <?php
+    <?php
 
-  include "layouts/head.php";
+    include "layouts/head.php";
 
-  ?>
+    ?>
 
 </head>
 <!-- [Head] end -->
- <!-- [Body] Start -->
+<!-- [Body] Start -->
 
-<body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr" data-pc-theme="light">
+<body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr"
+    data-pc-theme="light">
 
 
-<?php
+    <?php
 
-include "layouts/sidebar.php";
+    include "layouts/sidebar.php";
 
-?>
+    ?>
 
-<?php
+    <?php
 
-include "layouts/nav.php";
+    include "layouts/nav.php";
 
-?>
+    ?>
 
     <!-- [ Main Content ] start -->
     <div class="pc-container">
@@ -41,7 +51,8 @@ include "layouts/nav.php";
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="<?= BASE_PATH ?>/dashboard/index.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="<?= BASE_PATH ?>/dashboard/index.html">Home</a>
+                                </li>
                                 <li class="breadcrumb-item"><a href="javascript: void(0)">Users</a></li>
                                 <li class="breadcrumb-item" aria-current="page">Perfil</li>
                             </ul>
@@ -56,47 +67,42 @@ include "layouts/nav.php";
             </div>
             <!-- [ breadcrumb ] end -->
 
+
+
+
+
+
+
+
+
+
+            <!-- [ Main Content ] start -->
+  
             <!-- [ Main Content ] start -->
             <div class="row">
-                <!-- [ sample-page ] start -->
                 <div class="col-sm-12">
-                    <div class="card bg-primary">
-                    </div>
+                    <div class="card bg-primary"></div>
                     <div class="row">
                         <div class="col-lg-5 col-xxl-3">
                             <div class="card overflow-hidden">
                                 <div class="card-body position-relative">
                                     <div class="text-center mt-3">
                                         <div class="chat-avtar d-inline-flex mx-auto">
-                                            <img
-                                                class="rounded-circle img-fluid wid-90 img-thumbnail"
-                                                src="<?= BASE_PATH ?>/assets/images/user/avatar-1.jpg"
+                                            <!-- Mostrar la foto de perfil -->
+                                            <img class="rounded-circle img-fluid wid-90 img-thumbnail"
+                                                src="<?= BASE_PATH ?>/assets/images/user/<?= $user['avatar']; ?>"
                                                 alt="User image" />
                                             <i class="chat-badge bg-success me-2 mb-2"></i>
                                         </div>
-                                        <!-- TODO: Implementar nombre por API -->
-                                        <h5 class="mb-0">Jonathan Soto</h5>
+                                        <!-- Mostrar nombre completo del user -->
+                                        <h5 class="mb-0"><?= $user['name'] . ' ' . $user['lastname']; ?></h5>
                                         <ul class="list-inline mx-auto my-4">
                                             <li class="list-inline-item">
                                                 <a href="#" class="avtar avtar-s text-white bg-dribbble">
                                                     <i class="ti ti-brand-dribbble f-24"></i>
                                                 </a>
                                             </li>
-                                            <li class="list-inline-item">
-                                                <a href="#" class="avtar avtar-s text-white bg-amazon">
-                                                    <i class="ti ti-brand-figma f-24"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="#" class="avtar avtar-s text-white bg-pinterest">
-                                                    <i class="ti ti-brand-pinterest f-24"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="#" class="avtar avtar-s text-white bg-behance">
-                                                    <i class="ti ti-brand-behance f-24"></i>
-                                                </a>
-                                            </li>
+                                            <!-- Agregar otros enlaces sociales si es necesario -->
                                         </ul>
                                         <div class="row g-3">
                                             <div class="col-4">
@@ -114,64 +120,67 @@ include "layouts/nav.php";
                                         </div>
                                     </div>
                                 </div>
-                                <div
-                                    class="nav flex-column nav-pills list-group list-group-flush account-pills mb-0"
-                                    id="user-set-tab"
-                                    role="tablist"
-                                    aria-orientation="vertical">
-                                    <a
-                                        class="nav-link list-group-item list-group-item-action active"
-                                        id="user-set-profile-tab"
-                                        data-bs-toggle="pill"
-                                        href="#user-set-profile"
-                                        role="tab"
-                                        aria-controls="user-set-profile"
-                                        aria-selected="true">
-                                        <span class="f-w-500"><i class="ph-duotone ph-user-circle m-r-10"></i>Profile Overview</span>
+                                <div class="nav flex-column nav-pills list-group list-group-flush account-pills mb-0"
+                                    id="user-set-tab" role="tablist" aria-orientation="vertical">
+                                    <a class="nav-link list-group-item list-group-item-action active"
+                                        id="user-set-profile-tab" data-bs-toggle="pill" href="#user-set-profile"
+                                        role="tab" aria-controls="user-set-profile" aria-selected="true">
+                                        <span class="f-w-500"><i class="ph-duotone ph-user-circle m-r-10"></i>Profile
+                                            Overview</span>
                                     </a>
-
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-7 col-xxl-9">
                             <div class="tab-content" id="user-set-tabContent">
-                                <div class="tab-pane fade show active" id="user-set-profile" role="tabpanel" aria-labelledby="user-set-profile-tab">
+                                <div class="tab-pane fade show active" id="user-set-profile" role="tabpanel"
+                                    aria-labelledby="user-set-profile-tab">
 
                                     <div class="card">
                                         <div class="card-header">
                                             <h5>Personal information</h5>
                                         </div>
                                         <div class="card-body position-relative">
-                                            <div class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
+                                            <div
+                                                class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
                                                 <p class="mb-0 text-muted me-1">Email</p>
-                                                <p class="mb-0">jsoto@uabcs.mx</p>
+                                                <p class="mb-0"><?= $user['email']; ?></p>
+                                                <!-- Correo del user -->
                                             </div>
-                                            <div class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
+                                            <div
+                                                class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
                                                 <p class="mb-0 text-muted me-1">Phone</p>
-                                                <p class="mb-0">6123480678</p>
+                                                <p class="mb-0"><?= $user['phone_number']; ?></p>
+                                                <!-- Teléfono del user -->
                                             </div>
                                             <div class="d-inline-flex align-items-center justify-content-between w-100">
                                                 <p class="mb-0 text-muted me-1">Role</p>
-                                                <p class="mb-0">Administrador</p>
+                                                <p class="mb-0"><?= $user['role']; ?></p> <!-- Rol del user -->
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="card">
                                         <div class="card-header">
                                             <h5>Creation information</h5>
                                         </div>
                                         <div class="card-body position-relative">
-                                            <div class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
+                                            <div
+                                                class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
                                                 <p class="mb-0 text-muted me-1">Created by</p>
-                                                <p class="mb-0">Jonathan Soto</p>
+                                                <p class="mb-0"><?= $user['created_by']; ?></p>
+                                                <!-- Nombre del creador -->
                                             </div>
-                                            <div class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
+                                            <div
+                                                class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
                                                 <p class="mb-0 text-muted me-1">Created at</p>
-                                                <p class="mb-0">2022-09-24T18:14:20.000000Z</p>
+                                                <p class="mb-0"><?= $user['created_at']; ?></p>
+                                                <!-- Fecha de creación -->
                                             </div>
                                             <div class="d-inline-flex align-items-center justify-content-between w-100">
                                                 <p class="mb-0 text-muted me-1">Updated at</p>
-                                                <p class="mb-0">2022-09-24T18:14:20.000000Z</p>
+                                                <p class="mb-0"><?= $user['updated_at']; ?></p>
+                                                <!-- Fecha de actualización -->
                                             </div>
                                         </div>
                                     </div>
@@ -181,6 +190,22 @@ include "layouts/nav.php";
                     </div>
                 </div>
             </div>
+            <!-- [ Main Content ] end -->
+        
+
+            <!-- [ Main Content ] end -->
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
     </div>
 
@@ -188,13 +213,16 @@ include "layouts/nav.php";
         <div class="footer-wrapper container-fluid">
             <div class="row">
                 <div class="col-sm-6 my-1">
-                    <p class="m-0">Made with &#9829; by Team <a href="https://themeforest.net/user/phoenixcoded" target="_blank"> Phoenixcoded</a></p>
+                    <p class="m-0">Made with &#9829; by Team <a href="https://themeforest.net/user/phoenixcoded"
+                            target="_blank"> Phoenixcoded</a></p>
                 </div>
                 <div class="col-sm-6 ms-auto my-1">
                     <ul class="list-inline footer-link mb-0 justify-content-sm-end d-flex">
                         <li class="list-inline-item"><a href="<?= BASE_PATH ?>/index.html">Home</a></li>
-                        <li class="list-inline-item"><a href="https://pcoded.gitbook.io/light-able/" target="_blank">Documentation</a></li>
-                        <li class="list-inline-item"><a href="https://phoenixcoded.support-hub.io/" target="_blank">Support</a></li>
+                        <li class="list-inline-item"><a href="https://pcoded.gitbook.io/light-able/"
+                                target="_blank">Documentation</a></li>
+                        <li class="list-inline-item"><a href="https://phoenixcoded.support-hub.io/"
+                                target="_blank">Support</a></li>
                     </ul>
                 </div>
             </div>
@@ -236,7 +264,8 @@ include "layouts/nav.php";
     <div class="offcanvas border-0 pct-offcanvas offcanvas-end" tabindex="-1" id="offcanvas_pc_layout">
         <div class="offcanvas-header justify-content-between">
             <h5 class="offcanvas-title">Settings</h5>
-            <button type="button" class="btn btn-icon btn-link-danger" data-bs-dismiss="offcanvas" aria-label="Close"><i class="ti ti-x"></i></button>
+            <button type="button" class="btn btn-icon btn-link-danger" data-bs-dismiss="offcanvas" aria-label="Close"><i
+                    class="ti ti-x"></i></button>
         </div>
         <div class="pct-body customizer-body">
             <div class="offcanvas-body py-0">
@@ -248,27 +277,28 @@ include "layouts/nav.php";
                             <div class="row theme-color theme-layout">
                                 <div class="col-4">
                                     <div class="d-grid">
-                                        <button class="preset-btn btn active" data-value="true" onclick="layout_change('light');">
+                                        <button class="preset-btn btn active" data-value="true"
+                                            onclick="layout_change('light');">
                                             <span class="btn-label">Light</span>
-                                            <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
+                                            <span
+                                                class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="d-grid">
-                                        <button class="preset-btn btn" data-value="false" onclick="layout_change('dark');">
+                                        <button class="preset-btn btn" data-value="false"
+                                            onclick="layout_change('dark');">
                                             <span class="btn-label">Dark</span>
-                                            <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
+                                            <span
+                                                class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="d-grid">
-                                        <button
-                                            class="preset-btn btn"
-                                            data-value="default"
-                                            onclick="layout_change_default();"
-                                            data-bs-toggle="tooltip"
+                                        <button class="preset-btn btn" data-value="default"
+                                            onclick="layout_change_default();" data-bs-toggle="tooltip"
                                             title="Automatically sets the theme based on user's operating system's color scheme.">
                                             <span class="btn-label">Default</span>
                                             <span class="pc-lay-icon d-flex align-items-center justify-content-center">
@@ -286,17 +316,21 @@ include "layouts/nav.php";
                         <div class="row theme-color theme-sidebar-color">
                             <div class="col-6">
                                 <div class="d-grid">
-                                    <button class="preset-btn btn" data-value="true" onclick="layout_sidebar_change('dark');">
+                                    <button class="preset-btn btn" data-value="true"
+                                        onclick="layout_sidebar_change('dark');">
                                         <span class="btn-label">Dark</span>
-                                        <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
+                                        <span
+                                            class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
                                     </button>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="d-grid">
-                                    <button class="preset-btn btn active" data-value="false" onclick="layout_sidebar_change('light');">
+                                    <button class="preset-btn btn active" data-value="false"
+                                        onclick="layout_sidebar_change('light');">
                                         <span class="btn-label">Light</span>
-                                        <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
+                                        <span
+                                            class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
                                     </button>
                                 </div>
                             </div>
@@ -324,17 +358,21 @@ include "layouts/nav.php";
                         <div class="row theme-color theme-nav-caption">
                             <div class="col-6">
                                 <div class="d-grid">
-                                    <button class="preset-btn btn active" data-value="true" onclick="layout_caption_change('true');">
+                                    <button class="preset-btn btn active" data-value="true"
+                                        onclick="layout_caption_change('true');">
                                         <span class="btn-label">Caption Show</span>
-                                        <span class="pc-lay-icon"><span></span><span></span><span><span></span><span></span></span><span></span></span>
+                                        <span
+                                            class="pc-lay-icon"><span></span><span></span><span><span></span><span></span></span><span></span></span>
                                     </button>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="d-grid">
-                                    <button class="preset-btn btn" data-value="false" onclick="layout_caption_change('false');">
+                                    <button class="preset-btn btn" data-value="false"
+                                        onclick="layout_caption_change('false');">
                                         <span class="btn-label">Caption Hide</span>
-                                        <span class="pc-lay-icon"><span></span><span></span><span><span></span><span></span></span><span></span></span>
+                                        <span
+                                            class="pc-lay-icon"><span></span><span></span><span><span></span><span></span></span><span></span></span>
                                     </button>
                                 </div>
                             </div>
@@ -347,17 +385,21 @@ include "layouts/nav.php";
                             <div class="row theme-color theme-direction">
                                 <div class="col-6">
                                     <div class="d-grid">
-                                        <button class="preset-btn btn active" data-value="false" onclick="layout_rtl_change('false');">
+                                        <button class="preset-btn btn active" data-value="false"
+                                            onclick="layout_rtl_change('false');">
                                             <span class="btn-label">LTR</span>
-                                            <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
+                                            <span
+                                                class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="d-grid">
-                                        <button class="preset-btn btn" data-value="true" onclick="layout_rtl_change('true');">
+                                        <button class="preset-btn btn" data-value="true"
+                                            onclick="layout_rtl_change('true');">
                                             <span class="btn-label">RTL</span>
-                                            <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
+                                            <span
+                                                class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
                                         </button>
                                     </div>
                                 </div>
@@ -371,17 +413,21 @@ include "layouts/nav.php";
                             <div class="row theme-color theme-container">
                                 <div class="col-6">
                                     <div class="d-grid">
-                                        <button class="preset-btn btn active" data-value="false" onclick="change_box_container('false')">
+                                        <button class="preset-btn btn active" data-value="false"
+                                            onclick="change_box_container('false')">
                                             <span class="btn-label">Full Width</span>
-                                            <span class="pc-lay-icon"><span></span><span></span><span></span><span><span></span></span></span>
+                                            <span
+                                                class="pc-lay-icon"><span></span><span></span><span></span><span><span></span></span></span>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="d-grid">
-                                        <button class="preset-btn btn" data-value="true" onclick="change_box_container('true')">
+                                        <button class="preset-btn btn" data-value="true"
+                                            onclick="change_box_container('true')">
                                             <span class="btn-label">Fixed Width</span>
-                                            <span class="pc-lay-icon"><span></span><span></span><span></span><span><span></span></span></span>
+                                            <span
+                                                class="pc-lay-icon"><span></span><span></span><span></span><span><span></span></span></span>
                                         </button>
                                     </div>
                                 </div>

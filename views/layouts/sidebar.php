@@ -1,3 +1,16 @@
+<?php 
+include_once "../app/config.php";
+include_once '../app/authController.php';
+
+$AuthController = new AuthController();
+if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
+  $user = $AuthController->getUserByID($_SESSION['id']);
+} else {
+  header('Location: login');
+} 
+?>
+
+
 <!-- [ Pre-loader ] start -->
     <div class="loader-bg">
       <div class="loader-track">
@@ -724,8 +737,9 @@
                   <a href="profile" class="arrow-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,20">
                     <div class="d-flex align-items-center">
                       <div class="flex-grow-1 me-2">
-                        <h6 class="mb-0">Jonh Smith</h6>
-                        <small>Administrator</small>
+                      <h6 class="mb-0"><?= $user['name']; ?></h6>
+                      
+                      <p class="mb-0"><?= $user['role']; ?></p> <!-- Rol del user -->
                       </div>
                       <div class="flex-shrink-0">
                         <div class="btn btn-icon btn-link-secondary avtar">
