@@ -10,7 +10,11 @@ RewriteRule ^register/?$ views/register.php
 RewriteRule ^products/?$ views/products/index.php
 RewriteRule ^products/create/?$ views/products/create.php
 RewriteRule ^products/edit/([^/]+)/?$ views/products/edit.php?slug=$1
-RewriteRule ^products/([^/]+)/?$ views/products/details.php
+
+
+
+# RewriteRule ^products/([^/]+)/?$ views/products/details.php
+RewriteRule ^detailsProduct/?$ views/products/details.php
 
 
 

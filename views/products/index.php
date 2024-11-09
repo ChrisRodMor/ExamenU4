@@ -76,7 +76,7 @@ include_once "../../app/config.php";
                       <p class="prod-description text-muted mb-2">Reloj inteligente de última generación con múltiples funcionalidades.</p>
                       <p class="prod-brand text-muted mb-3">Marca: Apple</p>
                       <div class="d-grid gap-2">
-                        <a href="#" class="btn btn-primary btn-sm">Ver detalle</a>
+                        <a href="detailsProduct" class="btn btn-primary">Go somewhere</a>
                         <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editProductModal">Editar</button>
                         <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
                       </div>
