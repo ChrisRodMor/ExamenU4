@@ -6,6 +6,7 @@ if (isset($_POST['action'])) {
 	
 	if (!isset($_POST['global_token'])) {
 		echo json_encode(['error' => 'Token de autenticacion no valido.']);
+        header('Location: ' . BASE_PATH . 'login');
 		exit;
 	}
 	
@@ -127,7 +128,7 @@ class ProductController
         return $result['data'];
     }
 
-	public function agregarProducto($name, $slug, $description, $features, $brand, $cover){
+	public function agregarProducto($name, $slug, $description, $features, $brand, $cover, $categories, $tags){
 
         $curl = curl_init();
 
@@ -146,7 +147,15 @@ class ProductController
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => array('name' => $name,'slug' => $slug,'description' => $description,'features' => $features, 'brand_id' => $brand, 'cover'=> new CURLFILE($cover)),
+        CURLOPT_POSTFIELDS => array(
+            'name' => $name,
+            'slug' => $slug,
+            'description' => $description,
+            'features' => $features, 
+            'brand_id' => $brand,
+            'cover'=> new CURLFILE($cover)),
+            'categories' => $categories,
+            'tags' => $tags,
         CURLOPT_HTTPHEADER => array(
             'Authorization: Bearer ' . $_SESSION['token'],
         ),
@@ -160,7 +169,7 @@ class ProductController
         header('Location: ' . BASE_PATH . 'products');
     }
 
-	public function editProduct($id, $name, $slug, $description, $features, $brand) {
+	public function editProduct($id, $name, $slug, $description, $features, $brand, $cover, $categories, $tags) {
         if (!isset($_SESSION['token'])) {
             echo 'No se encontró el token de autorización.';
             return [];
@@ -184,6 +193,8 @@ class ProductController
                 'description' => $description,
                 'features' => $features,
                 'brand_id' => $brand,
+                'categories' => $categories,
+                'tags' => $tags,
             )),
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
