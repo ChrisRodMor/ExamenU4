@@ -75,15 +75,16 @@ class AuthController
         }
 
         $userData = $result['data'];
-        $name = $userData['name'];
-        $lastname = $userData['lastname'];
+        $id = $userData['id'];
+        // $name = $userData['name'];
+        // $lastname = $userData['lastname'];
         $token = $userData['token'];
 
         session_start();
         $_SESSION['token'] = $token;
-        $_SESSION['name'] = $name;
+        $_SESSION['id'] = $id;
 
-        echo "Bienvenido, $name $lastname con el token: $token";
+        // echo "Bienvenido, $name $lastname con el token: $token";
         header('Location: ' . BASE_PATH . 'home');
     }
 
@@ -125,8 +126,6 @@ class AuthController
     }
 
     public function logout(){
-		unset($_SESSION['global_token']);
-        session_start();
         session_unset();
         session_destroy();
         header('Location: ' . BASE_PATH . 'login');
