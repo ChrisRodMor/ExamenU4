@@ -4,9 +4,9 @@ RewriteBase  /ExamenU4/
 
 #páginas
 RewriteRule ^login?$ index.php
-RewriteRule ^home/?$ views/home.php
-RewriteRule ^profile/?$ views/profile.php
-RewriteRule ^register/?$ views/register.php
+RewriteRule ^home/?$ views/auth/home.php
+RewriteRule ^profile/?$ views/auth/profile.php
+RewriteRule ^register/?$ views/auth/register.php
 RewriteRule ^products/?$ views/products/index.php
 RewriteRule ^products/create/?$ views/products/create.php
 RewriteRule ^products/edit/([^/]+)/?$ views/products/edit.php?slug=$1
@@ -22,3 +22,4 @@ RewriteRule ^detailsProduct/?$ views/products/details.php
 RewriteRule ^auth?$ app/AuthController.php
 RewriteRule ^products?$ app/ProductController.php
 RewriteRule ^brands?$ app/BrandController.php
+RewriteRule ^config?$ app/config.php

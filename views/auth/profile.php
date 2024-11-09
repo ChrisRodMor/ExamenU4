@@ -1,6 +1,6 @@
 <?php
-include_once "../app/config.php";
-include_once '../app/authController.php';
+include_once "../../app/config.php";
+include_once '../../app/authController.php';
 
 $AuthController = new AuthController();
 if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
@@ -18,7 +18,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
 <head>
     <?php
 
-    include "layouts/head.php";
+    include "../layouts/head.php";
 
     ?>
 
@@ -32,13 +32,13 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
 
     <?php
 
-    include "layouts/sidebar.php";
+    include "../layouts/sidebar.php";
 
     ?>
 
     <?php
 
-    include "layouts/nav.php";
+    include "../layouts/nav.php";
 
     ?>
 

@@ -1,5 +1,5 @@
 <?php 
-  include_once "../app/config.php";
+  include_once "../../app/config.php";
 
 ?>
 <!doctype html>
@@ -9,7 +9,7 @@
   <head>
      <?php 
 
-      include "layouts/head.php";
+      include "../layouts/head.php";
 
     ?>
 
@@ -21,13 +21,13 @@
     
     <?php 
 
-      include "layouts/sidebar.php";
+      include "../layouts/sidebar.php";
 
     ?>
 
     <?php 
 
-      include "layouts/nav.php";
+      include "../layouts/nav.php";
 
     ?>
 
@@ -507,13 +507,13 @@
     <!-- [ Main Content ] end -->
     <?php 
 
-      include "layouts/footer.php";
+      include "../layouts/footer.php";
 
     ?>
     
     <?php 
 
-      include "layouts/modals.php";
+      include "../layouts/modals.php";
 
     ?>
 
@@ -528,7 +528,7 @@
     
     <?php 
 
-      include "layouts/scripts.php";
+      include "../layouts/scripts.php";
 
     ?>
     

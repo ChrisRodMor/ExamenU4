@@ -1,6 +1,6 @@
 <?php 
-include_once "../app/config.php";
-include_once '../app/authController.php';
+include_once "../../app/config.php";
+include_once '../../app/authController.php';
 
 $AuthController = new AuthController();
 if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
@@ -166,7 +166,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
               <h5 class="m-0">Notifications</h5>
               <ul class="list-inline ms-auto mb-0">
                 <li class="list-inline-item">
-                  <a href="../application/mail.html" class="avtar avtar-s btn-link-hover-primary">
+                  <a href="<?= BASE_PATH ?>/application/mail.html" class="avtar avtar-s btn-link-hover-primary">
                     <i class="ti ti-link f-18"></i>
                   </a>
                 </li>

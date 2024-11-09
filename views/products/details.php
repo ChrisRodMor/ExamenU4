@@ -350,182 +350,181 @@ include_once "../../app/config.php";
             </div>
           </div>
           <div class="card">
-                    <div class="card-body">
+            <div class="card-body">
 
-                      <div class="container mt-5">
-                        <!-- Presentación 1 -->
-                        <h2 class="text-primary mb-3">Presentación 1: Colchón Matrimonial Victory</h2>
-                        <div class="table-responsive">
-                          <table class="table table-bordered table-striped table-hover">
-                            <thead class="table-primary">
-                              <tr>
-                                <th>ID</th>
-                                <th>Descripción</th>
-                                <th>Código</th>
-                                <th>Peso (gramos)</th>
-                                <th>Estado</th>
-                                <th>Imagen</th>
-                                <th>Stock</th>
-                                <th>Stock Min</th>
-                                <th>Stock Max</th>
-                                <th>Precio Actual</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>2</td>
-                                <td>Colchón Matrimonial Victory</td>
-                                <td>comavi01</td>
-                                <td>10000</td>
-                                <td class="text-success">Activo</td>
-                                <td><img src="colchon_victory.jpg" alt="Imagen del colchón" width="50"></td>
-                                <td>15</td>
-                                <td>1</td>
-                                <td>25</td>
-                                <td>$10,999.99</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
+              <div class="container mt-5">
+                <!-- Presentación 1 -->
+                <h2 class="text-primary mb-3">Presentación 1: Colchón Matrimonial Victory</h2>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped table-hover">
+                    <thead class="table-primary">
+                      <tr>
+                        <th>ID</th>
+                        <th>Descripción</th>
+                        <th>Código</th>
+                        <th>Peso (gramos)</th>
+                        <th>Estado</th>
+                        <th>Imagen</th>
+                        <th>Stock</th>
+                        <th>Stock Min</th>
+                        <th>Stock Max</th>
+                        <th>Precio Actual</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>2</td>
+                        <td>Colchón Matrimonial Victory</td>
+                        <td>comavi01</td>
+                        <td>10000</td>
+                        <td class="text-success">Activo</td>
+                        <td><img src="colchon_victory.jpg" alt="Imagen del colchón" width="50"></td>
+                        <td>15</td>
+                        <td>1</td>
+                        <td>25</td>
+                        <td>$10,999.99</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-                        <!-- Órdenes de Presentación 1 -->
-                        <h4 class="text-secondary mb-3">Órdenes de Presentación 1</h4>
-                        <div class="table-responsive">
-                          <table class="table table-bordered table-striped table-hover">
-                            <thead class="table-secondary">
-                              <tr>
-                                <th>ID Orden</th>
-                                <th>Folio</th>
-                                <th>Total</th>
-                                <th>Pagado</th>
-                                <th>ID Cliente</th>
-                                <th>ID Dirección</th>
-                                <th>ID Estado Orden</th>
-                                <th>ID Tipo Pago</th>
-                                <th>ID Cupón</th>
-                                <th>Cantidad</th>
-                                <th>ID Precio</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td>82712</td>
-                                <td>$8,999.99</td>
-                                <td class="text-success">Pagado</td>
-                                <td>4</td>
-                                <td>13</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>2</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
+                <!-- Órdenes de Presentación 1 -->
+                <h4 class="text-secondary mb-3">Órdenes de Presentación 1</h4>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped table-hover">
+                    <thead class="table-secondary">
+                      <tr>
+                        <th>ID Orden</th>
+                        <th>Folio</th>
+                        <th>Total</th>
+                        <th>Pagado</th>
+                        <th>ID Cliente</th>
+                        <th>ID Dirección</th>
+                        <th>ID Estado Orden</th>
+                        <th>ID Tipo Pago</th>
+                        <th>ID Cupón</th>
+                        <th>Cantidad</th>
+                        <th>ID Precio</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>82712</td>
+                        <td>$8,999.99</td>
+                        <td class="text-success">Pagado</td>
+                        <td>4</td>
+                        <td>13</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>2</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-                        <!-- Presentación 2 -->
-                        <h2 class="text-primary mb-3">Presentación 2: Colchón Queen Memory Foam</h2>
-                        <div class="table-responsive">
-                          <table class="table table-bordered table-striped table-hover">
-                            <thead class="table-primary">
-                              <tr>
-                                <th>ID</th>
-                                <th>Descripción</th>
-                                <th>Código</th>
-                                <th>Peso (gramos)</th>
-                                <th>Estado</th>
-                                <th>Imagen</th>
-                                <th>Stock</th>
-                                <th>Stock Min</th>
-                                <th>Stock Max</th>
-                                <th>Precio Actual</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>3</td>
-                                <td>Colchón Queen Memory Foam</td>
-                                <td>comqmf01</td>
-                                <td>12000</td>
-                                <td class="text-success">Activo</td>
-                                <td><img src="colchon_memory_foam.jpg" alt="Imagen del colchón" width="50"></td>
-                                <td>10</td>
-                                <td>2</td>
-                                <td>20</td>
-                                <td>$12,499.99</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
+                <!-- Presentación 2 -->
+                <h2 class="text-primary mb-3">Presentación 2: Colchón Queen Memory Foam</h2>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped table-hover">
+                    <thead class="table-primary">
+                      <tr>
+                        <th>ID</th>
+                        <th>Descripción</th>
+                        <th>Código</th>
+                        <th>Peso (gramos)</th>
+                        <th>Estado</th>
+                        <th>Imagen</th>
+                        <th>Stock</th>
+                        <th>Stock Min</th>
+                        <th>Stock Max</th>
+                        <th>Precio Actual</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>3</td>
+                        <td>Colchón Queen Memory Foam</td>
+                        <td>comqmf01</td>
+                        <td>12000</td>
+                        <td class="text-success">Activo</td>
+                        <td><img src="colchon_memory_foam.jpg" alt="Imagen del colchón" width="50"></td>
+                        <td>10</td>
+                        <td>2</td>
+                        <td>20</td>
+                        <td>$12,499.99</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-                        <!-- Órdenes de Presentación 2 -->
-                        <h4 class="text-secondary mb-3">Órdenes de Presentación 2</h4>
-                        <div class="table-responsive">
-                          <table class="table table-bordered table-striped table-hover">
-                            <thead class="table-secondary">
-                              <tr>
-                                <th>ID Orden</th>
-                                <th>Folio</th>
-                                <th>Total</th>
-                                <th>Pagado</th>
-                                <th>ID Cliente</th>
-                                <th>ID Dirección</th>
-                                <th>ID Estado Orden</th>
-                                <th>ID Tipo Pago</th>
-                                <th>ID Cupón</th>
-                                <th>Cantidad</th>
-                                <th>ID Precio</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>4</td>
-                                <td>82730</td>
-                                <td>$12,499.99</td>
-                                <td class="text-success">Pagado</td>
-                                <td>3</td>
-                                <td>14</td>
-                                <td>2</td>
-                                <td>1</td>
-                                <td>3</td>
-                                <td>1</td>
-                                <td>3</td>
-                              </tr>
-                              <tr>
-                                <td>5</td>
-                                <td>82731</td>
-                                <td>$24,999.98</td>
-                                <td class="text-danger">No pagado</td>
-                                <td>6</td>
-                                <td>15</td>
-                                <td>3</td>
-                                <td>2</td>
-                                <td>4</td>
-                                <td>2</td>
-                                <td>3</td>
-                              </tr>
-                              <tr>
-                                <td>6</td>
-                                <td>82732</td>
-                                <td>$37,499.97</td>
-                                <td class="text-success">Pagado</td>
-                                <td>5</td>
-                                <td>16</td>
-                                <td>4</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>3</td>
-                                <td>3</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
+                <!-- Órdenes de Presentación 2 -->
+                <h4 class="text-secondary mb-3">Órdenes de Presentación 2</h4>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped table-hover">
+                    <thead class="table-secondary">
+                      <tr>
+                        <th>ID Orden</th>
+                        <th>Folio</th>
+                        <th>Total</th>
+                        <th>Pagado</th>
+                        <th>ID Cliente</th>
+                        <th>ID Dirección</th>
+                        <th>ID Estado Orden</th>
+                        <th>ID Tipo Pago</th>
+                        <th>ID Cupón</th>
+                        <th>Cantidad</th>
+                        <th>ID Precio</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>4</td>
+                        <td>82730</td>
+                        <td>$12,499.99</td>
+                        <td class="text-success">Pagado</td>
+                        <td>3</td>
+                        <td>14</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>3</td>
+                      </tr>
+                      <tr>
+                        <td>5</td>
+                        <td>82731</td>
+                        <td>$24,999.98</td>
+                        <td class="text-danger">No pagado</td>
+                        <td>6</td>
+                        <td>15</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>2</td>
+                        <td>3</td>
+                      </tr>
+                      <tr>
+                        <td>6</td>
+                        <td>82732</td>
+                        <td>$37,499.97</td>
+                        <td class="text-success">Pagado</td>
+                        <td>5</td>
+                        <td>16</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>5</td>
+                        <td>3</td>
+                        <td>3</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- [ sample-page ] end -->
       </div>
