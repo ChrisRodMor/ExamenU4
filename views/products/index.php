@@ -1,5 +1,9 @@
 <?php
 include_once "../../app/config.php";
+include_once "../../app/ProductController.php";
+
+$productController = new ProductController();
+$products = $productController->getProducts();
 
 ?>
 <!doctype html>
@@ -84,7 +88,28 @@ include_once "../../app/config.php";
                   </div>
                 </div>
               </div>
-
+              <div class="row">
+                <?php foreach ($products as $product): ?>
+                  <div class="col-xl-4 col-sm-6">
+                    <div class="product-card card">
+                      <div class="card-img-top">
+                        <a href="/application/ecom_product-details">
+                        <img src="<?php echo htmlspecialchars($product['cover']); ?>"  alt="image" class="img-prod img-fluid" loading="lazy" width="800" height="800" decoding="async" alt="<?php echo htmlspecialchars($product['name']); ?>"                        </a>
+                      </div>
+                      <div class="card-body">
+                        <h5 class="prod-title mb-2"><?= htmlspecialchars($product['name']) ?></h5>
+                        <p class="prod-description text-muted mb-2"><?= htmlspecialchars($product['description']) ?></p>
+                        <p class="prod-brand text-muted mb-3">Marca: <?= htmlspecialchars($product['brand']['name']) ?></p>
+                        <div class="d-grid gap-2">
+                          <a href="detailsProduct?slug=<?= htmlspecialchars($product['slug']) ?>" class="btn btn-primary">Detalles</a>
+                          <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editProductModal">Editar</button>
+                          <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <?php endforeach; ?>
+              </div>
               <!-- MODAL AGREGAR PRODUCTO -->
               <modal class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
