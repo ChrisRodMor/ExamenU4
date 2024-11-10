@@ -731,6 +731,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
           <div class="card-body">
             <div class="d-flex align-items-center">
               <div class="flex-shrink-0">
+                <!-- Foto perfil -->
                 <img src="<?= BASE_PATH ?>assets/images/user/avatar-1.jpg" alt="user-image" class="user-avtar wid-45 rounded-circle" />
               </div>
               <div class="flex-grow-1 ms-3">

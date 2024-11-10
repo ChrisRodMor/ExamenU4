@@ -327,6 +327,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
         <li class="dropdown pc-h-item header-user-profile">
           <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button"
             aria-haspopup="false" data-bs-auto-close="outside" aria-expanded="false">
+               <!-- foto de perfil-->
             <img src="<?= BASE_PATH ?>assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar" />
           </a>
           <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
@@ -343,11 +344,11 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
                       <!-- Foto que redirige a profile  -->
                       <a href="profile">
                         <div class="flex-shrink-0">
-                          <img src="<?= BASE_PATH ?>assets/images/user/avatar-2.jpg" alt="user-image"
-                            class="wid-50 rounded-circle" />
+                        <img src="<?= $user['avatar']; ?>" alt="user-image" class="wid-50 rounded-circle" />
                         </div>
                       </a>
 
+                      
                      
 
 

@@ -89,9 +89,9 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
                                     <div class="text-center mt-3">
                                         <div class="chat-avtar d-inline-flex mx-auto">
                                             <!-- Mostrar la foto de perfil -->
-                                            <img class="rounded-circle img-fluid wid-90 img-thumbnail"
-                                                src="<?= BASE_PATH ?>/assets/images/user/<?= $user['avatar']; ?>"
-                                                alt="User image" />
+                                            <img src="<?= $user['avatar']; ?>" alt="user-image" class="wid-50 rounded-circle" />
+
+                                                
                                             <i class="chat-badge bg-success me-2 mb-2"></i>
                                         </div>
                                         <!-- Mostrar nombre completo del user -->
