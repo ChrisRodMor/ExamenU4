@@ -62,7 +62,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
           <div class="dropdown-menu dropdown-qta dropdown-menu-end pc-h-dropdown">
             <div class="overflow-hidden">
               <div class="qta-links m-n1">
-                <a href="#!" class="dropdown-item">
+                <a href="products" class="dropdown-item">
                   <i class="ph-duotone ph-shopping-cart"></i>
                   <span>E-commerce</span>
                 </a>
@@ -94,7 +94,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
                   <i class="ph-duotone ph-currency-circle-dollar"></i>
                   <span>Plans</span>
                 </a>
-                <a href="#!" class="dropdown-item">
+                <a href="users" class="dropdown-item">
                   <i class="ph-duotone ph-user-circle"></i>
                   <span>Users</span>
                 </a>
