@@ -76,8 +76,8 @@ class AuthController
 
         $userData = $result['data'];
         $id = $userData['id'];
-        // $name = $userData['name'];
-        // $lastname = $userData['lastname'];
+        $name = $userData['name'];
+        $lastname = $userData['lastname'];
         $token = $userData['token'];
 
         session_start();
