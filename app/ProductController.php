@@ -14,7 +14,7 @@ if (isset($_POST['action'])) {
 
 	switch($_POST['action']){
 		
-
+		// Agregar producto
 		case 'addProduct':
 			$name = $_POST['name'];
 			$slug = $_POST['slug'];
@@ -22,12 +22,13 @@ if (isset($_POST['action'])) {
 			$features = $_POST['features'];
 			$cover = $_FILES['cover']['tmp_name'];
 			$brand = $_POST['brand_id'];
+			$categories = isset($_POST['categories']) ? $_POST['categories'] : [];
+			$tags = isset($_POST['tags']) ? $_POST['tags'] : [];
 
-			$productController->agregarProducto($name, $slug, $description, $features, $brand, $cover);
-			break;
-
+			$productController->agregarProducto($name, $slug, $description, $features, $brand, $cover, $categories, $tags);
 		break;
 
+		// Editar producto
 		case 'editProduct':
 			$id = $_POST['id'];
 			$name = $_POST['name'];
@@ -35,21 +36,22 @@ if (isset($_POST['action'])) {
 			$description = $_POST['description'];
 			$features = $_POST['features'];
 			$brand = $_POST['brand_id'];
-			
+			$cover = isset($_FILES['cover']['tmp_name']) ? $_FILES['cover']['tmp_name'] : null;
+			$categories = isset($_POST['categories']) ? $_POST['categories'] : [];
+			$tags = isset($_POST['tags']) ? $_POST['tags'] : [];
 
-			$productController->editProduct($id, $name, $slug, $description, $features, $brand);
-			break;
-
+			$productController->editProduct($id, $name, $slug, $description, $features, $brand, $cover, $categories, $tags);
 		break;
 
+		// Eliminar producto
 		case 'deleteProduct':
 			$id = $_POST['id'];
-
+            
 			$productController->deleteProduct($id);
-
 		break;
 	}
 }
+
 
 class ProductController
 {
@@ -128,54 +130,30 @@ class ProductController
         return $result['data'];
     }
 
-	public function agregarProducto($name, $slug, $description, $features, $brand, $cover, $categories, $tags){
-
+	public function agregarProducto($name, $slug, $description, $features, $brand, $cover, $categories, $tags) {
         $curl = curl_init();
-
-        if (!isset($_SESSION['token'])) {
-            echo 'No se encontró el token de autorización.';
-            return [];
-        }
-
-
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => array(
-            'name' => $name,
-            'slug' => $slug,
-            'description' => $description,
-            'features' => $features, 
-            'brand_id' => $brand,
-            'cover'=> new CURLFILE($cover)),
-            'categories' => $categories,
-            'tags' => $tags,
-        CURLOPT_HTTPHEADER => array(
-            'Authorization: Bearer ' . $_SESSION['token'],
-        ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-        echo $response;
-
-        header('Location: ' . BASE_PATH . 'products');
-    }
-
-	public function editProduct($id, $name, $slug, $description, $features, $brand, $cover, $categories, $tags) {
+    
         if (!isset($_SESSION['token'])) {
             echo 'No se encontró el token de autorización.';
             return [];
         }
     
-        $curl = curl_init();
+        $postFields = [
+            'name' => $name,
+            'slug' => $slug,
+            'description' => $description,
+            'features' => $features,
+            'brand_id' => $brand,
+            'cover' => new CURLFILE($cover),
+        ];
+    
+        foreach ($categories as $index => $category) {
+            $postFields["categories[$index]"] = $category;
+        }
+    
+        foreach ($tags as $index => $tag) {
+            $postFields["tags[$index]"] = $tag;
+        }
     
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products',
@@ -185,19 +163,61 @@ class ProductController
             CURLOPT_TIMEOUT => 0,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'PUT',
-            CURLOPT_POSTFIELDS => json_encode(array(
-                'id' => $id,
-                'name' => $name,
-                'slug' => $slug,
-                'description' => $description,
-                'features' => $features,
-                'brand_id' => $brand,
-                'categories' => $categories,
-                'tags' => $tags,
-            )),
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $postFields,
             CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
+                'Authorization: Bearer ' . $_SESSION['token'],
+            ),
+        ));
+    
+        $response = curl_exec($curl);
+        curl_close($curl);
+        echo $response;
+    
+        header('Location: ' . BASE_PATH . 'products');
+    }
+    
+
+	public function editProduct($id, $name, $slug, $description, $features, $brand, $cover, $categories, $tags) {
+        if (!isset($_SESSION['token'])) {
+            echo 'No se encontró el token de autorización.';
+            return [];
+        }
+    
+        $curl = curl_init();
+
+        $postFields = [
+            'id' => $id,
+            'name' => $name,
+            'slug' => $slug,
+            'description' => $description,
+            'features' => $features,
+            'brand_id' => $brand,
+        ];
+    
+        if ($cover) {
+            $postFields['cover'] = new CURLFILE($cover);
+        }
+    
+        foreach ($categories as $index => $category) {
+            $postFields["categories[$index]"] = $category;
+        }
+    
+        foreach ($tags as $index => $tag) {
+            $postFields["tags[$index]"] = $tag;
+        }
+    
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products/' . $id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_POSTFIELDS => $postFields,
+            CURLOPT_HTTPHEADER => array(
                 'Authorization: Bearer ' . $_SESSION['token'],
             ),
         ));
@@ -206,9 +226,15 @@ class ProductController
         curl_close($curl);
     
         echo $response;
-        header('Location: ' . BASE_PATH . 'products');
-
+    
+        $responseData = json_decode($response, true);
+        if (isset($responseData['success']) && $responseData['success']) {
+            header('Location: ' . BASE_PATH . 'products');
+        } else {
+            echo 'Error al editar el producto';
+        }
     }
+    
 
 	public function deleteProduct($id)
 	{
