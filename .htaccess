@@ -12,19 +12,20 @@ RewriteRule ^register/?$ views/auth/register.php
 
 #products
 RewriteRule ^products/?$ views/products/index.php
-RewriteRule ^products/create/?$ views/products/create.php
-RewriteRule ^products/edit/([^/]+)/?$ views/products/edit.php?slug=$1
-
 # RewriteRule ^products/([^/]+)/?$ views/products/details.php
 RewriteRule ^detailsProduct/?$ views/products/details.php
 
+
 #users
 RewriteRule ^users/?$ views/users/index.php
+# RewriteRule ^users/([^/]+)/?$ views/users/details.php
+RewriteRule ^detailsUser/?$ views/users/details.php
+
 
 
 
 #controladores
 RewriteRule ^auth?$ app/AuthController.php
-RewriteRule ^products?$ app/ProductController.php
+RewriteRule ^api-products?$ app/ProductController.php
 RewriteRule ^brands?$ app/BrandController.php
 RewriteRule ^config?$ app/config.php
