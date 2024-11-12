@@ -96,7 +96,7 @@ include_once "../../app/config.php";
                       <td>6123480678</td>
                       <td>2022-09-24T17:25:25.000000Z</td>
                       <td>
-                        <a href="#">
+                        <a href="detailsUser">
                           <button class="btn btn-primary">Profile</button>
                         </a>
                         <div class="overlay-edit">
@@ -130,7 +130,7 @@ include_once "../../app/config.php";
                       <td>No encontrado</td>
                       <td>2022-09-24T17:25:25.000000Z</td>
                       <td>
-                        <a href="#">
+                        <a href="detailsUser">
                           <button class="btn btn-primary">Profile</button>
                         </a>
                         <div class="overlay-edit">
