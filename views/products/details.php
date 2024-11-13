@@ -150,16 +150,7 @@ include_once "../../app/config.php";
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <span class="badge bg-success f-14">In stock</span>
                   <h2 class="my-3">Colchón Matrimonial Victory</h2>
-                  <div class="star f-18 mb-3">
-                    <i class="fas fa-star text-warning"></i>
-                    <i class="fas fa-star text-warning"></i>
-                    <i class="fas fa-star text-warning"></i>
-                    <i class="fas fa-star-half-alt text-warning"></i>
-                    <i class="far fa-star text-muted"></i>
-                    <span class="text-sm text-muted">(4.0)</span>
-                  </div>
                   <h3 class="mt-4 mb-sm-3 mb-2 f-w-500">Detalles</h3>
                   <div>
                     <h4>
@@ -167,66 +158,12 @@ include_once "../../app/config.php";
                     </h4>
                   </div>
                   <div class="mb-3 row">
-                    <label class="col-form-label col-lg-3 col-sm-12">Colors <span class="text-danger">*</span></label>
-                    <div class="col-lg-6 col-md-12 col-sm-12 d-flex align-items-center">
-                      <div class="form-check form-check-inline color-checkbox mb-0">
-                        <input class="form-check-input" type="radio" name="product_color" checked />
-                        <i class="fas fa-circle text-primary"></i>
-                      </div>
-                      <div class="form-check form-check-inline color-checkbox mb-0">
-                        <input class="form-check-input" type="radio" name="product_color" />
-                        <i class="fas fa-circle text-secondary"></i>
-                      </div>
-                      <div class="form-check form-check-inline color-checkbox mb-0">
-                        <input class="form-check-input" type="radio" name="product_color" />
-                        <i class="fas fa-circle text-danger"></i>
-                      </div>
-                      <div class="form-check form-check-inline color-checkbox mb-0">
-                        <input class="form-check-input" type="radio" name="product_color" />
-                        <i class="fas fa-circle text-dark"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mb-3 row align-items-center">
-                    <label class="col-form-label col-lg-3 col-sm-12">
-                      <span class="d-block">Size</span>
-                      <a class="link-primary text-sm text-decoration-underline">Size Chart?</a></label>
-                    <div class="col-lg-9 col-md-12 col-sm-12">
-                      <div class="row g-2">
-                        <div class="col-auto">
-                          <input type="radio" class="btn-check" id="btnrdolite1" name="btn_radio2" checked />
-                          <label class="btn btn-sm btn-light-primary" for="btnrdolite1">Small</label>
-                        </div>
-                        <div class="col-auto">
-                          <input type="radio" class="btn-check" id="btnrdolite2" name="btn_radio2" />
-                          <label class="btn btn-sm btn-light-primary" for="btnrdolite2">Medium</label>
-                        </div>
-                        <div class="col-auto">
-                          <input type="radio" class="btn-check" id="btnrdolite3" name="btn_radio2" />
-                          <label class="btn btn-sm btn-light-primary" for="btnrdolite3">Large</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mb-3 row">
-                    <label class="col-form-label col-lg-3 col-sm-12">Stock <span class="text-danger">*</span></label>
+                    <h4 class="col-form-label col-lg-2 col-sm-12">Stock <span class="text-danger">*</span></h4>
                     <h4 class="col-lg-6 col-md-12 col-sm-12">
                       15
                     </h4>
                   </div>
                   <h3 class="mb-4"><b>$10999.99</b><span class="mx-2 f-16 text-muted f-w-400 text-decoration-line-through">$399.00</span></h3>
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="d-grid">
-                        <button type="button" class="btn btn-primary">Buy Now</button>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="d-grid">
-                        <button type="button" class="btn btn-outline-secondary">Add to cart</button>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>

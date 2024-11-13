@@ -65,14 +65,14 @@ $products = $productController->getProducts();
             </div>
             <div class="ecom-content">
 
-            <!-- TODO: Implementar funcionalidad a botones -->
+              <!-- TODO: Implementar funcionalidad a botones -->
               <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addProductModal">Crear producto</a>
               <div class="row">
                 <div class="col-xl-4 col-sm-6">
                   <div class="product-card card">
                     <div class="card-img-top">
                       <a href="/application/ecom_product-details">
-                        <img src="<?= BASE_PATH ?>assets/images/application/img-prod-3.jpg" alt="image" class="img-prod img-fluid" loading="lazy" width="800" height="800" decoding="async"  />
+                        <img src="<?= BASE_PATH ?>assets/images/application/img-prod-3.jpg" alt="image" class="img-prod img-fluid" loading="lazy" width="800" height="800" decoding="async" />
                       </a>
                     </div>
                     <div class="card-body">
@@ -94,7 +94,7 @@ $products = $productController->getProducts();
                     <div class="product-card card">
                       <div class="card-img-top">
                         <a href="/application/ecom_product-details">
-                        <img src="<?php echo htmlspecialchars($product['cover']); ?>"  alt="image" class="img-prod img-fluid" loading="lazy" width="800" height="800" decoding="async" alt="<?php echo htmlspecialchars($product['name']); ?>"                        </a>
+                          <img src="<?php echo htmlspecialchars($product['cover']); ?>" alt="image" class="img-prod img-fluid" loading="lazy" width="800" height="800" decoding="async" alt="<?php echo htmlspecialchars($product['name']); ?>" </a>
                       </div>
                       <div class="card-body">
                         <h5 class="prod-title mb-2"><?= htmlspecialchars($product['name']) ?></h5>
@@ -111,43 +111,62 @@ $products = $productController->getProducts();
                 <?php endforeach; ?>
               </div>
               <!-- MODAL AGREGAR PRODUCTO -->
-              <modal class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+              <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content bg-dark text-light">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="addProductModalLabel">Añadir Producto</h5>
+                      <h5 class="modal-title bg-dark text-light" id="addProductModalLabel">Añadir Producto</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                       <form>
                         <div class="mb-3">
-                          <label for="productName" class="form-label">Nombre</label>
+                          <label for="productName" class="form-label text-light">Nombre</label>
                           <input type="text" class="form-control bg-dark text-light" id="productName" required>
                         </div>
                         <div class="mb-3">
-                          <label for="productSlug" class="form-label">Slug</label>
+                          <label for="productSlug" class="form-label text-light">Slug</label>
                           <input type="text" class="form-control bg-dark text-light" id="productSlug" required>
                         </div>
                         <div class="mb-3">
-                          <label for="productDescription" class="form-label">Descripción</label>
+                          <label for="productDescription" class="form-label text-light">Descripción</label>
                           <textarea class="form-control bg-dark text-light" id="productDescription" rows="3" required></textarea>
                         </div>
                         <div class="mb-3">
-                          <label for="productFeatures" class="form-label">Características</label>
+                          <label for="productFeatures" class="form-label text-light">Características</label>
                           <input type="text" class="form-control bg-dark text-light" id="productFeatures" required>
                         </div>
                         <div class="mb-3">
-                          <label for="productImage" class="form-label">Imagen</label>
+                          <label for="productImage" class="form-label text-light">Imagen</label>
                           <input type="file" class="form-control bg-dark text-light" id="productImage" accept="image/*" required>
                         </div>
                         <div class="mb-3">
-                          <label for="productBrand" class="form-label">Marca</label>
+                          <label for="productBrand" class="form-label text-light">Marca</label>
                           <select class="form-control bg-dark text-light" id="productBrand" required>
                             <option value="1">Marca 1</option>
                             <option value="2">Marca 2</option>
                             <option value="3">Marca 3</option>
                           </select>
                         </div>
+                        <div class="mb-3">
+                          <label for="productTags" class="form-label text-light">Tags</label>
+                          <select class="form-control bg-dark text-light select-multiple" id="productTags" style="height: auto; overflow-y: auto; max-height: 150px;">
+                            <option value="1">Muebles</option>
+                            <option value="2">Hogar</option>
+                          </select>
+                        </div>
+
+                        <div id="selectedTags" class="selected-items-container mt-3"></div>
+
+                        <div class="mb-3">
+                          <label for="productCategories" class="form-label text-light">Categories</label>
+                          <select class="form-control bg-dark text-light select-multiple" id="productCategories" style="height: auto; overflow-y: auto; max-height: 150px;">
+                            <option value="3">Cocina y Electrodomésticos</option>
+                            <option value="4">Celulares</option>
+                          </select>
+                        </div>
+
+                        <div id="selectedCategories" class="selected-items-container mt-3"></div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                           <button type="submit" class="btn btn-primary">Guardar</button>
@@ -156,7 +175,8 @@ $products = $productController->getProducts();
                     </div>
                   </div>
                 </div>
-              </modal>
+              </div>
+
 
               <!-- MODAL EDITAR PRODUCTO -->
               <modal class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
@@ -211,6 +231,55 @@ $products = $productController->getProducts();
     for (var t = 0; t < tc.length; t++) {
       new SimpleBar(tc[t]);
     }
+
+
+    function setupMultiSelect(selectElementId, selectedContainerId) {
+      const selectElement = document.getElementById(selectElementId);
+      const selectedContainer = document.getElementById(selectedContainerId);
+
+      // Agregar elemento seleccionado
+      function addSelectedItem(itemText, itemValue) {
+        const item = document.createElement("div");
+        item.classList.add("selected-item");
+        item.setAttribute("data-value", itemValue);
+
+        item.innerHTML = `
+      ${itemText}
+      <span class="remove-item" onclick="removeSelectedItem('${selectElementId}', '${itemValue}')">&times;</span>
+    `;
+
+        selectedContainer.appendChild(item);
+      }
+
+      // Detectar cambios en el select
+      selectElement.addEventListener("change", (event) => {
+        const selectedOptions = Array.from(event.target.selectedOptions);
+        selectedOptions.forEach((option) => {
+          if (!document.querySelector(`#${selectedContainerId} [data-value="${option.value}"]`)) {
+            addSelectedItem(option.text, option.value);
+          }
+        });
+      });
+    }
+
+    // Remover elemento seleccionado
+    function removeSelectedItem(selectElementId, itemValue) {
+      const selectElement = document.getElementById(selectElementId);
+      Array.from(selectElement.options).forEach((option) => {
+        if (option.value === itemValue) {
+          option.selected = false;
+        }
+      });
+
+      const selectedItem = document.querySelector(`[data-value="${itemValue}"]`);
+      if (selectedItem) {
+        selectedItem.remove();
+      }
+    }
+
+    // Inicializar multiselect para tags y categories
+    setupMultiSelect("productTags", "selectedTags");
+    setupMultiSelect("productCategories", "selectedCategories");
   </script>
 
   <?php
@@ -223,3 +292,28 @@ $products = $productController->getProducts();
 <!-- [Body] end -->
 
 </html>
+
+<style>
+  /* CSS PERSONALIZADO */
+  .selected-items-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .selected-item {
+    background-color: #04a9f5;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+  }
+
+  .selected-item .remove-item {
+    margin-left: 8px;
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: bold;
+  }
+</style>
