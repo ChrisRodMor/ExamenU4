@@ -112,51 +112,53 @@ $products = $productController->getProducts();
               </div>
               <!-- MODAL AGREGAR PRODUCTO -->
               <modal class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content bg-dark text-light">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="addProductModalLabel">Añadir Producto</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form>
-                        <div class="mb-3">
-                          <label for="productName" class="form-label">Nombre</label>
-                          <input type="text" class="form-control bg-dark text-light" id="productName" required>
-                        </div>
-                        <div class="mb-3">
-                          <label for="productSlug" class="form-label">Slug</label>
-                          <input type="text" class="form-control bg-dark text-light" id="productSlug" required>
-                        </div>
-                        <div class="mb-3">
-                          <label for="productDescription" class="form-label">Descripción</label>
-                          <textarea class="form-control bg-dark text-light" id="productDescription" rows="3" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                          <label for="productFeatures" class="form-label">Características</label>
-                          <input type="text" class="form-control bg-dark text-light" id="productFeatures" required>
-                        </div>
-                        <div class="mb-3">
-                          <label for="productImage" class="form-label">Imagen</label>
-                          <input type="file" class="form-control bg-dark text-light" id="productImage" accept="image/*" required>
-                        </div>
-                        <div class="mb-3">
-                          <label for="productBrand" class="form-label">Marca</label>
-                          <select class="form-control bg-dark text-light" id="productBrand" required>
-                            <option value="1">Marca 1</option>
-                            <option value="2">Marca 2</option>
-                            <option value="3">Marca 3</option>
-                          </select>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                          <button type="submit" class="btn btn-primary">Guardar</button>
-                        </div>
-                      </form>
-                    </div>
+                  <div class="modal-dialog">
+                      <div class="modal-content bg-dark text-light">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="addProductModalLabel">Añadir Producto</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              <form action="api-products" method="POST" enctype="multipart/form-data">
+                                  <input type="hidden" name="action" value="addProduct">
+                                  <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($globalToken); ?>">                                  <div class="mb-3">
+                                      <label for="productName" class="form-label">Nombre</label>
+                                      <input type="text" class="form-control bg-dark text-light" id="name" name="name" required>
+                                </div>
+                                  <div class="mb-3">
+                                      <label for="productSlug" class="form-label">Slug</label>
+                                      <input type="text" class="form-control bg-dark text-light" id="slug" name="slug" required>
+                                  </div>
+                                  <div class="mb-3">
+                                      <label for="productDescription" class="form-label">Descripción</label>
+                                      <textarea class="form-control bg-dark text-light" id="description" name="description" rows="3" required></textarea>
+                                  </div>
+                                  <div class="mb-3">
+                                      <label for="productFeatures" class="form-label">Características</label>
+                                      <input type="text" class="form-control bg-dark text-light" id="features" name="features" required>
+                                  </div>
+                                  <div class="mb-3">
+                                      <label for="productImage" class="form-label">Imagen</label>
+                                      <input type="file" class="form-control bg-dark text-light" id="cover" name="cover" accept="image/*" required>
+                                  </div>
+                                  <div class="mb-3">
+                                      <label for="productBrand" class="form-label">Marca</label>
+                                      <select class="form-control bg-dark text-light" id="brand_id" name="brand_id" required>
+                                          <option value="1">Marca 1</option>
+                                          <option value="2">Marca 2</option>
+                                          <option value="3">Marca 3</option>
+                                      </select>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                      <button type="submit" class="btn btn-primary">Guardar</button>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
                   </div>
-                </div>
               </modal>
+
 
               <!-- MODAL EDITAR PRODUCTO -->
               <modal class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
