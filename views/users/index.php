@@ -44,8 +44,8 @@ include_once "../../app/config.php";
           <div class="row align-items-center">
             <div class="col-md-12">
               <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?= BASE_PATH ?>dashboard/index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript: void(0)">Profile</a></li>
+                <li class="breadcrumb-item"><a href="home">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Profile</li>
                 <li class="breadcrumb-item" aria-current="page">User List</li>
               </ul>
             </div>
@@ -61,6 +61,8 @@ include_once "../../app/config.php";
 
 
       <!-- [ Main Content ] start -->
+
+
       <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-sm-12">
@@ -135,9 +137,11 @@ include_once "../../app/config.php";
                         </a>
                         <div class="overlay-edit">
                           <ul class="list-inline mb-0">
+                            <!-- TODO: IMPLEMENTAR FUNCION PARA EDITAR -->
                             <li class="list-inline-item m-0">
                               <a href="#" class="avtar avtar-s btn btn-link-warning"><i class="ti ti-pencil f-18"></i></a>
                             </li>
+                            <!-- TODO: IMPLEMENTAR FUNCIÓN PARA ELIMINAR -->
                             <li class="list-inline-item m-0">
                               <a href="#" class="avtar avtar-s btn bg-white btn-link-danger"><i class="ti ti-trash f-18"></i></a>
                             </li>
@@ -148,6 +152,7 @@ include_once "../../app/config.php";
                   </tbody>
                 </table>
               </div>
+              <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal" style="margin-top: 15px; margin-bottom: 15px;">Crear Usuario</a>
             </div>
           </div>
         </div>
@@ -156,57 +161,53 @@ include_once "../../app/config.php";
       <!-- [ Main Content ] end -->
     </div>
   </div>
-  <!-- [ Main Content ] end -->
-  <footer class="pc-footer">
-    <div class="footer-wrapper container-fluid">
-      <div class="row">
-        <div class="col-sm-6 my-1">
-          <p class="m-0">Made with &#9829; by Team <a href="https://themeforest.net/user/phoenixcoded" target="_blank"> Phoenixcoded</a></p>
+
+  <!-- MODAL AGREGAR -->
+  <modal class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-light">
+        <div class="modal-header">
+          <h5 class="modal-title text-light" id="addUserModalLabel">Añadir Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="col-sm-6 ms-auto my-1">
-          <ul class="list-inline footer-link mb-0 justify-content-sm-end d-flex">
-            <li class="list-inline-item"><a href="<?= BASE_PATH ?>index.html">Home</a></li>
-            <li class="list-inline-item"><a href="https://pcoded.gitbook.io/light-able/" target="_blank">Documentation</a></li>
-            <li class="list-inline-item"><a href="https://phoenixcoded.support-hub.io/" target="_blank">Support</a></li>
-          </ul>
+        <div class="modal-body">
+          <!-- TODO: HACER FUNCIONAR EL MODAL -->
+          <form action="" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="UserName" class="form-label text-light">Nombre</label>
+              <input type="text" class="form-control bg-dark text-light" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="UserLastName" class="form-label text-light">Apellido(s)</label>
+              <input type="text" class="form-control bg-dark text-light" id="lastName" name="lastName" required>
+            </div>
+            <div class="mb-3">
+              <label for="UserEmail" class="form-label text-light">Email</label>
+              <input type="email" class="form-control bg-dark text-light" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="UserPhone" class="form-label text-light">Teléfono</label>
+              <input type="tel" class="form-control bg-dark text-light" id="phone" name="phone" required>
+            </div>
+            <div class="mb-3">
+              <label for="UserRole" class="form-label text-light">Rol</label>
+              <input type="text" class="form-control bg-dark text-light" id="role" name="role" required>
+            </div>
+            <div class="mb-3">
+              <label for="UserPassword" class="form-label text-light">Contraseña</label>
+              <input type="password" class="form-control bg-dark text-light" id="password" name="password" required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  </footer>
-  <!-- Required Js -->
-  <script src="<?= BASE_PATH ?>assets/js/plugins/popper.min.js"></script>
-  <script src="<?= BASE_PATH ?>assets/js/plugins/simplebar.min.js"></script>
-  <script src="<?= BASE_PATH ?>assets/js/plugins/bootstrap.min.js"></script>
-  <script src="<?= BASE_PATH ?>assets/js/fonts/custom-font.js"></script>
-  <script src="<?= BASE_PATH ?>assets/js/pcoded.js"></script>
-  <script src="<?= BASE_PATH ?>assets/js/plugins/feather.min.js"></script>
+  </modal>
 
-
-  <script>
-    layout_change('light');
-  </script>
-
-  <script>
-    layout_sidebar_change('light');
-  </script>
-
-  <script>
-    change_box_container('false');
-  </script>
-
-  <script>
-    layout_caption_change('true');
-  </script>
-
-  <script>
-    layout_rtl_change('false');
-  </script>
-
-  <script>
-    preset_change('preset-1');
-  </script>
-
-
+  <!-- [ Main Content ] end -->
   <!-- [Page Specific JS] start -->
   <script src="<?= BASE_PATH ?>assets/js/plugins/simple-datatables.js"></script>
   <script>
@@ -216,170 +217,13 @@ include_once "../../app/config.php";
     });
   </script>
   <!-- [Page Specific JS] end -->
-  <div class="offcanvas border-0 pct-offcanvas offcanvas-end" tabindex="-1" id="offcanvas_pc_layout">
-    <div class="offcanvas-header justify-content-between">
-      <h5 class="offcanvas-title">Settings</h5>
-      <button type="button" class="btn btn-icon btn-link-danger" data-bs-dismiss="offcanvas" aria-label="Close"><i class="ti ti-x"></i></button>
-    </div>
-    <div class="pct-body customizer-body">
-      <div class="offcanvas-body py-0">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">
-            <div class="pc-dark">
-              <h6 class="mb-1">Theme Mode</h6>
-              <p class="text-muted text-sm">Choose light or dark mode or Auto</p>
-              <div class="row theme-color theme-layout">
-                <div class="col-4">
-                  <div class="d-grid">
-                    <button class="preset-btn btn active" data-value="true" onclick="layout_change('light');">
-                      <span class="btn-label">Light</span>
-                      <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
-                    </button>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="d-grid">
-                    <button class="preset-btn btn" data-value="false" onclick="layout_change('dark');">
-                      <span class="btn-label">Dark</span>
-                      <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
-                    </button>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="d-grid">
-                    <button
-                      class="preset-btn btn"
-                      data-value="default"
-                      onclick="layout_change_default();"
-                      data-bs-toggle="tooltip"
-                      title="Automatically sets the theme based on user's operating system's color scheme.">
-                      <span class="btn-label">Default</span>
-                      <span class="pc-lay-icon d-flex align-items-center justify-content-center">
-                        <i class="ph-duotone ph-cpu"></i>
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <h6 class="mb-1">Sidebar Theme</h6>
-            <p class="text-muted text-sm">Choose Sidebar Theme</p>
-            <div class="row theme-color theme-sidebar-color">
-              <div class="col-6">
-                <div class="d-grid">
-                  <button class="preset-btn btn" data-value="true" onclick="layout_sidebar_change('dark');">
-                    <span class="btn-label">Dark</span>
-                    <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
-                  </button>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="d-grid">
-                  <button class="preset-btn btn active" data-value="false" onclick="layout_sidebar_change('light');">
-                    <span class="btn-label">Light</span>
-                    <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <h6 class="mb-1">Accent color</h6>
-            <p class="text-muted text-sm">Choose your primary theme color</p>
-            <div class="theme-color preset-color">
-              <a href="#!" class="active" data-value="preset-1"><i class="ti ti-check"></i></a>
-              <a href="#!" data-value="preset-2"><i class="ti ti-check"></i></a>
-              <a href="#!" data-value="preset-3"><i class="ti ti-check"></i></a>
-              <a href="#!" data-value="preset-4"><i class="ti ti-check"></i></a>
-              <a href="#!" data-value="preset-5"><i class="ti ti-check"></i></a>
-              <a href="#!" data-value="preset-6"><i class="ti ti-check"></i></a>
-              <a href="#!" data-value="preset-7"><i class="ti ti-check"></i></a>
-              <a href="#!" data-value="preset-8"><i class="ti ti-check"></i></a>
-              <a href="#!" data-value="preset-9"><i class="ti ti-check"></i></a>
-              <a href="#!" data-value="preset-10"><i class="ti ti-check"></i></a>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <h6 class="mb-1">Sidebar Caption</h6>
-            <p class="text-muted text-sm">Sidebar Caption Hide/Show</p>
-            <div class="row theme-color theme-nav-caption">
-              <div class="col-6">
-                <div class="d-grid">
-                  <button class="preset-btn btn active" data-value="true" onclick="layout_caption_change('true');">
-                    <span class="btn-label">Caption Show</span>
-                    <span class="pc-lay-icon"><span></span><span></span><span><span></span><span></span></span><span></span></span>
-                  </button>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="d-grid">
-                  <button class="preset-btn btn" data-value="false" onclick="layout_caption_change('false');">
-                    <span class="btn-label">Caption Hide</span>
-                    <span class="pc-lay-icon"><span></span><span></span><span><span></span><span></span></span><span></span></span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="pc-rtl">
-              <h6 class="mb-1">Theme Layout</h6>
-              <p class="text-muted text-sm">LTR/RTL</p>
-              <div class="row theme-color theme-direction">
-                <div class="col-6">
-                  <div class="d-grid">
-                    <button class="preset-btn btn active" data-value="false" onclick="layout_rtl_change('false');">
-                      <span class="btn-label">LTR</span>
-                      <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
-                    </button>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="d-grid">
-                    <button class="preset-btn btn" data-value="true" onclick="layout_rtl_change('true');">
-                      <span class="btn-label">RTL</span>
-                      <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item pc-box-width">
-            <div class="pc-container-width">
-              <h6 class="mb-1">Layout Width</h6>
-              <p class="text-muted text-sm">Choose Full or Container Layout</p>
-              <div class="row theme-color theme-container">
-                <div class="col-6">
-                  <div class="d-grid">
-                    <button class="preset-btn btn active" data-value="false" onclick="change_box_container('false')">
-                      <span class="btn-label">Full Width</span>
-                      <span class="pc-lay-icon"><span></span><span></span><span></span><span><span></span></span></span>
-                    </button>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="d-grid">
-                    <button class="preset-btn btn" data-value="true" onclick="change_box_container('true')">
-                      <span class="btn-label">Fixed Width</span>
-                      <span class="pc-lay-icon"><span></span><span></span><span></span><span><span></span></span></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="d-grid">
-              <button class="btn btn-light-danger" id="layoutreset">Reset Layout</button>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+
+  <?php
+
+  include "../layouts/footer.php";
+  include "../layouts/scripts.php";
+
+  ?>
 
 </body>
 <!-- [Body] end -->
