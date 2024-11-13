@@ -26,6 +26,11 @@ RewriteRule ^detailsUser/?$ views/users/details.php
 
 #controladores
 RewriteRule ^auth?$ app/AuthController.php
-RewriteRule ^api-products?$ app/ProductController.php
+RewriteRule ^tags?$ app/TagController.php
 RewriteRule ^brands?$ app/BrandController.php
+RewriteRule ^categories?$ app/CategoryController.php
+RewriteRule ^api-products?$ app/ProductController.php
+RewriteRule ^api-users?$ app/UserController.php
+RewriteRule ^api-clients?$ app/ClientController.php
+
 RewriteRule ^config?$ app/config.php
