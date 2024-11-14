@@ -33,8 +33,6 @@ include_once "../../app/config.php";
 
   ?>
 
-
-
   <!-- [ Main Content ] start -->
   <div class="pc-container">
     <div class="pc-content">
@@ -97,55 +95,17 @@ include_once "../../app/config.php";
                       <td>jsoto@uabcs.mx</td>
                       <td>6123480678</td>
                       <td>2022-09-24T17:25:25.000000Z</td>
-                      <td>
-                        <a href="detailsUser">
-                          <button class="btn btn-primary">Profile</button>
-                        </a>
-                        <div class="overlay-edit">
-                          <ul class="list-inline mb-0">
-                            <li class="list-inline-item m-0">
-                              <a href="#" class="avtar avtar-s btn btn-link-warning"><i class="ti ti-pencil f-18"></i></a>
-                            </li>
-                            <li class="list-inline-item m-0">
-                              <a href="#" class="avtar avtar-s btn bg-white btn-link-danger"><i class="ti ti-trash f-18"></i></a>
-                            </li>
-                          </ul>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-inline-block align-middle">
-                          <img
-                            src="<?= BASE_PATH ?>assets/images/user/avatar-2.jpg"
-                            alt="user image"
-                            class="img-radius align-top m-r-15"
-                            style="width: 40px" />
-                          <div class="d-inline-block">
-                            <h6 class="m-b-0">Niggel Alexis Altamirano Hernandez</h6>
-                            <p class="m-b-0 text-primary">Administrador</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>nial_19@alu.uabcs.mx</td>
-                      <!-- TODO: HACER UNA FUNCIÓN POR SI PHONE = NULL -->
-                      <td>No encontrado</td>
-                      <td>2022-09-24T17:25:25.000000Z</td>
-                      <td>
-                        <a href="detailsUser">
-                          <button class="btn btn-primary">Profile</button>
-                        </a>
-                        <div class="overlay-edit">
-                          <ul class="list-inline mb-0">
-                            <!-- TODO: IMPLEMENTAR FUNCION PARA EDITAR -->
-                            <li class="list-inline-item m-0">
-                              <a href="#" class="avtar avtar-s btn btn-link-warning"><i class="ti ti-pencil f-18"></i></a>
-                            </li>
-                            <!-- TODO: IMPLEMENTAR FUNCIÓN PARA ELIMINAR -->
-                            <li class="list-inline-item m-0">
-                              <a href="#" class="avtar avtar-s btn bg-white btn-link-danger"><i class="ti ti-trash f-18"></i></a>
-                            </li>
-                          </ul>
+                      <td class="buttons-cell" style="width: 1%;">
+                        <div class="profile-actions">
+                          <a href="detailsUser" class="btn btn-primary">
+                            <i class="ti ti-user me-2"></i> Profile
+                          </a>
+                          <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editUserModal">
+                            <i class="ti ti-pencil me-2"></i> Editar
+                          </a>
+                          <a href="#" class="btn btn-danger">
+                            <i class="ti ti-trash me-2"></i> Eliminar
+                          </a>
                         </div>
                       </td>
                     </tr>
@@ -168,6 +128,51 @@ include_once "../../app/config.php";
       <div class="modal-content bg-dark text-light">
         <div class="modal-header">
           <h5 class="modal-title text-light" id="addUserModalLabel">Añadir Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- TODO: HACER FUNCIONAR EL MODAL -->
+          <form action="" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="UserName" class="form-label text-light">Nombre</label>
+              <input type="text" class="form-control bg-dark text-light" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="UserLastName" class="form-label text-light">Apellido(s)</label>
+              <input type="text" class="form-control bg-dark text-light" id="lastName" name="lastName" required>
+            </div>
+            <div class="mb-3">
+              <label for="UserEmail" class="form-label text-light">Email</label>
+              <input type="email" class="form-control bg-dark text-light" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="UserPhone" class="form-label text-light">Teléfono</label>
+              <input type="tel" class="form-control bg-dark text-light" id="phone" name="phone" required>
+            </div>
+            <div class="mb-3">
+              <label for="UserRole" class="form-label text-light">Rol</label>
+              <input type="text" class="form-control bg-dark text-light" id="role" name="role" required>
+            </div>
+            <div class="mb-3">
+              <label for="UserPassword" class="form-label text-light">Contraseña</label>
+              <input type="password" class="form-control bg-dark text-light" id="password" name="password" required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </modal>
+
+  <!-- MODAL EDITAR -->
+  <modal class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-light">
+        <div class="modal-header">
+          <h5 class="modal-title text-light" id="editUserModalLabel">Añadir Usuario</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
