@@ -1,5 +1,9 @@
 <?php
 include_once "../../app/config.php";
+include_once "../../app/UserController.php";
+
+$userController = new UserController();
+$users = $userController->getUsers();
 ?>
 
 
@@ -62,42 +66,44 @@ include_once "../../app/config.php";
 
 
       <div class="row">
-        <!-- [ sample-page ] start -->
-        <div class="col-sm-12">
-          <div class="card border-0 table-card user-profile-list">
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-hover" id="pc-dt-simple">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Phone Number</th>
-                      <th>Creation date</th>
-                      <th>Profile</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+      <!-- [ sample-page ] start -->
+      <div class="col-sm-12">
+        <div class="card border-0 table-card user-profile-list">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover" id="pc-dt-simple">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Creation date</th>
+                    <th>Profile</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($users as $user): ?>
                     <tr>
                       <td>
                         <div class="d-inline-block align-middle">
                           <img
-                            src="<?= BASE_PATH ?>assets/images/user/avatar-1.jpg"
-                            alt="user image"
+                            src="<?= !empty($user['avatar']) && filter_var($user['avatar'], FILTER_VALIDATE_URL) ? $user['avatar'] : BASE_PATH . 'assets/images/user/avatar-1.jpg' ?>" 
+                            alt="Avatar del usuario" 
+                            onerror="this.onerror=null;this.src='<?= BASE_PATH . 'assets/images/user/avatar-1.jpg' ?>';"                            
                             class="img-radius align-top m-r-15"
                             style="width: 40px" />
                           <div class="d-inline-block">
-                            <h6 class="m-b-0">Jonathan Soto</h6>
-                            <p class="m-b-0 text-primary">Administrador</p>
+                            <h6 class="m-b-0"><?= htmlspecialchars($user['name']) ?></h6>
+                            <p class="m-b-0 text-primary"><?= htmlspecialchars($user['role']) ?></p>
                           </div>
                         </div>
                       </td>
-                      <td>jsoto@uabcs.mx</td>
-                      <td>6123480678</td>
-                      <td>2022-09-24T17:25:25.000000Z</td>
+                      <td><?= htmlspecialchars($user['email']) ?></td>
+                      <td><?= htmlspecialchars($user['phone_number']) ?></td>
+                      <td><?= htmlspecialchars($user['created_at']) ?></td>
                       <td class="buttons-cell" style="width: 1%;">
                         <div class="profile-actions">
-                          <a href="detailsUser" class="btn btn-primary">
+                          <a href="detailsUser?id=<?= $user['id'] ?>" class="btn btn-primary">
                             <i class="ti ti-user me-2"></i> Profile
                           </a>
                           <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editUserModal">
@@ -109,17 +115,17 @@ include_once "../../app/config.php";
                         </div>
                       </td>
                     </tr>
-                  </tbody>
-                </table>
-              </div>
-              <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal" style="margin-top: 15px; margin-bottom: 15px;">Crear Usuario</a>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
             </div>
+            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal" style="margin-top: 15px; margin-bottom: 15px;">Crear Usuario</a>
           </div>
         </div>
-        <!-- [ sample-page ] end -->
       </div>
-      <!-- [ Main Content ] end -->
+      <!-- [ sample-page ] end -->
     </div>
+    <!-- [ Main Content ] end -->
   </div>
 
   <!-- MODAL AGREGAR -->
@@ -132,30 +138,32 @@ include_once "../../app/config.php";
         </div>
         <div class="modal-body">
           <!-- TODO: HACER FUNCIONAR EL MODAL -->
-          <form action="" method="POST" enctype="multipart/form-data">
+          <form action="api-users" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="action" value="addUser">
+            <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($globalToken); ?>">
             <div class="mb-3">
-              <label for="UserName" class="form-label text-light">Nombre</label>
+              <label for="name" class="form-label text-light">Nombre</label>
               <input type="text" class="form-control bg-dark text-light" id="name" name="name" required>
             </div>
             <div class="mb-3">
-              <label for="UserLastName" class="form-label text-light">Apellido(s)</label>
-              <input type="text" class="form-control bg-dark text-light" id="lastName" name="lastName" required>
+              <label for="lastname" class="form-label text-light">Apellido(s)</label>
+              <input type="text" class="form-control bg-dark text-light" id="lastname" name="lastname" required>
             </div>
             <div class="mb-3">
-              <label for="UserEmail" class="form-label text-light">Email</label>
+              <label for="email" class="form-label text-light">Email</label>
               <input type="email" class="form-control bg-dark text-light" id="email" name="email" required>
             </div>
             <div class="mb-3">
-              <label for="UserPhone" class="form-label text-light">Teléfono</label>
-              <input type="tel" class="form-control bg-dark text-light" id="phone" name="phone" required>
+              <label for="phone_number" class="form-label text-light">Teléfono</label>
+              <input type="tel" class="form-control bg-dark text-light" id="phone_number" name="phone_number" required>
             </div>
             <div class="mb-3">
-              <label for="UserRole" class="form-label text-light">Rol</label>
-              <input type="text" class="form-control bg-dark text-light" id="role" name="role" required>
-            </div>
-            <div class="mb-3">
-              <label for="UserPassword" class="form-label text-light">Contraseña</label>
+              <label for="password" class="form-label text-light">Contraseña</label>
               <input type="password" class="form-control bg-dark text-light" id="password" name="password" required>
+            </div>
+            <div class="mb-3">
+              <label for="profile_photo_file" class="form-label text-light">Foto de perfil</label>
+              <input type="file" class="form-control bg-dark text-light" id="profile_photo_file" name="profile_photo_file">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
