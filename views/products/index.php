@@ -115,58 +115,58 @@ $tags = $tagController->getTags();
 
               <!-- MODAL AGREGAR PRODUCTO -->
               <modal class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content bg-dark text-light">
-      <div class="modal-header">
-        <h5 class="modal-title text-light" id="addProductModalLabel">Añadir Producto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form action="api-products" method="POST" enctype="multipart/form-data">
-          <input type="hidden" name="action" value="addProduct">
-          <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($globalToken); ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content bg-dark text-light">
+                      <div class="modal-header">
+                        <h5 class="modal-title text-light" id="addProductModalLabel">Añadir Producto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form action="api-products" method="POST" enctype="multipart/form-data">
+                          <input type="hidden" name="action" value="addProduct">
+                          <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($globalToken); ?>">
 
-          <!-- Nombre del producto -->
-          <div class="mb-3">
-            <label for="productName" class="form-label text-light">Nombre</label>
-            <input type="text" class="form-control bg-dark text-light" id="name" name="name" required>
-          </div>
+                          <!-- Nombre del producto -->
+                          <div class="mb-3">
+                            <label for="productName" class="form-label text-light">Nombre</label>
+                            <input type="text" class="form-control bg-dark text-light" id="name" name="name" required>
+                          </div>
 
-          <!-- Slug -->
-          <div class="mb-3">
-            <label for="productSlug" class="form-label text-light">Slug</label>
-            <input type="text" class="form-control bg-dark text-light" id="slug" name="slug" required>
-          </div>
+                          <!-- Slug -->
+                          <div class="mb-3">
+                            <label for="productSlug" class="form-label text-light">Slug</label>
+                            <input type="text" class="form-control bg-dark text-light" id="slug" name="slug" required>
+                          </div>
 
-          <!-- Descripción -->
-          <div class="mb-3">
-            <label for="productDescription" class="form-label text-light">Descripción</label>
-            <textarea class="form-control bg-dark text-light" id="description" name="description" rows="3" required></textarea>
-          </div>
+                          <!-- Descripción -->
+                          <div class="mb-3">
+                            <label for="productDescription" class="form-label text-light">Descripción</label>
+                            <textarea class="form-control bg-dark text-light" id="description" name="description" rows="3" required></textarea>
+                          </div>
 
-          <!-- Características -->
-          <div class="mb-3">
-            <label for="productFeatures" class="form-label text-light">Características</label>
-            <input type="text" class="form-control bg-dark text-light" id="features" name="features" required>
-          </div>
+                          <!-- Características -->
+                          <div class="mb-3">
+                            <label for="productFeatures" class="form-label text-light">Características</label>
+                            <input type="text" class="form-control bg-dark text-light" id="features" name="features" required>
+                          </div>
 
-          <!-- Imagen -->
-          <div class="mb-3">
-            <label for="productImage" class="form-label text-light">Imagen</label>
-            <input type="file" class="form-control bg-dark text-light" id="cover" name="cover" accept="image/*" required>
-          </div>
+                          <!-- Imagen -->
+                          <div class="mb-3">
+                            <label for="productImage" class="form-label text-light">Imagen</label>
+                            <input type="file" class="form-control bg-dark text-light" id="cover" name="cover" accept="image/*" required>
+                          </div>
 
-          <!-- Marca -->
-          <div class="mb-3">
-            <label for="productBrand" class="form-label text-light">Marca</label>
-            <select class="form-control bg-dark text-light" id="brand_id" name="brand_id" required>
-              <?php foreach ($brands as $brand): ?>
-                <option value="<?php echo htmlspecialchars($brand['id']); ?>">
-                  <?php echo htmlspecialchars($brand['name']); ?>
-                </option>
-              <?php endforeach; ?>
-            </select>
-          </div>
+                          <!-- Marca -->
+                          <div class="mb-3">
+                            <label for="productBrand" class="form-label text-light">Marca</label>
+                            <select class="form-control bg-dark text-light" id="brand_id" name="brand_id" required>
+                              <?php foreach ($brands as $brand): ?>
+                                <option value="<?php echo htmlspecialchars($brand['id']); ?>">
+                                  <?php echo htmlspecialchars($brand['name']); ?>
+                                </option>
+                              <?php endforeach; ?>
+                            </select>
+                          </div>
 
           <!-- Tags -->
           <div class="mb-3">
