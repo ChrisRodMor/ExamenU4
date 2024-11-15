@@ -21,6 +21,12 @@ RewriteRule ^users/?$ views/users/index.php
 # RewriteRule ^users/([^/]+)/?$ views/users/details.php
 RewriteRule ^detailsUser/?$ views/users/details.php
 
+#clients
+RewriteRule ^clients/?$ views/clients/index.php
+# RewriteRule ^clients/([^/]+)/?$ views/clients/details.php
+RewriteRule ^detailsClient/?$ views/clients/details.php
+
+
 
 
 
