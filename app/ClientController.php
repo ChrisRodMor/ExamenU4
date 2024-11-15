@@ -183,7 +183,8 @@
             $response = curl_exec($curl);
         
             curl_close($curl);
-            return $response;
+            
+            header('Location: ' . BASE_PATH . 'clients');
         }
 
         public function deleteClient($id){

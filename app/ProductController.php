@@ -22,8 +22,9 @@ if (isset($_POST['action'])) {
 			$features = $_POST['features'];
 			$cover = $_FILES['cover']['tmp_name'];
 			$brand = $_POST['brand_id'];
-			$categories = isset($_POST['categories']) ? $_POST['categories'] : [];
-			$tags = isset($_POST['tags']) ? $_POST['tags'] : [];
+			$categories = $_POST['categories'];
+            $tags = $_POST['tags'];
+
 
 			$productController->addProduct($name, $slug, $description, $features, $brand, $cover, $categories, $tags);
 		break;
@@ -37,8 +38,9 @@ if (isset($_POST['action'])) {
 			$features = $_POST['features'];
 			$brand = $_POST['brand_id'];
 			$cover = isset($_FILES['cover']['tmp_name']) ? $_FILES['cover']['tmp_name'] : null;
-			$categories = isset($_POST['categories']) ? $_POST['categories'] : [];
-			$tags = isset($_POST['tags']) ? $_POST['tags'] : [];
+			$categories = $_POST['categories'];
+            $tags = $_POST['tags'];
+
 
 			$productController->editProduct($id, $name, $slug, $description, $features, $brand, $cover, $categories, $tags);
 		break;
