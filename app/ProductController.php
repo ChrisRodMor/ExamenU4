@@ -25,7 +25,7 @@ if (isset($_POST['action'])) {
 			$categories = isset($_POST['categories']) ? $_POST['categories'] : [];
 			$tags = isset($_POST['tags']) ? $_POST['tags'] : [];
 
-			$productController->agregarProducto($name, $slug, $description, $features, $brand, $cover, $categories, $tags);
+			$productController->addProduct($name, $slug, $description, $features, $brand, $cover, $categories, $tags);
 		break;
 
 		// Editar producto
@@ -130,13 +130,14 @@ class ProductController
         return $result['data'];
     }
 
-	public function agregarProducto($name, $slug, $description, $features, $brand, $cover, $categories, $tags) {
-        $curl = curl_init();
+	public function addProduct($name, $slug, $description, $features, $brand, $cover, $categories, $tags) {
     
         if (!isset($_SESSION['token'])) {
             echo 'No se encontró el token de autorización.';
             return [];
         }
+        
+        $curl = curl_init();
     
         $postFields = [
             'name' => $name,
@@ -172,7 +173,6 @@ class ProductController
     
         $response = curl_exec($curl);
         curl_close($curl);
-        echo $response;
     
         header('Location: ' . BASE_PATH . 'products');
     }

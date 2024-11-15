@@ -1,42 +1,32 @@
 <?php
 include_once "../../app/config.php";
-include_once '../../app/authController.php';
+include_once "../../app/authController.php";
+
+// Obtener el ID del usuario desde la URL
+$userId = isset($_GET['id']) ? $_GET['id'] : null;
+
+if ($userId) {
+    // Obtener los datos del usuario específico usando el ID
+    $userDetails = (new AuthController())->getUserByID($userId);
+} else {
+    echo "No se especificó el ID del usuario.";
+    exit;
+}
 ?>
 <!doctype html>
 <html lang="en">
 <!-- [Head] start -->
-
 <head>
-    <?php
-
-    include "../layouts/head.php";
-
-    ?>
-
+    <?php include "../layouts/head.php"; ?>
 </head>
 <!-- [Head] end -->
 <!-- [Body] Start -->
+<body>
+    <?php include "../layouts/sidebar.php"; ?>
+    <?php include "../layouts/nav.php"; ?>
 
-<body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr"
-    data-pc-theme="light">
-
-
-    <?php
-
-    include "../layouts/sidebar.php";
-
-    ?>
-
-    <?php
-
-    include "../layouts/nav.php";
-
-    ?>
-
-    <!-- [ Main Content ] start -->
     <div class="pc-container">
         <div class="pc-content">
-            <!-- [ Main Content ] start -->
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card bg-primary"></div>
@@ -45,80 +35,56 @@ include_once '../../app/authController.php';
                             <div class="card overflow-hidden">
                                 <div class="card-body position-relative">
                                     <div class="text-center mt-3">
-                                        <div class="chat-avtar d-inline-flex mx-auto">
-                                            <!-- Mostrar la foto de perfil -->
-                                            <img src="<?= BASE_PATH ?>/assets/images/user/avatar-1.jpg" alt="user-image" class="wid-50 rounded-circle" />
-
-
-                                            <i class="chat-badge bg-success me-2 mb-2"></i>
+                                        <div class="chat-avatar d-inline-flex mx-auto">
+                                            <img 
+                                                src="<?= !empty($user['avatar']) && filter_var($user['avatar'], FILTER_VALIDATE_URL) ? $user['avatar'] : BASE_PATH . 'assets/images/user/avatar-1.jpg' ?>" 
+                                                alt="Avatar del usuario" 
+                                                onerror="this.onerror=null;this.src='<?= BASE_PATH . 'assets/images/user/avatar-1.jpg' ?>';" 
+                                                class="wid-50 rounded-circle" 
+                                            />
                                         </div>
-                                        <!-- Mostrar nombre completo del user -->
-                                        <h5 class="mb-0">Jonathan Soto</h5>
+                                        <h5 class="mb-0"><?= htmlspecialchars($userDetails['name']) . ' ' . htmlspecialchars($userDetails['lastname']) ?></h5>
                                     </div>
-                                </div>
-                                <div class="nav flex-column nav-pills list-group list-group-flush account-pills mb-0"
-                                    id="user-set-tab" role="tablist" aria-orientation="vertical">
-                                    <a class="nav-link list-group-item list-group-item-action active"
-                                        id="user-set-profile-tab" data-bs-toggle="pill" href="#user-set-profile"
-                                        role="tab" aria-controls="user-set-profile" aria-selected="true">
-                                        <span class="f-w-500"><i class="ph-duotone ph-user-circle m-r-10"></i>Profile
-                                            Overview</span>
-                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-7 col-xxl-9">
-                            <div class="tab-content" id="user-set-tabContent">
-                                <div class="tab-pane fade show active" id="user-set-profile" role="tabpanel"
-                                    aria-labelledby="user-set-profile-tab">
-
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>Personal information</h5>
-                                        </div>
-                                        <div class="card-body position-relative">
-                                            <div
-                                                class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
-                                                <p class="mb-0 text-muted me-1">Email</p>
-                                                <p class="mb-0">jsoto@uabcs.mx</p>
-                                                <!-- Correo del user -->
-                                            </div>
-                                            <div
-                                                class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
-                                                <p class="mb-0 text-muted me-1">Phone</p>
-                                                <p class="mb-0">6123480678</p>
-                                                <!-- Teléfono del user -->
-                                            </div>
-                                            <div class="d-inline-flex align-items-center justify-content-between w-100">
-                                                <p class="mb-0 text-muted me-1">Role</p>
-                                                <p class="mb-0">Administrador</p> <!-- Rol del user -->
-                                            </div>
-                                        </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Personal Information</h5>
+                                </div>
+                                <div class="card-body position-relative">
+                                    <div class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
+                                        <p class="mb-0 text-muted me-1">Email</p>
+                                        <p class="mb-0"><?= htmlspecialchars($userDetails['email']) ?></p>
                                     </div>
+                                    <div class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
+                                        <p class="mb-0 text-muted me-1">Phone</p>
+                                        <p class="mb-0"><?= htmlspecialchars($userDetails['phone_number']) ?></p>
+                                    </div>
+                                    <div class="d-inline-flex align-items-center justify-content-between w-100">
+                                        <p class="mb-0 text-muted me-1">Role</p>
+                                        <p class="mb-0"><?= htmlspecialchars($userDetails['role']) ?></p>
+                                    </div>
+                                </div>
+                            </div>
 
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>Creation information</h5>
-                                        </div>
-                                        <div class="card-body position-relative">
-                                            <div
-                                                class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
-                                                <p class="mb-0 text-muted me-1">Created by</p>
-                                                <p class="mb-0">Jonathan Soto</p>
-                                                <!-- Nombre del creador -->
-                                            </div>
-                                            <div
-                                                class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
-                                                <p class="mb-0 text-muted me-1">Created at</p>
-                                                <p class="mb-0">2022-09-24T18:14:20.000000Z</p>
-                                                <!-- Fecha de creación -->
-                                            </div>
-                                            <div class="d-inline-flex align-items-center justify-content-between w-100">
-                                                <p class="mb-0 text-muted me-1">Updated at</p>
-                                                <p class="mb-0">2022-09-24T18:14:20.000000Z</p>
-                                                <!-- Fecha de actualización -->
-                                            </div>
-                                        </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Creation Information</h5>
+                                </div>
+                                <div class="card-body position-relative">
+                                    <div class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
+                                        <p class="mb-0 text-muted me-1">Created by</p>
+                                        <p class="mb-0"><?= htmlspecialchars($user['created_by'] ?? 'N/A') ?></p>
+                                    </div>
+                                    <div class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
+                                        <p class="mb-0 text-muted me-1">Created at</p>
+                                        <p class="mb-0"><?= htmlspecialchars($userDetails['created_at']) ?></p>
+                                    </div>
+                                    <div class="d-inline-flex align-items-center justify-content-between w-100">
+                                        <p class="mb-0 text-muted me-1">Updated at</p>
+                                        <p class="mb-0"><?= htmlspecialchars($userDetails['updated_at']) ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -126,17 +92,9 @@ include_once '../../app/authController.php';
                     </div>
                 </div>
             </div>
-            <!-- [ Main Content ] end -->
         </div>
     </div>
-
-    <?php
-
-    include "../layouts/footer.php";
-    include "../layouts/scripts.php";
-  
-    ?>
+    <?php include "../layouts/footer.php"; ?>
+    <?php include "../layouts/scripts.php"; ?>
 </body>
-<!-- [Body] end -->
-
 </html>

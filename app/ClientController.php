@@ -26,18 +26,17 @@
             break;
 
             case 'editClient':
-                // $id = $_POST['id'];
-                // $name = $_POST['name'];
-                // $slug = $_POST['slug'];
-                // $description = $_POST['description'];
-                // $features = $_POST['features'];
-                // $brand = $_POST['brand_id'];
-                // $cover = isset($_FILES['cover']['tmp_name']) ? $_FILES['cover']['tmp_name'] : null;
-                // $categories = isset($_POST['categories']) ? $_POST['categories'] : [];
-                // $tags = isset($_POST['tags']) ? $_POST['tags'] : [];
-
-                // $clientController->editProduct($id, $name, $slug, $description, $features, $brand, $cover, $categories, $tags);
+                $id = $_POST['id'];
+                $name = $_POST['name'];
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                $phone_number = $_POST['phone_number'];
+                $is_suscribed = $_POST['is_suscribed'];
+                $level_id = $_POST['level_id'];
+            
+                $clientController->editClient($name, $email, $password, $phone_number, $is_suscribed, $level_id, $id);
             break;
+            
 
             case 'deleteClient':
                 $id = $_POST['id'];
@@ -146,6 +145,47 @@
             header('Location: ' . BASE_PATH . 'clients');
         }
 
+        function editClient($name, $email, $password, $phone_number, $is_suscribed, $level_id, $id) {
+
+            if (!isset($_SESSION['token'])) {
+                echo 'No se encontró el token de autorización.';
+                return [];
+            }
+
+            $curl = curl_init();
+        
+            $postData = http_build_query([
+                'name' => $name,
+                'email' => $email,
+                'password' => $password,
+                'phone_number' => $phone_number,
+                'is_suscribed' => $is_suscribed,
+                'level_id' => $level_id,
+                'id' => $id
+            ]);
+        
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://crud.jonathansoto.mx/api/clients',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'PUT',
+                CURLOPT_POSTFIELDS => $postData,
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/x-www-form-urlencoded',
+                    'Authorization: Bearer ' . $_SESSION['token'],
+                ),
+            ));
+        
+            $response = curl_exec($curl);
+        
+            curl_close($curl);
+            return $response;
+        }
+
         public function deleteClient($id){
             
             if (!isset($_SESSION['token'])) {
@@ -156,17 +196,17 @@
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/clients/' . $id,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'DELETE',
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer ' . $_SESSION['token'],
-            ),
+                CURLOPT_URL => 'https://crud.jonathansoto.mx/api/clients/' . $id,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'DELETE',
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: Bearer ' . $_SESSION['token'],
+                ),
             ));
 
             $response = curl_exec($curl);
