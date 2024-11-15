@@ -60,7 +60,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
                 </a>
                 <a href="clients" class="dropdown-item">
                   <i class="ph-duotone ph-identification-badge"></i>
-                  <span>Membership</span>
+                  <span>Clients</span>
                 </a>
                 <a href="users" class="dropdown-item">
                   <i class="ph-duotone ph-user-circle"></i>
@@ -138,7 +138,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
                     <a href="clients" class="dropdown-item">
                       <span class="d-flex align-items-center">
                         <i class="ph-duotone ph-identification-badge"></i>
-                        <span>Membership</span>
+                        <span>Clients</span>
                       </span>
                     </a>
                     <a href="users" class="dropdown-item">
