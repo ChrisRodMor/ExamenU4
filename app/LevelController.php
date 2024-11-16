@@ -2,6 +2,27 @@
 
     include_once "config.php";
 
+    if (isset($_POST['action'])) {
+    
+        if (!isset($_POST['global_token'])) {
+            echo json_encode(['error' => 'Token de autenticación no válido.']);
+            header('Location: ' . BASE_PATH . 'login');
+            exit;
+        }
+
+        $levelController = new OrderController();
+    
+        switch ($_POST['action']) {
+
+            case 'getLevelById':
+                $id = $_POST['id'];
+    
+                $levelController->getLevelById($id);
+            break;
+    
+        }
+    }
+
     class LevelController{
 
         function getLevels() {
