@@ -15,16 +15,40 @@
         switch ($_POST['action']) {
     
             case 'addOrder':
-                //aun nada
+                $folio = $_POST['folio'];
+                $total = $_POST['total'];
+                $isPaid = $_POST['is_paid'];
+                $clientId = $_POST['client_id'];
+                $addressId = $_POST['address_id'];
+                $orderStatusId = $_POST['order_status_id'];
+                $paymentTypeId = $_POST['payment_type_id'];
+                $couponId = $_POST['coupon_id'];
+
+                $presentations = [];
+                if (isset($_POST['presentations']) && is_array($_POST['presentations'])) {
+                    foreach ($_POST['presentations'] as $presentation) {
+                        $presentations[] = [
+                            'id' => $presentation['id'],
+                            'quantity' => $presentation['quantity']
+                        ];
+                    }
+                }
+
+                $orderController->addOrder($folio, $total, $isPaid, $clientId, $addressId, $orderStatusId, $paymentTypeId, $couponId, $presentations);
             break;
     
 
             case 'editOrder':
-                //aun nada
+                $id = $_POST['id'];
+                $orderStatusId = $_POST['order_status_id'];
+
+                $orderController->editOrder($id, $orderStatusId);
             break;
     
             case 'deleteOrder':
-                //aun nada
+                $id = $_POST['id'];
+
+                $orderController->deleteOrder($id);
             break;
 
             case 'getOrderByID':
@@ -140,6 +164,115 @@
 
             return $result['data'];
         }
+        
+        function addOrder($folio, $total, $isPaid, $clientId, $addressId, $orderStatusId, $paymentTypeId, $couponId, $presentations) {
+
+            if (!isset($_SESSION['token'])) {
+                echo 'No se encontró el token de autorización.';
+                return [];
+            }
+        
+
+            $curl = curl_init();
+        
+            $postData = [
+                'folio' => $folio,
+                'total' => $total,
+                'is_paid' => $isPaid,
+                'client_id' => $clientId,
+                'address_id' => $addressId,
+                'order_status_id' => $orderStatusId,
+                'payment_type_id' => $paymentTypeId,
+                'coupon_id' => $couponId,
+            ];
+        
+            foreach ($presentations as $index => $presentation) {
+                $postData["presentations[$index][id]"] = $presentation['id'];
+                $postData["presentations[$index][quantity]"] = $presentation['quantity'];
+            }
+
+            curl_setopt_array($curl, [
+                CURLOPT_URL => 'https://crud.jonathansoto.mx/api/orders',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $postData,
+                CURLOPT_HTTPHEADER => [
+                    'Authorization: Bearer ' . $_SESSION['token']
+                ],
+            ]);
+        
+            $response = curl_exec($curl);
+            curl_close($curl);
+        
+            return $response;
+        }
+
+        function editOrder($id, $orderStatusId) {
+
+            if (!isset($_SESSION['token'])) {
+                echo 'No se encontró el token de autorización.';
+                return [];
+            }
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+                CURLOPT_URL => 'https://crud.jonathansoto.mx/api/orders',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'PUT',
+                CURLOPT_POSTFIELDS => "id=$id&order_status_id=$orderStatusId",
+                CURLOPT_HTTPHEADER => [
+                    'Content-Type: application/x-www-form-urlencoded',
+                    'Authorization: Bearer ' . $_SESSION['token']
+                ],
+            ]);
+        
+            $response = curl_exec($curl);
+            curl_close($curl);
+        
+            
+            return $response;
+        }
+
+        function deleteOrder($id) {
+
+            if (!isset($_SESSION['token'])) {
+                echo 'No se encontró el token de autorización.';
+                return [];
+            }
+
+            $curl = curl_init();
+        
+            curl_setopt_array($curl, [
+                CURLOPT_URL => 'https://crud.jonathansoto.mx/api/orders/' . $id,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'DELETE',
+                CURLOPT_HTTPHEADER => [
+                    'Authorization: Bearer ' . $_SESSION['token']
+                ],
+            ]);
+        
+            $response = curl_exec($curl);
+            curl_close($curl);
+        
+            return $response;
+        }
+        
         
         
         
