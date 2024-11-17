@@ -64,15 +64,10 @@ include "../layouts/nav.php";
           <!-- [ sample-page ] start -->
           <div class="col-md-6 col-xl-4">
             <div class="card user-card">
-              <div class="card-body">
+              
+            <div class="card-body">
                 <div class="user-cover-bg">
                   <img src="<?= BASE_PATH ?>/assets/images/application/img-user-cover-1.jpg" alt="image" class="img-fluid" />
-                  <div class="cover-data">
-                    <div class="d-inline-flex align-items-center">
-                      <i class="ph-duotone ph-star text-warning me-1"></i>
-                      4.5 <small class="text-white text-opacity-50">/ 5</small>
-                    </div>
-                  </div>
                 </div>
                 <div class="chat-avtar card-user-image">
                   <img src="<?= BASE_PATH ?>/assets/images/user/avatar-1.jpg" alt="user-image" class="img-thumbnail rounded-circle" />
@@ -80,48 +75,16 @@ include "../layouts/nav.php";
                 </div>
                 <div class="d-flex">
                   <div class="flex-grow-1 ms-2">
-                    <h6 class="mb-1">William Bond</h6>
-                    <p class="text-muted text-sm mb-0">DM on <a href="#" class="text-primary">@williambond</a></p>
-                  </div>
-                  <div class="flex-shrink-0">
-                    <button class="btn btn-primary btn-sm">Message</button>
-                    <button class="btn btn-outline-secondary btn-sm ms-1">Follow</button>
-                  </div>
-                </div>
-                <div class="row g-3 my-2 text-center">
-                  <div class="col-4">
-                    <h5 class="mb-0">86</h5>
-                    <small class="text-muted">Post</small>
-                  </div>
-                  <div class="col-4 border border-top-0 border-bottom-0">
-                    <h5 class="mb-0">40</h5>
-                    <small class="text-muted">Project</small>
-                  </div>
-                  <div class="col-4">
-                    <h5 class="mb-0">4.5K</h5>
-                    <small class="text-muted">Members</small>
+                    <h6 class="mb-1">Marshall Parker</h6>
+                    <p class="text-muted text-sm mb-0">Email: <a href="mailto:mapa_46@gmail.com" class="text-primary">mapa_46@gmail.com</a></p>
+                    <p class="text-muted text-sm mb-0">Phone: 6127384765</p>
                   </div>
                 </div>
                 <div class="saprator my-2">
-                  <span>Skills</span>
+                  <span>Level</span>
                 </div>
                 <div class="text-center">
-                  <span class="badge bg-light-secondary border rounded-pill border-secondary bg-transparent f-14 me-1 mt-1">UX</span>
-                  <span class="badge bg-light-secondary border rounded-pill border-secondary bg-transparent f-14 me-1 mt-1">Figma</span>
-                  <span class="badge bg-light-secondary border rounded-pill border-secondary bg-transparent f-14 me-1 mt-1">Backend</span>
-                </div>
-                <div class="saprator my-2">
-                  <span>Task completed</span>
-                </div>
-                <div class="d-flex align-items-center">
-                  <div class="flex-grow-1 me-2">
-                    <div class="progress" style="height: 8px">
-                      <div class="progress-bar bg-danger" style="width: 30%"></div>
-                    </div>
-                  </div>
-                  <div class="flex-shrink-0">
-                    <h6 class="mb-0">30%</h6>
-                  </div>
+                  <span class="badge bg-light-secondary border rounded-pill border-secondary bg-transparent f-14 me-1 mt-1">Normal (0% Discount)</span>
                 </div>
               </div>
             </div>
