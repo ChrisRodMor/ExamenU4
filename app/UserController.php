@@ -54,6 +54,11 @@
 
         public function getUsers(){
 
+            if (!isset($_SESSION['token'])) {
+                echo 'No se encontró el token de autorización.';
+                return [];
+            }
+
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
