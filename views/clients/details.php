@@ -13,6 +13,7 @@ include_once "../../app/config.php";
 
   ?>
 </head>
+
 <!-- [Head] end -->
 <!-- [Body] Start -->
 
@@ -63,29 +64,27 @@ include_once "../../app/config.php";
         <div class="row">
           <!-- [ sample-page ] start -->
           <div class="col-sm-12">
-  <div class="card social-profile">
-    <img src="<?= BASE_PATH ?>/assets/images/application/img-profile-cover.jpg" alt="" class="w-100 card-img-top" />
-    <div class="card-body pt-0">
-      <div class="row align-items-end">
-        <!-- Imagen del cliente -->
-        <div class="col-md-auto text-md-start">
-          <img class="img-fluid img-profile-avtar" src="<?= BASE_PATH ?>/assets/images/user/avatar-5.jpg" alt="User image" />
-        </div>
-        <!-- Datos personales del cliente -->
-        <div class="col">
-          <div class="d-flex flex-wrap align-items-center justify-content-start soc-profile-data">
-            <p class="me-3 mb-0"><strong>Nombre:</strong> Marshall Parker</p>
-            <p class="me-3 mb-0"><strong>Email:</strong> <i class="ph-envelope me-1"></i> mapa_46@gmail.com</p>
-            <p class="me-3 mb-0"><strong>Teléfono:</strong> <i class="ph-phone me-1"></i> 6127384765</p>
-            <p class="me-3 mb-0"><strong>Nivel:</strong> <i class="ph-star me-1"></i> Normal (Descuento: 0%)</p>
-            <p class="mb-0"><strong>Status:</strong> <span class="badge bg-success">Suscrito</span></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
+            <div class="card social-profile">
+              <img src="<?= BASE_PATH ?>/assets/images/application/img-profile-cover.jpg" alt="" class="w-100 card-img-top" />
+              <div class="card-body pt-0">
+                <div class="row align-items-end">
+                  <!-- Imagen del cliente -->
+                  <div class="col-md-auto text-md-start">
+                    <img class="img-fluid img-profile-avtar" src="<?= BASE_PATH ?>/assets/images/user/avatar-5.jpg" alt="User image" />
+                  </div>
+                  <!-- Datos personales del cliente -->
+                  <div class="col">
+                    <div class="d-flex flex-wrap align-items-center justify-content-start soc-profile-data">
+                      <p class="me-3 mb-0"><strong>Nombre:</strong> Marshall Parker</p>
+                      <p class="me-3 mb-0"><strong>Email:</strong> <i class="ph-envelope me-1"></i> mapa_46@gmail.com</p>
+                      <p class="me-3 mb-0"><strong>Teléfono:</strong> <i class="ph-phone me-1"></i> 6127384765</p>
+                      <p class="me-3 mb-0"><strong>Nivel:</strong> <i class="ph-star me-1"></i> Normal (Descuento: 0%)</p>
+                      <p class="mb-0"><strong>Status:</strong> <span class="badge bg-success">Suscrito</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           <div class="card">
             <div class="card-body py-0">
               <ul class="nav nav-tabs orders-tabs" id="myTab" role="tablist">
@@ -108,15 +107,14 @@ include_once "../../app/config.php";
             </div>
           </div>
           <div class="row">
+            <!-- ORDERS -->
             <div class="col-lg-12 col-xxl-12">
-              <!-- ORDERS -->
               <div class="tab-content">
                 <div class="tab-pane show active" id="orders" role="tabpanel">
                   <div class="card">
                     <div class="card-body">
                       <div class="container my-3">
                         <div class="row">
-                          <!-- Order 1 -->
                           <div class="col-xxl-3 col-lg-4 col-sm-6">
                             <div class="border card">
                               <div class="p-2 card-body">
@@ -221,6 +219,31 @@ include_once "../../app/config.php";
                 <div class="tab-pane" id="compras" role="tabpanel" aria-labelledby="compras-tab">
                   <div class="card">
                     <div class="card-body">
+                      <div class="container my-3">
+                        <div class="row">
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="border card">
+                              <div class="p-2 card-body">
+                                <div class="d-flex align-items-center justify-content-between gap-1">
+                                  <h3 class="mb-0">Total compras</h3>
+                                  <div class="avtar bg-success rounded-circle">
+                                    <svg class="pc-icon text-white" style="font-size: larger;">
+                                      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" data-darkreader-inline-fill="" data-darkreader-inline-stroke="" style="--darkreader-inline-fill: currentColor; --darkreader-inline-stroke: currentColor;">
+                                        <path d="M10.464 8.746c.227-.18.497-.311.786-.394v2.795a2.252 2.252 0 0 1-.786-.393c-.394-.313-.546-.681-.546-1.004 0-.323.152-.691.546-1.004ZM12.75 15.662v-2.824c.347.085.664.228.921.421.427.32.579.686.579.991 0 .305-.152.671-.579.991a2.534 2.534 0 0 1-.921.42Z"></path>
+                                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v.816a3.836 3.836 0 0 0-1.72.756c-.712.566-1.112 1.35-1.112 2.178 0 .829.4 1.612 1.113 2.178.502.4 1.102.647 1.719.756v2.978a2.536 2.536 0 0 1-.921-.421l-.879-.66a.75.75 0 0 0-.9 1.2l.879.66c.533.4 1.169.645 1.821.75V18a.75.75 0 0 0 1.5 0v-.81a4.124 4.124 0 0 0 1.821-.749c.745-.559 1.179-1.344 1.179-2.191 0-.847-.434-1.632-1.179-2.191a4.122 4.122 0 0 0-1.821-.75V8.354c.29.082.559.213.786.393l.415.33a.75.75 0 0 0 .933-1.175l-.415-.33a3.836 3.836 0 0 0-1.719-.755V6Z" clip-rule="evenodd"></path>
+                                      </svg></svg>
+                                  </div>
+                                </div>
+                                <h5 class="mb-2 mt-3">$5678.99</h5>
+                                <div class="d-flex align-items-center gap-1">
+                                  <h5 class="mb-0">3</h5>
+                                  <p class="mb-0 text-muted d-flex align-items-center gap-2">Compras</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -228,9 +251,68 @@ include_once "../../app/config.php";
                 <div class="tab-pane" id="addresses" role="tabpanel" aria-labelledby="addresses-tab">
                   <div class="card">
                     <div class="card-body">
+                      <div class="container my-4">
+                        <div class="row">
+                          <div class="col-xxl-3 col-lg-4 col-sm-6 mb-3">
+                            <div class="card border">
+                              <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                  <h6 class="mb-0">Dirección</h6>
+                                  <i class="ph-duotone ph-map-pin text-primary f-30"></i>
+                                </div>
+                                <div>
+                                  <p class="mb-1">
+                                    <strong>Calle:</strong> Calle artículo 743, 123
+                                  </p>
+                                  <p class="mb-1">
+                                    <strong>Código postal:</strong> 23088
+                                  </p>
+                                  <p class="mb-1">
+                                    <strong>Ciudad:</strong> La Paz
+                                  </p>
+                                  <p class="mb-1">
+                                    <strong>Provincia:</strong> Baja California Sur
+                                  </p>
+                                  <p class="mb-0 text-muted">
+                                    <em>Tipo:</em> Dirección de facturación
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6 mb-3">
+                            <div class="card border">
+                              <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                  <h6 class="mb-0">Dirección</h6>
+                                  <i class="ph-duotone ph-map-pin text-primary f-30"></i>
+                                </div>
+                                <div>
+                                  <p class="mb-1">
+                                    <strong>Calle:</strong> Calle Lope de Rueda, 32
+                                  </p>
+                                  <p class="mb-1">
+                                    <strong>Código postal:</strong> 19171
+                                  </p>
+                                  <p class="mb-1">
+                                    <strong>Ciudad:</strong> Cabanillas del Campo
+                                  </p>
+                                  <p class="mb-1">
+                                    <strong>Provincia:</strong> Guadalajara
+                                  </p>
+                                  <p class="mb-0 text-muted">
+                                    <em>Tipo:</em> Dirección de facturación
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
+              </div>
               </div>
             </div>
           </div>
@@ -238,7 +320,6 @@ include_once "../../app/config.php";
         <!-- [ sample-page ] end -->
       </div>
       <!-- [ Main Content ] end -->
-    </div>
     </div>
     <div class="modal fade modal-lightbox post-modal-lightbox" id="lightboxModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -298,15 +379,19 @@ include_once "../../app/config.php";
   .soc-profile-data {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem; /* Espacio entre elementos */
+    gap: 1rem;
+    /* Espacio entre elementos */
   }
 
   .soc-profile-data p {
-    margin: 0; /* Elimina márgenes adicionales */
-    font-size: 1rem; /* Ajusta el tamaño de fuente */
+    margin: 0;
+    /* Elimina márgenes adicionales */
+    font-size: 1rem;
+    /* Ajusta el tamaño de fuente */
   }
 
   .soc-profile-data strong {
-    color: #333; /* Color de los encabezados */
+    color: #333;
+    /* Color de los encabezados */
   }
 </style>
