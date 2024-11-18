@@ -37,12 +37,11 @@ if (isset($_POST['action'])) {
 			$description = $_POST['description'];
 			$features = $_POST['features'];
 			$brand = $_POST['brand_id'];
-			$cover = isset($_FILES['cover']['tmp_name']) ? $_FILES['cover']['tmp_name'] : null;
 			$categories = $_POST['categories'];
             $tags = $_POST['tags'];
 
 
-			$productController->editProduct($id, $name, $slug, $description, $features, $brand, $cover, $categories, $tags);
+			$productController->editProduct($id, $name, $slug, $description, $features, $brand, $categories, $tags);
 		break;
 
 		// Eliminar producto
@@ -180,7 +179,7 @@ class ProductController
     }
     
 
-	public function editProduct($id, $name, $slug, $description, $features, $brand, $cover, $categories, $tags) {
+	public function editProduct($id, $name, $slug, $description, $features, $brand, $categories, $tags) {
         if (!isset($_SESSION['token'])) {
             echo 'No se encontró el token de autorización.';
             return [];
@@ -197,10 +196,6 @@ class ProductController
             'brand_id' => $brand,
         ];
     
-        if ($cover) {
-            $postFields['cover'] = new CURLFILE($cover);
-        }
-    
         foreach ($categories as $index => $category) {
             $postFields["categories[$index]"] = $category;
         }
@@ -210,7 +205,7 @@ class ProductController
         }
     
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products/' . $id,
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
