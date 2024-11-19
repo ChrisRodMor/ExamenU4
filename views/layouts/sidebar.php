@@ -56,6 +56,13 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
             </span>
             <span class="pc-mtext">Users</span></a>
         </li>
+        <li class="pc-item pc-hasmenu">
+          <a href="orders" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-list me-2"></i>
+            </span>
+            <span class="pc-mtext">Orders</span></a>
+        </li>
       </ul>
     </div>
     <div class="card pc-user-card">

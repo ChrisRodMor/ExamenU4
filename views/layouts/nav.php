@@ -66,6 +66,10 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
                   <i class="ph-duotone ph-user-circle"></i>
                   <span>Users</span>
                 </a>
+                <a href="orders" class="dropdown-item">
+                  <i class="ph-duotone ph-list me-2"></i>
+                  <span>Orders</span>
+                </a>
               </div>
             </div>
           </div>
