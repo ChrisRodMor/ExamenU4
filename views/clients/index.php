@@ -83,14 +83,13 @@ include_once "../../app/config.php";
                     </p>
                     <p class="text-muted text-sm mb-0">Phone: 6127384765</p>
                   </div>
-                  <!-- Botones Info, Edit y Delete -->
                   <div class="d-flex flex-column ms-auto">
                     <a href="detailsClient">
                       <button  href="detailsClient" class="btn btn-outline-primary btn-sm mb-1" title="Info">
                         <i class="ph-duotone ph-info"></i>
                       </button>
                     </a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#addClientModal">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#editClientModal">
                     <button class="btn btn-outline-warning btn-sm mb-1" title="Edit">
                       <i class="ph-duotone ph-pencil"></i>
                     </button>
@@ -175,7 +174,7 @@ include_once "../../app/config.php";
       <div class="modal-dialog">
         <div class="modal-content bg-dark text-light">
           <div class="modal-header">
-            <h5 class="modal-title text-light" id="editclientModalLabel">Añadir Usuario</h5>
+            <h5 class="modal-title text-light" id="editclientModalLabel">Editar cliente</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">

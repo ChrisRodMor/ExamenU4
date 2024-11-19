@@ -23,8 +23,8 @@ RewriteRule ^users/([^/]+)/?$ views/users/details.php
 
 #clients
 RewriteRule ^clients/?$ views/clients/index.php
-RewriteRule ^clients/([^/]+)/?$ views/clients/details.php
-# RewriteRule ^detailsClient/?$ views/clients/details.php
+# RewriteRule ^clients/([^/]+)/?$ views/clients/details.php
+RewriteRule ^detailsClient/?$ views/clients/details.php
 
 #orders
 RewriteRule ^orders/?$ views/orders/index.php
