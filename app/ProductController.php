@@ -218,18 +218,11 @@ class ProductController
                 'Authorization: Bearer ' . $_SESSION['token'],
             ),
         ));
-    
-        $response = curl_exec($curl);
+        
         curl_close($curl);
-    
-        echo $response;
-    
-        $responseData = json_decode($response, true);
-        if (isset($responseData['success']) && $responseData['success']) {
-            header('Location: ' . BASE_PATH . 'products');
-        } else {
-            echo 'Error al editar el producto';
-        }
+
+        header('Location: ' . BASE_PATH . 'products');
+
     }
     
 
