@@ -218,8 +218,10 @@ class ProductController
                 'Authorization: Bearer ' . $_SESSION['token'],
             ),
         ));
-        
+
+        $response = curl_exec($curl);
         curl_close($curl);
+        echo $response;
 
         header('Location: ' . BASE_PATH . 'products');
 
