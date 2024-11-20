@@ -165,7 +165,7 @@ $tags = $tagController->getTags();
 
                                       <div class="mb-3">
                                         <label for="productTags" class="form-label text-light">Tags</label>
-                                        <button type="button" class="btn btn-sm btn-secondary mt-2" id="addTagField">+ Añadir otro tag</button>
+                                        <button type="button" class="btn btn-sm btn-secondary mt-2" id="editTagField">+ Añadir otro tag</button>
                                         <select class="form-control bg-dark text-light" id="productTags" name="tags[]" required>
                                             <?php foreach ($tags as $tag): ?>
                                                 <option value="<?= htmlspecialchars($tag['id']) ?>">
@@ -178,7 +178,7 @@ $tags = $tagController->getTags();
 
                                     <div class="mb-3">
                                         <label for="productCategories" class="form-label text-light">Categories</label>
-                                        <button type="button" class="btn btn-sm btn-secondary mt-2" id="addCategoryField">+ Añadir otra categoría</button>
+                                        <button type="button" class="btn btn-sm btn-secondary mt-2" id="editCategoryField">+ Añadir otra categoría</button>
                                         <select class="form-control bg-dark text-light" id="productCategories" name="categories[]" required>
                                             <?php foreach ($categories as $category): ?>
                                                 <option value="<?= htmlspecialchars($category['id']) ?>">
