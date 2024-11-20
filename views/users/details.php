@@ -37,7 +37,7 @@ if ($userId) {
                                     <div class="text-center mt-3">
                                         <div class="chat-avatar d-inline-flex mx-auto">
                                             <img 
-                                                src="<?= !empty($user['avatar']) && filter_var($user['avatar'], FILTER_VALIDATE_URL) ? $user['avatar'] : BASE_PATH . 'assets/images/user/avatar-1.jpg' ?>" 
+                                                src="<?= !empty($userDetails['avatar']) && filter_var($userDetails['avatar'], FILTER_VALIDATE_URL) ? $userDetails['avatar'] : BASE_PATH . 'assets/images/user/avatar-1.jpg' ?>"
                                                 alt="Avatar del usuario" 
                                                 onerror="this.onerror=null;this.src='<?= BASE_PATH . 'assets/images/user/avatar-1.jpg' ?>';" 
                                                 class="wid-50 rounded-circle" 

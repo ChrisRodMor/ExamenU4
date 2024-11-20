@@ -4,6 +4,7 @@ include_once "../../app/UserController.php";
 
 $userController = new UserController();
 $users = $userController->getUsers();
+
 ?>
 
 
@@ -56,9 +57,9 @@ $users = $userController->getUsers();
                 <h2 class="mb-0">User List</h2>
               </div>
             </div>
-          </div>
         </div>
       </div>
+    </div>
       <!-- [ breadcrumb ] end -->
 
 
@@ -106,17 +107,7 @@ $users = $userController->getUsers();
                           <a href="detailsUser?id=<?= $user['id'] ?>" class="btn btn-primary">
                             <i class="ti ti-user me-2"></i> Profile
                           </a>
-                          <a href="#" class="btn btn-warning" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#editUserModal"
-                            data-id="<?= $user['id'] ?>" 
-                            data-name="<?= htmlspecialchars($user['name']) ?>" 
-                            data-lastname="<?= htmlspecialchars($user['lastname']) ?>" 
-                            data-email="<?= htmlspecialchars($user['email']) ?>" 
-                            data-phone="<?= htmlspecialchars($user['phone_number']) ?>"
-                            data-role="<?= htmlspecialchars($user['role']) ?>">
-                            <i class="ti ti-pencil me-2"></i> Editar
-                          </a>
+                          <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editUserModal<?php echo $user['id']; ?>"><i class="ti ti-pencil me-2"></i>Editar</button>
                           <form action="api-users" method="POST" class="d-inline">
                             <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($globalToken); ?>">
                             <input type="hidden" name="action" value="deleteUser">
@@ -124,12 +115,57 @@ $users = $userController->getUsers();
                             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
                                 <i class="ti ti-trash me-2"></i> Eliminar
                             </button>
-                        </form>
-
+                          </form>
                         </div>
                       </td>
                     </tr>
-                  <?php endforeach; ?>
+                    <!-- MODAL EDITAR -->
+                    <modal class="modal fade" id="editUserModal<?php echo $user['id']; ?>" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content bg-dark text-light">
+                          <div class="modal-header">
+                            <h5 class="modal-title text-light" id="editUserModalLabel">Editar Usuario</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <form action="api-users" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="action" value="editUser">
+                            <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($globalToken); ?>">            
+                            <input type="hidden" name="id" id="userId" value="<?= htmlspecialchars($user['id']) ?>">
+                              <div class="mb-3">
+                                <label for="UserName" class="form-label text-light">Nombre</label>
+                                <input type="text" class="form-control bg-dark text-light" id="name" value="<?= htmlspecialchars($user['name']) ?>" name="name" required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="UserLastName" class="form-label text-light">Apellido(s)</label>
+                                <input type="text" class="form-control bg-dark text-light" id="lastName" value="<?= htmlspecialchars($user['lastname']) ?>" name="lastname" required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="UserEmail" class="form-label text-light">Email</label>
+                                <input type="text" class="form-control bg-dark text-light" id="email" value="<?= htmlspecialchars($user['email']) ?>" name="email" required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="UserPhone" class="form-label text-light">Teléfono</label>
+                                <input type="text" class="form-control bg-dark text-light" id="phone" value="<?= htmlspecialchars($user['phone_number']) ?>" name="phone_number" required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="UserPassword" class="form-label text-light">Contraseña</label>
+                                <input type="password" class="form-control bg-dark text-light" id="password" placeholder="Nueva contraseña" name="password" required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="UserPhoto" class="form-label text-light">Foto de Perfil</label>
+                                <input type="file" class="form-control bg-dark text-light" id="profile_photo_file"  name="profile_photo_file">
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                  </modal>
+                    <?php endforeach; ?>
                 </tbody>
               </table>
             </div>
@@ -188,52 +224,6 @@ $users = $userController->getUsers();
     </div>
   </modal>
 
-  <!-- MODAL EDITAR -->
-  <modal class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content bg-dark text-light">
-        <div class="modal-header">
-          <h5 class="modal-title text-light" id="editUserModalLabel">Editar Usuario</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form action="api-users" method="POST" enctype="multipart/form-data">
-          <input type="hidden" name="action" value="editUser">
-          <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($globalToken); ?>">            
-          <input type="hidden" name="id" id="userId" value="">
-            <div class="mb-3">
-              <label for="UserName" class="form-label text-light">Nombre</label>
-              <input type="text" class="form-control bg-dark text-light" id="name" name="name" required>
-            </div>
-            <div class="mb-3">
-              <label for="UserLastName" class="form-label text-light">Apellido(s)</label>
-              <input type="text" class="form-control bg-dark text-light" id="lastName" name="lastname" required>
-            </div>
-            <div class="mb-3">
-              <label for="UserEmail" class="form-label text-light">Email</label>
-              <input type="email" class="form-control bg-dark text-light" id="email" name="email" required>
-            </div>
-            <div class="mb-3">
-              <label for="UserPhone" class="form-label text-light">Teléfono</label>
-              <input type="tel" class="form-control bg-dark text-light" id="phone" name="phone_number" required>
-            </div>
-            <div class="mb-3">
-              <label for="UserPassword" class="form-label text-light">Contraseña</label>
-              <input type="password" class="form-control bg-dark text-light" id="password" name="password" required>
-            </div>
-            <div class="mb-3">
-              <label for="UserPhoto" class="form-label text-light">Foto de Perfil</label>
-              <input type="file" class="form-control bg-dark text-light" id="profile_photo_file" name="profile_photo_file">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="submit" class="btn btn-primary">Guardar</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-</modal>
 
   <!-- [ Main Content ] end -->
   <!-- [Page Specific JS] start -->
@@ -244,25 +234,6 @@ $users = $userController->getUsers();
       perPage: 5
     });
 
-    const editUserModal = document.getElementById('editUserModal');
-
-    editUserModal.addEventListener('show.bs.modal', function (event) {
-      const button = event.relatedTarget;
-
-      // Obtener datos de los atributos data-*
-      const userId = button.getAttribute('data-id');
-      const userName = button.getAttribute('data-name');
-      const userLastName = button.getAttribute('data-lastname');
-      const userEmail = button.getAttribute('data-email');
-      const userPhone = button.getAttribute('data-phone');
-      
-      document.getElementById('userId').value = userId;
-      document.getElementById('name').value = userName;
-      document.getElementById('lastName').value = userLastName;
-      document.getElementById('email').value = userEmail;
-      document.getElementById('phone').value = userPhone;
-
-    });
 
   </script>
   <!-- [Page Specific JS] end -->
