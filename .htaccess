@@ -12,19 +12,19 @@ RewriteRule ^register/?$ views/auth/register.php
 
 #products
 RewriteRule ^products/?$ views/products/index.php
-RewriteRule ^products/([^/]+)/?$ views/products/details.php
-# RewriteRule ^detailsProduct/?$ views/products/details.php
+# RewriteRule ^products/([^/]+)/?$ views/products/details.php
+RewriteRule ^detailsProduct/?$ views/products/details.php
 
 
 #users
 RewriteRule ^users/?$ views/users/index.php
-RewriteRule ^users/([^/]+)/?$ views/users/details.php
-# RewriteRule ^detailsUser/?$ views/users/details.php
+# RewriteRule ^users/([^/]+)/?$ views/users/details.php
+RewriteRule ^detailsUser/?$ views/users/details.php
 
 #clients
 RewriteRule ^clients/?$ views/clients/index.php
-RewriteRule ^clients/([^/]+)/?$ views/clients/details.php
-# RewriteRule ^detailsClient/?$ views/clients/details.php
+# RewriteRule ^clients/([^/]+)/?$ views/clients/details.php
+RewriteRule ^detailsClient/?$ views/clients/details.php
 
 #orders
 RewriteRule ^orders/?$ views/orders/index.php
