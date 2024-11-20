@@ -180,29 +180,30 @@ class ProductController
     
 
 	public function editProduct($id, $name, $slug, $description, $features, $brand, $categories, $tags) {
+        
         if (!isset($_SESSION['token'])) {
             echo 'No se encontró el token de autorización.';
             return [];
         }
     
-        $curl = curl_init();
-
-        $postFields = [
+        $postFields = http_build_query([
             'id' => $id,
             'name' => $name,
             'slug' => $slug,
             'description' => $description,
             'features' => $features,
-            'brand_id' => $brand,
-        ];
+            'brand_id' => $brand
+        ]);
     
         foreach ($categories as $index => $category) {
-            $postFields["categories[$index]"] = $category;
+            $postFields .= "&categories[$index]=" . urlencode($category);
         }
     
         foreach ($tags as $index => $tag) {
-            $postFields["tags[$index]"] = $tag;
+            $postFields .= "&tags[$index]=" . urlencode($tag);
         }
+    
+        $curl = curl_init();
     
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products',
@@ -215,17 +216,18 @@ class ProductController
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => $postFields,
             CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded',
                 'Authorization: Bearer ' . $_SESSION['token'],
             ),
         ));
-
+    
         $response = curl_exec($curl);
         curl_close($curl);
+    
         echo $response;
-
         header('Location: ' . BASE_PATH . 'products');
-
     }
+    
     
 
 	public function deleteProduct($id)
