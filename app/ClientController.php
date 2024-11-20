@@ -55,6 +55,8 @@
                 return [];
             }
 
+            $curl = curl_init();
+
             curl_setopt_array($curl, array(
                 CURLOPT_URL => 'https://crud.jonathansoto.mx/api/clients',
                 CURLOPT_RETURNTRANSFER => true,
