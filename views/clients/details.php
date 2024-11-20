@@ -80,6 +80,7 @@ include_once "../../app/config.php";
                       <p class="me-3 mb-0"><strong>Teléfono:</strong> <i class="ph-phone me-1"></i> 6127384765</p>
                       <p class="me-3 mb-0"><strong>Nivel:</strong> <i class="ph-star me-1"></i> Normal (Descuento: 0%)</p>
                       <p class="mb-0"><strong>Status:</strong> <span class="badge bg-success">Suscrito</span></p>
+                      <p class="mb-0"><strong>Status:</strong> <span class="badge bg-secondary">Suscrito</span></p>
                     </div>
                   </div>
                 </div>
