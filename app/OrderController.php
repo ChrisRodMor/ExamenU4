@@ -62,7 +62,7 @@
                 $end_date = $_POST['end_date'];
     
                 
-                $orderController->getOrdersBetweenDates($start_date, $end_date);
+                $orderController->getOrderBetweenDates($start_date, $end_date);
             break;
         }
     }
