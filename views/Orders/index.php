@@ -58,7 +58,15 @@ include_once "../../app/config.php";
                     </div>
                 </div>
 
-                <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addOrderModal" style="margin-top: 15px; margin-bottom: 15px;">Crear Orden</a>
+                <div class="d-flex gap-2" style="margin-top: 15px; margin-bottom: 15px;">
+                    <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addOrderModal">
+                        Crear Orden
+                    </a>
+                    <button class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#dateRangeModal">
+                        Seleccionar rango de Fechas
+                    </button>
+                </div>
+
                 <!-- [ Main Content ] start -->
                 <div class="row">
                     <!-- ORDERS -->
@@ -107,15 +115,23 @@ include_once "../../app/config.php";
                                                         </li>
                                                     </ul>
                                                     <div class="d-flex justify-content-end mt-3">
+                                                        <a href="detailsOrder">
+                                                            <button class="btn btn-outline-primary btn-sm mb-1 mx-1 d-flex align-items-center justify-content-center" title="Info">
+                                                                <i class="ph-duotone ph-info"></i>
+                                                            </button>
+                                                        </a>
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#editOrderModal">
-                                                            <button class="btn btn-outline-warning btn-sm me-2" title="Edit">
+                                                            <button class="btn btn-outline-warning btn-sm mx-1 d-flex align-items-center justify-content-center" title="Edit">
                                                                 <i class="ph-duotone ph-pencil"></i>
                                                             </button>
                                                         </a>
-                                                        <button class="btn btn-outline-danger btn-sm" title="Delete">
-                                                            <i class="ph-duotone ph-trash"></i>
-                                                        </button>
+                                                        <a href="">
+                                                            <button class="btn btn-outline-danger btn-sm mx-1 d-flex align-items-center justify-content-center" title="Delete">
+                                                                <i class="ph-duotone ph-trash"></i>
+                                                            </button>
+                                                        </a>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -162,14 +178,21 @@ include_once "../../app/config.php";
                                                         </li>
                                                     </ul>
                                                     <div class="d-flex justify-content-end mt-3">
+                                                        <a href="detailsOrder">
+                                                            <button class="btn btn-outline-primary btn-sm mb-1 mx-1 d-flex align-items-center justify-content-center" title="Info">
+                                                                <i class="ph-duotone ph-info"></i>
+                                                            </button>
+                                                        </a>
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#editOrderModal">
-                                                            <button class="btn btn-outline-warning btn-sm me-2" title="Edit">
+                                                            <button class="btn btn-outline-warning btn-sm mx-1 d-flex align-items-center justify-content-center" title="Edit">
                                                                 <i class="ph-duotone ph-pencil"></i>
                                                             </button>
                                                         </a>
-                                                        <button class="btn btn-outline-danger btn-sm" title="Delete">
-                                                            <i class="ph-duotone ph-trash"></i>
-                                                        </button>
+                                                        <a href="">
+                                                            <button class="btn btn-outline-danger btn-sm mx-1 d-flex align-items-center justify-content-center" title="Delete">
+                                                                <i class="ph-duotone ph-trash"></i>
+                                                            </button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -396,6 +419,33 @@ include_once "../../app/config.php";
                 </div>
             </div>
         </div>
+
+        <!-- MODAL FILTRAR POR FECHA -->
+        <div class="modal fade" id="dateRangeModal" tabindex="-1" aria-labelledby="dateRangeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="dateRangeModalLabel">Seleccionar Rango de Fechas</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="dateRangeForm">
+                            <div class="mb-3">
+                                <label for="startDate" class="form-label">Fecha Inicial</label>
+                                <input type="date" class="form-control" id="startDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="endDate" class="form-label">Fecha Final</label>
+                                <input type="date" class="form-control" id="endDate" required>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="generateLinkButton">Generar Enlace</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <?php
