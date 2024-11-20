@@ -100,15 +100,7 @@ $tags = $tagController->getTags();
                             type="button" 
                             class="btn btn-warning" 
                             data-bs-toggle="modal" 
-                            data-bs-target="#editProductModal"
-                            data-id="<?= $product['id'] ?>"
-                            data-name="<?= htmlspecialchars($product['name']) ?>"
-                            data-slug="<?= htmlspecialchars($product['slug']) ?>"
-                            data-description="<?= htmlspecialchars($product['description']) ?>"
-                            data-features="<?= htmlspecialchars($product['features']) ?>"
-                            data-brand_id="<?= $product['brand_id'] ?>"
-                            data-categories='<?= json_encode(array_column($product['categories'], "id")) ?>'
-                            data-tags='<?= json_encode(array_column($product['tags'], "id")) ?>'>
+                            data-bs-target="#editProductModal<?php echo $product['id']; ?>">
                             Editar
                           </button>
                           <!-- Formulario para eliminar producto -->
@@ -122,6 +114,90 @@ $tags = $tagController->getTags();
                       </div>
                     </div>
                   </div>
+                  <!-- MODAL EDITAR PRODUCTO -->
+                  <modal class="modal fade" id="editProductModal<?php echo $product['id']; ?>" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                          <div class="modal-content bg-dark text-light">
+                              <div class="modal-header">
+                                  <h5 class="modal-title text-light" id="editProductModalLabel">Editar Producto</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <form action="api-products" method="POST" enctype="multipart/form-data">
+                                      <input type="hidden" name="action" value="editProduct">
+                                      <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($globalToken); ?>">
+                                      <input type="hidden" name="id" id="userId" value="<?= htmlspecialchars($product['id']) ?>">
+                                      <!-- Nombre del producto -->
+                                      <div class="mb-3">
+                                          <label for="productName" class="form-label text-light">Nombre</label>
+                                          <input type="text" class="form-control bg-dark text-light" id="name" value="<?= htmlspecialchars($product['name']) ?>" name="name" required>
+                                      </div>
+
+                                      <!-- Slug -->
+                                      <div class="mb-3">
+                                          <label for="productSlug" class="form-label text-light">Slug</label>
+                                          <input type="text" class="form-control bg-dark text-light" id="slug" value="<?= htmlspecialchars($product['slug']) ?>" name="slug" required>
+                                      </div>
+
+                                      <!-- Descripción -->
+                                      <div class="mb-3">
+                                          <label for="productDescription" class="form-label text-light">Descripción</label>
+                                          <textarea class="form-control bg-dark text-light" id="description" name="description" rows="3" required><?= htmlspecialchars($product['description']) ?></textarea>
+                                      </div>
+
+                                      <!-- Características -->
+                                      <div class="mb-3">
+                                          <label for="productFeatures" class="form-label text-light">Características</label>
+                                          <input type="text" class="form-control bg-dark text-light" id="features" value="<?= htmlspecialchars($product['features']) ?>" name="features" required>
+                                      </div>
+
+                                      <!-- Marca -->
+                                      <div class="mb-3">
+                                          <label for="productBrand" class="form-label text-light">Marca</label>
+                                          <select class="form-control bg-dark text-light" id="brand_id" value="<?= htmlspecialchars($product['brand_id']) ?>" name="brand_id" required>
+                                              <?php foreach ($brands as $brand): ?>
+                                                  <option value="<?php echo htmlspecialchars($brand['id']); ?>">
+                                                      <?php echo htmlspecialchars($brand['name']); ?>
+                                                  </option>
+                                              <?php endforeach; ?>
+                                          </select>
+                                      </div>
+
+                                      <div class="mb-3">
+                                        <label for="productTags" class="form-label text-light">Tags</label>
+                                        <button type="button" class="btn btn-sm btn-secondary mt-2" id="addTagField">+ Añadir otro tag</button>
+                                        <select class="form-control bg-dark text-light" id="productTags" name="tags[]" required>
+                                            <?php foreach ($tags as $tag): ?>
+                                                <option value="<?= htmlspecialchars($tag['id']) ?>">
+                                                    <?= htmlspecialchars($tag['name']) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <div id="selectedTags" class="selected-items-container mt-3"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="productCategories" class="form-label text-light">Categories</label>
+                                        <button type="button" class="btn btn-sm btn-secondary mt-2" id="addCategoryField">+ Añadir otra categoría</button>
+                                        <select class="form-control bg-dark text-light" id="productCategories" name="categories[]" required>
+                                            <?php foreach ($categories as $category): ?>
+                                                <option value="<?= htmlspecialchars($category['id']) ?>">
+                                                    <?= htmlspecialchars($category['name']) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <div id="selectedCategories" class="selected-items-container mt-3"></div>
+                                    </div>
+                                      <!-- Botones de modal -->
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                          <button type="submit" class="btn btn-primary">Guardar</button>
+                                      </div>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </modal>
                 <?php endforeach; ?>
               </div>
 
@@ -182,28 +258,29 @@ $tags = $tagController->getTags();
 
                                   <div class="mb-3">
                                     <label for="productTags" class="form-label text-light">Tags</label>
-                                    <select class="form-control bg-dark text-light select-multiple" id="productTags" name="tags[]" multiple style="height: auto; overflow-y: auto; max-height: 150px;">
+                                    <button type="button" class="btn btn-sm btn-secondary mt-2" id="addTagField">+ Añadir otro tag</button>
+                                    <select class="form-control bg-dark text-light" id="productTags" name="tags[]" required>
                                         <?php foreach ($tags as $tag): ?>
                                             <option value="<?= htmlspecialchars($tag['id']) ?>">
                                                 <?= htmlspecialchars($tag['name']) ?>
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
+                                    <div id="selectedTags" class="selected-items-container mt-3"></div>
                                 </div>
-                                <div id="selectedTags" class="selected-items-container mt-3"></div>
 
                                 <div class="mb-3">
                                     <label for="productCategories" class="form-label text-light">Categories</label>
-                                    <select class="form-control bg-dark text-light select-multiple" id="productCategories" name="categories[]" multiple style="height: auto; overflow-y: auto; max-height: 150px;">
+                                    <button type="button" class="btn btn-sm btn-secondary mt-2" id="addCategoryField">+ Añadir otra categoría</button>
+                                    <select class="form-control bg-dark text-light" id="productCategories" name="categories[]" required>
                                         <?php foreach ($categories as $category): ?>
                                             <option value="<?= htmlspecialchars($category['id']) ?>">
                                                 <?= htmlspecialchars($category['name']) ?>
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
+                                    <div id="selectedCategories" class="selected-items-container mt-3"></div>
                                 </div>
-                                <div id="selectedCategories" class="selected-items-container mt-3"></div>
-
                                   <!-- Botones de modal -->
                                   <div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -213,83 +290,6 @@ $tags = $tagController->getTags();
                           </div>
                       </div>
                   </div>
-              </modal>
-
-              <!-- MODAL EDITAR PRODUCTO -->
-              <modal class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content bg-dark text-light">
-                    <div class="modal-header">
-                      <h5 class="modal-title text-light" id="editProductModalLabel">Editar Producto</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form action="api-products" method="POST" enctype="multipart/form-data">
-                      <input type="hidden" name="action" value="editProduct">
-                      <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($globalToken); ?>">
-                      <input type="hidden" name="id" id="productId">
-                        <div class="mb-3">
-                          <label for="productName" class="form-label text-light">Nombre</label>
-                          <input type="text" class="form-control bg-dark text-light" id="name" name="name">
-                        </div>
-                        <div class="mb-3">
-                          <label for="productSlug" class="form-label text-light">Slug</label>
-                          <input type="text" class="form-control bg-dark text-light" id="slug" name="slug">
-                        </div>
-                        <div class="mb-3">
-                          <label for="productDescription" class="form-label text-light">Descripción</label>
-                          <textarea class="form-control bg-dark text-light" id="description" name="description" rows="3" ></textarea>
-                          </div>
-                        <div class="mb-3">
-                          <label for="productFeatures" class="form-label text-light">Características</label>
-                          <input type="text" class="form-control bg-dark text-light" id="features" name="features" >
-                        </div>
-                        <!-- <div class="mb-3">
-                          <label for="productImage" class="form-label text-light">Imagen</label>
-                          <input type="file" class="form-control bg-dark text-light" id="cover" name="cover" accept="image/*">
-                        </div> -->
-                        <div class="mb-3">
-                          <label for="productBrand" class="form-label text-light">Marca</label>
-                          <select class="form-control bg-dark text-light" id="brand_id" name="brand_id">
-                            <?php foreach ($brands as $brand): ?>
-                                <option value="<?php echo htmlspecialchars($brand['id']); ?>">
-                                    <?php echo htmlspecialchars($brand['name']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                          </select>
-                        </div>
-                        <div class="mb-3">
-                          <label for="productTags" class="form-label text-light">Tags</label>
-                          <select class="form-control bg-dark text-light select-multiple" id="productTags" name="tags[]" multiple style="height: auto; overflow-y: auto; max-height: 150px;">
-                              <?php foreach ($tags as $tag): ?>
-                                  <option value="<?= htmlspecialchars($tag['id']) ?>">
-                                      <?= htmlspecialchars($tag['name']) ?>
-                                  </option>
-                              <?php endforeach; ?>
-                          </select>
-                      </div>
-                      <div id="selectedTags" class="selected-items-container mt-3"></div>
-
-                      <div class="mb-3">
-                          <label for="productCategories" class="form-label text-light">Categories</label>
-                          <select class="form-control bg-dark text-light select-multiple" id="productCategories" name="categories[]" multiple style="height: auto; overflow-y: auto; max-height: 150px;">
-                              <?php foreach ($categories as $category): ?>
-                                  <option value="<?= htmlspecialchars($category['id']) ?>">
-                                      <?= htmlspecialchars($category['name']) ?>
-                                  </option>
-                              <?php endforeach; ?>
-                          </select>
-                      </div>
-                      <div id="selectedCategories" class="selected-items-container mt-3"></div>
-
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                          <button type="submit" class="btn btn-primary">Guardar</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
               </modal>
             </div>
           </div>
@@ -311,115 +311,6 @@ $tags = $tagController->getTags();
 
   ?>
 
-
-  <!-- [Page Specific JS] start -->
-  <script>
-  // scroll-block
-  var tc = document.querySelectorAll('.scroll-block');
-  for (var t = 0; t < tc.length; t++) {
-    new SimpleBar(tc[t]);
-  }
-
-  function addField(containerId, name) {
-        const container = document.getElementById(containerId);
-        const input = document.createElement("input");
-        input.type = "text";
-        input.name = name + "[]";
-        input.className = "form-control bg-dark text-light my-1";
-        input.placeholder = "ID de " + (name === 'categories' ? 'categoría' : 'etiqueta');
-        container.appendChild(input);
-    }
-
-  function setupMultiSelect(selectElementId, selectedContainerId) {
-    const selectElement = document.getElementById(selectElementId);
-    const selectedContainer = document.getElementById(selectedContainerId);
-
-    // Agregar elemento seleccionado
-    function addSelectedItem(itemText, itemValue) {
-      const item = document.createElement("div");
-      item.classList.add("selected-item");
-      item.setAttribute("data-value", itemValue);
-
-      item.innerHTML = `
-        ${itemText}
-        <span class="remove-item" onclick="removeSelectedItem('${selectElementId}', '${itemValue}')">&times;</span>
-      `;
-
-      selectedContainer.appendChild(item);
-    }
-
-    // Detectar cambios en el select
-    selectElement.addEventListener("change", (event) => {
-      const selectedOptions = Array.from(event.target.selectedOptions);
-      selectedOptions.forEach((option) => {
-        if (!document.querySelector(`#${selectedContainerId} [data-value="${option.value}"]`)) {
-          addSelectedItem(option.text, option.value);
-        }
-      });
-    });
-  }
-  
-  // Referencia al modal
-const editProductModal = document.getElementById('editProductModal');
-
-// Evento al abrir el modal
-editProductModal.addEventListener('show.bs.modal', function (event) {
-    const button = event.relatedTarget;
-
-    // Obtener datos del producto desde los atributos data-*
-    const productId = button.getAttribute('data-id');
-    const productName = button.getAttribute('data-name');
-    const productSlug = button.getAttribute('data-slug');
-    const productDescription = button.getAttribute('data-description');
-    const productFeatures = button.getAttribute('data-features');
-    const productBrandId = button.getAttribute('data-brand_id');
-    const productCategories = JSON.parse(button.getAttribute('data-categories'));
-    const productTags = JSON.parse(button.getAttribute('data-tags'));
-
-    // Asignar valores a los campos del formulario
-    document.getElementById('productId').value = productId;
-    document.getElementById('name').value = productName;
-    document.getElementById('slug').value = productSlug;
-    document.getElementById('description').value = productDescription;
-    document.getElementById('features').value = productFeatures;
-    document.getElementById('brand_id').value = productBrandId;
-
-    // Seleccionar categorías
-    const categorySelect = document.getElementById('productCategories');
-    Array.from(categorySelect.options).forEach(option => {
-        option.selected = productCategories.includes(parseInt(option.value));
-    });
-
-    // Seleccionar tags
-    const tagsSelect = document.getElementById('productTags');
-    Array.from(tagsSelect.options).forEach(option => {
-        option.selected = productTags.includes(parseInt(option.value));
-    });
-});
-
-
-
-  // Remover elemento seleccionado
-  function removeSelectedItem(selectElementId, itemValue) {
-    const selectElement = document.getElementById(selectElementId);
-    Array.from(selectElement.options).forEach((option) => {
-      if (option.value === itemValue) {
-        option.selected = false;
-      }
-    });
-
-    const selectedItem = document.querySelector(`[data-value="${itemValue}"]`);
-    if (selectedItem) {
-      selectedItem.remove();
-    }
-  }
-
-  // Inicializar multiselect para tags y categories
-  setupMultiSelect("productTags", "selectedTags");
-  setupMultiSelect("productCategories", "selectedCategories");
-</script>
-
-
   <?php
 
   include "../layouts/modals.php";
@@ -429,7 +320,48 @@ editProductModal.addEventListener('show.bs.modal', function (event) {
 </body>
 <!-- [Body] end -->
 
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Función para crear un nuevo campo select dinámicamente
+    const createSelectField = (options, name) => {
+        const select = document.createElement("select");
+        select.className = "form-control bg-dark text-light mt-2";
+        select.name = name + "[]";
+        select.required = true;
+
+        options.forEach(option => {
+            const opt = document.createElement("option");
+            opt.value = option.value;
+            opt.textContent = option.text;
+            select.appendChild(opt);
+        });
+
+        return select;
+    };
+
+    // Delegación de eventos para manejar clicks en los botones de agregar tags o categorías
+    document.body.addEventListener("click", (event) => {
+        if (event.target && (event.target.id === "addTagField" || event.target.id === "addCategoryField")) {
+            const modal = event.target.closest(".modal"); // Encuentra el modal correspondiente al botón
+            const isTagButton = event.target.id === "addTagField";
+
+            // Encuentra los contenedores y opciones dentro del modal actual
+            const container = modal.querySelector(isTagButton ? "#selectedTags" : "#selectedCategories");
+            const selectId = isTagButton ? "#productTags" : "#productCategories";
+            const options = Array.from(modal.querySelectorAll(`${selectId} option`))
+                .map(opt => ({ value: opt.value, text: opt.textContent }));
+
+            // Crea y añade un nuevo campo
+            const newField = createSelectField(options, isTagButton ? "tags" : "categories");
+            container.appendChild(newField);
+        }
+    });
+});
+
+
+</script>
 </html>
+
 
 <style>
   /* CSS PERSONALIZADO */

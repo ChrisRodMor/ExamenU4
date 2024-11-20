@@ -25,11 +25,6 @@ if ($productSlug) {
     $presentationController = new PresentationController(); // Instancia del controlador de presentaciones
     $presentations = $presentationController->getPresentationsOfProduct($productId);
 
-    // Verificar si se encontraron presentaciones
-    if (!$presentations) {
-        echo "No se encontraron presentaciones para este producto.";
-        $presentations = []; // Asegúrate de que sea un array vacío para evitar errores en la vista
-    }
 } else {
     echo "No se especificó el slug del producto.";
     exit;
@@ -192,9 +187,10 @@ if ($productSlug) {
                   </div>
                   <div class="mb-3 row">
                     <h4 class="col-form-label col-lg-2 col-sm-12">Stock</h4>
-                    <h4 class="col-lg-6 col-md-12 col-sm-12"><?= htmlspecialchars($presentation['stock']) ?></h4>
+                    <h4 class="col-lg-6 col-md-12 col-sm-12"><?= htmlspecialchars($productDetails['presentations'][0]['stock']) ?></h4>
                   </div>
-                  <h3 class="mb-4"><b>$<?= htmlspecialchars($presentation['amount']) ?></b></h3>
+                  <h3 class="mb-4"><b>$<?= htmlspecialchars($productDetails['presentations'][0]['price'][0]['amount']) ?>
+                  </b></h3>
                 </div>
               </div>
             </div>
