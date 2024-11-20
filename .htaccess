@@ -12,8 +12,8 @@ RewriteRule ^register/?$ views/auth/register.php
 
 #products
 RewriteRule ^products/?$ views/products/index.php
-# RewriteRule ^products/([^/]+)/?$ views/products/details.php
-RewriteRule ^detailsProduct/?$ views/products/details.php
+RewriteRule ^products/([^/]+)/?$ views/products/details.php
+# RewriteRule ^detailsProduct/?$ views/products/details.php
 
 
 #users
