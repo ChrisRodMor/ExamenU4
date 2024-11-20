@@ -54,19 +54,19 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
           <div class="dropdown-menu dropdown-qta dropdown-menu-end pc-h-dropdown">
             <div class="overflow-hidden">
               <div class="qta-links m-n1">
-                <a href="products" class="dropdown-item">
+                <a href="<?= BASE_PATH ?>products" class="dropdown-item">
                   <i class="ph-duotone ph-shopping-cart"></i>
                   <span>E-commerce</span>
                 </a>
-                <a href="clients" class="dropdown-item">
+                <a href="<?= BASE_PATH ?>clients" class="dropdown-item">
                   <i class="ph-duotone ph-identification-badge"></i>
                   <span>Clients</span>
                 </a>
-                <a href="users" class="dropdown-item">
+                <a href="<?= BASE_PATH ?>users" class="dropdown-item">
                   <i class="ph-duotone ph-user-circle"></i>
                   <span>Users</span>
                 </a>
-                <a href="orders" class="dropdown-item">
+                <a href="<?= BASE_PATH ?>orders" class="dropdown-item">
                   <i class="ph-duotone ph-list me-2"></i>
                   <span>Orders</span>
                 </a>

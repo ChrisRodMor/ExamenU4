@@ -36,28 +36,28 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
           <i class="ph-duotone ph-buildings"></i>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="products" class="pc-link">
+          <a href="<?= BASE_PATH ?>products" class="pc-link">
             <span class="pc-micon">
               <i class="ph-duotone ph-shopping-cart"></i>
             </span>
             <span class="pc-mtext">E-commerce</span></a>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="clients" class="pc-link">
+          <a href="<?= BASE_PATH ?>clients" class="pc-link">
             <span class="pc-micon">
               <i class="ph-duotone ph-identification-badge"></i>
             </span>
             <span class="pc-mtext">Clients</span></a>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="users" class="pc-link">
+          <a href="<?= BASE_PATH ?>users" class="pc-link">
             <span class="pc-micon">
               <i class="ph-duotone ph-user-circle"></i>
             </span>
             <span class="pc-mtext">Users</span></a>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="orders" class="pc-link">
+          <a href="<?= BASE_PATH ?>orders" class="pc-link">
             <span class="pc-micon">
               <i class="ph-duotone ph-list me-2"></i>
             </span>
@@ -91,7 +91,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
               <div class="dropdown-menu">
                 <ul>
                   <li>
-                    <a class="pc-user-links" href="profile">
+                    <a class="pc-user-links" href="<?= BASE_PATH ?>profile">
                       <i class="ph-duotone ph-user"></i>
                       <span>My Account</span>
                     </a>
