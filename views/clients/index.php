@@ -88,11 +88,9 @@ $clients = $clientController->getClients();
                       <p class="text-muted text-sm mb-0">Phone: <?= htmlspecialchars($client['phone_number']) ?></p>
                     </div>
                     <div class="d-flex flex-column ms-auto">
-                      <a href="detailsClient">
-                        <button  href="detailsClient" class="btn btn-outline-primary btn-sm mb-1" title="Info">
-                          <i class="ph-duotone ph-info"></i>
-                        </button>
-                      </a>
+                    <a href="detailsClient?id=<?= htmlspecialchars($client['id']) ?>" class="btn btn-outline-primary btn-sm mb-1" title="Info">
+                        <i class="ph-duotone ph-info"></i>
+                    </a>
                       <a href="#" data-bs-toggle="modal" data-bs-target="#editClientModal<?= htmlspecialchars($client['id']) ?>">
                       <button class="btn btn-outline-warning btn-sm mb-1" title="Edit">
                         <i class="ph-duotone ph-pencil"></i>
