@@ -1,7 +1,42 @@
 <?php
 include_once "../../app/config.php";
+include_once "../../app/ProductController.php";
+include_once "../../app/PresentationController.php";
 
+// Obtener el slug del producto desde la URL amigable
+$requestUri = $_SERVER['REQUEST_URI'];
+$basePath = '/ExamenU4/products/';
+$productSlug = str_replace($basePath, '', $requestUri);
+
+// Eliminar posibles barras finales
+$productSlug = rtrim($productSlug, '/');
+
+// Validar si el slug es válido
+if ($productSlug) {
+    // Obtener los detalles del producto específico usando el slug
+    $productDetails = (new ProductController())->getProductsBySlug($productSlug);
+
+    // Verificar si se encontraron los detalles del producto
+    if (!$productDetails) {
+        echo "No se encontró el producto. Verifica que el slug sea válido.";
+        exit;
+    }
+    $productId = $productDetails['id']; // Asegúrate de que este sea el campo correcto del ID en tu API
+    $presentationController = new PresentationController(); // Instancia del controlador de presentaciones
+    $presentations = $presentationController->getPresentationsOfProduct($productId);
+
+    // Verificar si se encontraron presentaciones
+    if (!$presentations) {
+        echo "No se encontraron presentaciones para este producto.";
+        $presentations = []; // Asegúrate de que sea un array vacío para evitar errores en la vista
+    }
+} else {
+    echo "No se especificó el slug del producto.";
+    exit;
+}
 ?>
+
+
 <!doctype html>
 <html lang="en">
 <!-- [Head] start -->
@@ -96,31 +131,31 @@ include_once "../../app/config.php";
                           </ul>
                         </div>
                         <div class="carousel-item active">
-                          <img src="<?= BASE_PATH ?>assets/images/application/img-prod-1.jpg" class="d-block w-100" alt="Product images" />
+                          <img src="<?= htmlspecialchars($productDetails['cover']) ?>" class="d-block w-100" alt="Imagen principal del producto" />
                         </div>
                         <div class="carousel-item">
-                          <img src="<?= BASE_PATH ?>assets/images/application/img-prod-2.jpg" class="d-block w-100" alt="Product images" />
+                          <img src="<?= htmlspecialchars($productDetails['cover']) ?>" class="d-block w-100" alt="Imagen principal del producto" />
                         </div>
                         <div class="carousel-item">
-                          <img src="<?= BASE_PATH ?>assets/images/application/img-prod-3.jpg" class="d-block w-100" alt="Product images" />
+                          <img src="<?= htmlspecialchars($productDetails['cover']) ?>" class="d-block w-100" alt="Imagen principal del producto" />
                         </div>
                         <div class="carousel-item">
-                          <img src="<?= BASE_PATH ?>assets/images/application/img-prod-4.jpg" class="d-block w-100" alt="Product images" />
+                          <img src="<?= htmlspecialchars($productDetails['cover']) ?>" class="d-block w-100" alt="Imagen principal del producto" />
                         </div>
                         <div class="carousel-item">
-                          <img src="<?= BASE_PATH ?>assets/images/application/img-prod-5.jpg" class="d-block w-100" alt="Product images" />
+                          <img src="<?= htmlspecialchars($productDetails['cover']) ?>" class="d-block w-100" alt="Imagen principal del producto" />
                         </div>
                         <div class="carousel-item">
-                          <img src="<?= BASE_PATH ?>assets/images/application/img-prod-6.jpg" class="d-block w-100" alt="Product images" />
+                          <img src="<?= htmlspecialchars($productDetails['cover']) ?>" class="d-block w-100" alt="Imagen principal del producto" />
                         </div>
                         <div class="carousel-item">
-                          <img src="<?= BASE_PATH ?>assets/images/application/img-prod-7.jpg" class="d-block w-100" alt="Product images" />
+                          <img src="<?= htmlspecialchars($productDetails['cover']) ?>" class="d-block w-100" alt="Imagen principal del producto" />
                         </div>
                         <div class="carousel-item">
-                          <img src="<?= BASE_PATH ?>assets/images/application/img-prod-8.jpg" class="d-block w-100" alt="Product images" />
+                          <img src="<?= htmlspecialchars($productDetails['cover']) ?>" class="d-block w-100" alt="Imagen principal del producto" />
                         </div>
                       </div>
-                      <ol class="list-inline carousel-indicators position-relative product-carousel-indicators my-sm-3 mx-0">
+                      <!-- <ol class="list-inline carousel-indicators position-relative product-carousel-indicators my-sm-3 mx-0">
                         <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="list-inline-item w-25 h-auto active">
                           <img src="<?= BASE_PATH ?>assets/images/application/img-prod-1.jpg" class="d-block wid-50 rounded" alt="Product images" />
                         </li>
@@ -145,25 +180,21 @@ include_once "../../app/config.php";
                         <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="7" class="list-inline-item w-25 h-auto">
                           <img src="<?= BASE_PATH ?>assets/images/application/img-prod-8.jpg" class="d-block wid-50 rounded" alt="Product images" />
                         </li>
-                      </ol>
+                      </ol> -->
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <h2 class="my-3">Colchón Matrimonial Victory</h2>
+                  <h2 class="my-3"><?= htmlspecialchars($productDetails['name']) ?></h2>
                   <h3 class="mt-4 mb-sm-3 mb-2 f-w-500">Detalles</h3>
                   <div>
-                    <h4>
-                      Los buenos días empiezan en tu dormitorio, especialmente en este colchón matrimonial Spring Air modelo Victory.
-                    </h4>
+                    <h4><?= htmlspecialchars($productDetails['description']) ?></h4>
                   </div>
                   <div class="mb-3 row">
-                    <h4 class="col-form-label col-lg-2 col-sm-12">Stock <span class="text-danger">*</span></h4>
-                    <h4 class="col-lg-6 col-md-12 col-sm-12">
-                      15
-                    </h4>
+                    <h4 class="col-form-label col-lg-2 col-sm-12">Stock</h4>
+                    <h4 class="col-lg-6 col-md-12 col-sm-12"><?= htmlspecialchars($presentation['stock']) ?></h4>
                   </div>
-                  <h3 class="mb-4"><b>$10999.99</b><span class="mx-2 f-16 text-muted f-w-400 text-decoration-line-through">$399.00</span></h3>
+                  <h3 class="mb-4"><b>$<?= htmlspecialchars($presentation['amount']) ?></b></h3>
                 </div>
               </div>
             </div>
@@ -197,36 +228,51 @@ include_once "../../app/config.php";
             </div>
             <div class="card-body">
               <div class="tab-content">
-                <div class="tab-pane show active" id="ecomtab-1" role="tabpanel" aria-labelledby="ecomtab-tab-1">
-                  <div class="table-responsive">
-
-                    <div class="table-responsive">
-                      <p class="text-muted">
-                        Cuenta con una unidad de 510 resortes continuos que aseguran una perfecta estabilidad; además, los materiales poseen una tecnología repelente a
-                        los ácaros y demás bichos portadores de enfermedades, así como un retardante de fuego que previene la propagación de flamas en caso de siniestro.
-                      </p>
-                    </div>
-                  </div>
+              <div class="tab-pane show active" id="ecomtab-1" role="tabpanel" aria-labelledby="ecomtab-tab-1">
+                <div class="table-responsive">
+                    <p class="text-muted">
+                        <?= htmlspecialchars($productDetails['features']) ?: "No se encontraron características para este producto." ?>
+                    </p>
                 </div>
-                <div class="tab-pane" id="ecomtab-3" role="tabpanel" aria-labelledby="ecomtab-tab-3">
-
-                  <table class="table table-borderless mb-0">
+            </div>
+            <div class="tab-pane" id="ecomtab-3" role="tabpanel" aria-labelledby="ecomtab-tab-3">
+                <table class="table table-borderless mb-0">
                     <tbody>
-                      <tr>
-                        <td class="text-muted py-1 border-top-0">Brand :</td>
-                        <td class="py-1 border-top-0">Spring Air</td>
-                      </tr>
-                      <tr>
-                        <td class="text-muted py-1">Tags :</td>
-                        <td class="py-1">Muebles | Hogar | Baño</td>
-                      </tr>
-                      <tr>
-                        <td class="text-muted py-1">Categories :</td>
-                        <td class="py-1">Hogar y Muebles</td>
-                      </tr>
+                        <!-- Mostrar la marca -->
+                        <tr>
+                            <td class="text-muted py-1 border-top-0">Brand :</td>
+                            <td class="py-1 border-top-0">
+                                <?= htmlspecialchars($productDetails['brand']['name'] ?? 'No especificada') ?>
+                            </td>
+                        </tr>
+
+                        <!-- Mostrar las etiquetas -->
+                        <tr>
+                            <td class="text-muted py-1">Tags :</td>
+                            <td class="py-1">
+                                <?php if (!empty($productDetails['tags'])): ?>
+                                    <?= implode(' | ', array_map('htmlspecialchars', array_column($productDetails['tags'], 'name'))) ?>
+                                <?php else: ?>
+                                    No especificados
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+
+                        <!-- Mostrar las categorías -->
+                        <tr>
+                            <td class="text-muted py-1">Categories :</td>
+                            <td class="py-1">
+                                <?php if (!empty($productDetails['categories'])): ?>
+                                    <?= implode(' | ', array_map('htmlspecialchars', array_column($productDetails['categories'], 'name'))) ?>
+                                <?php else: ?>
+                                    No especificadas
+                                <?php endif; ?>
+                            </td>
+                        </tr>
                     </tbody>
-                  </table>
-                </div>
+                </table>
+            </div>
+
                 <div class="tab-pane" id="ecomtab-4" role="tabpanel" aria-labelledby="ecomtab-tab-4">
                   <div class="card">
                     <div class="card-body">
@@ -287,181 +333,64 @@ include_once "../../app/config.php";
             </div>
           </div>
           <div class="card">
-            <div class="card-body">
+    <div class="card-body">
+        <div class="container mt-5">
+            <?php if (!empty($presentations)): ?>
+                <?php foreach ($presentations as $index => $presentation): ?>
+                    <!-- Título de la Presentación -->
+                    <h2 class="text-primary mb-3">
+                        Presentación <?= $index + 1 ?>: <?= htmlspecialchars($presentation['description']) ?>
+                    </h2>
 
-              <div class="container mt-5">
-                <!-- Presentación 1 -->
-                <h2 class="text-primary mb-3">Presentación 1: Colchón Matrimonial Victory</h2>
-                <div class="table-responsive">
-                  <table class="table table-bordered table-striped table-hover">
-                    <thead class="table-primary">
-                      <tr>
-                        <th>ID</th>
-                        <th>Descripción</th>
-                        <th>Código</th>
-                        <th>Peso (gramos)</th>
-                        <th>Estado</th>
-                        <th>Imagen</th>
-                        <th>Stock</th>
-                        <th>Stock Min</th>
-                        <th>Stock Max</th>
-                        <th>Precio Actual</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>2</td>
-                        <td>Colchón Matrimonial Victory</td>
-                        <td>comavi01</td>
-                        <td>10000</td>
-                        <td class="text-success">Activo</td>
-                        <td><img src="colchon_victory.jpg" alt="Imagen del colchón" width="50"></td>
-                        <td>15</td>
-                        <td>1</td>
-                        <td>25</td>
-                        <td>$10,999.99</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                    <!-- Tabla de Presentación -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Descripción</th>
+                                    <th>Código</th>
+                                    <th>Peso (gramos)</th>
+                                    <th>Estado</th>
+                                    <th>Imagen</th>
+                                    <th>Stock</th>
+                                    <th>Stock Min</th>
+                                    <th>Stock Max</th>
+                                    <th>Precio Actual</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><?= htmlspecialchars($presentation['id']) ?></td>
+                                    <td><?= htmlspecialchars($presentation['description']) ?></td>
+                                    <td><?= htmlspecialchars($presentation['code']) ?></td>
+                                    <td><?= htmlspecialchars($presentation['weight_in_grams']) ?></td>
+                                    <td class="<?= $presentation['status'] === 'Activo' ? 'text-success' : 'text-danger' ?>">
+                                        <?= htmlspecialchars($presentation['status']) ?>
+                                    </td>
+                                    <td>
+                                        <img src="<?= htmlspecialchars($presentation['cover']) ?>" alt="Imagen de <?= htmlspecialchars($presentation['description']) ?>" width="50">
+                                    </td>
+                                    <td><?= htmlspecialchars($presentation['stock']) ?></td>
+                                    <td><?= htmlspecialchars($presentation['stock_min']) ?></td>
+                                    <td><?= htmlspecialchars($presentation['stock_max']) ?></td>
+                                    <td><?= htmlspecialchars($presentation['amount']) ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                <!-- Órdenes de Presentación 1 -->
-                <h4 class="text-secondary mb-3">Órdenes de Presentación 1</h4>
-                <div class="table-responsive">
-                  <table class="table table-bordered table-striped table-hover">
-                    <thead class="table-secondary">
-                      <tr>
-                        <th>ID Orden</th>
-                        <th>Folio</th>
-                        <th>Total</th>
-                        <th>Pagado</th>
-                        <th>ID Cliente</th>
-                        <th>ID Dirección</th>
-                        <th>ID Estado Orden</th>
-                        <th>ID Tipo Pago</th>
-                        <th>ID Cupón</th>
-                        <th>Cantidad</th>
-                        <th>ID Precio</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>82712</td>
-                        <td>$8,999.99</td>
-                        <td class="text-success">Pagado</td>
-                        <td>4</td>
-                        <td>13</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                    <!-- Placeholder para las Órdenes (si tienes datos relacionados, añade lógica similar aquí) -->
+                    <h4 class="text-secondary mb-3">Órdenes de Presentación <?= $index + 1 ?></h4>
+                    <!-- Aquí podrías agregar otra tabla para mostrar órdenes, iterando sobre un array si está disponible -->
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>No se encontraron presentaciones para este producto.</p>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
 
-                <!-- Presentación 2 -->
-                <h2 class="text-primary mb-3">Presentación 2: Colchón Queen Memory Foam</h2>
-                <div class="table-responsive">
-                  <table class="table table-bordered table-striped table-hover">
-                    <thead class="table-primary">
-                      <tr>
-                        <th>ID</th>
-                        <th>Descripción</th>
-                        <th>Código</th>
-                        <th>Peso (gramos)</th>
-                        <th>Estado</th>
-                        <th>Imagen</th>
-                        <th>Stock</th>
-                        <th>Stock Min</th>
-                        <th>Stock Max</th>
-                        <th>Precio Actual</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>3</td>
-                        <td>Colchón Queen Memory Foam</td>
-                        <td>comqmf01</td>
-                        <td>12000</td>
-                        <td class="text-success">Activo</td>
-                        <td><img src="colchon_memory_foam.jpg" alt="Imagen del colchón" width="50"></td>
-                        <td>10</td>
-                        <td>2</td>
-                        <td>20</td>
-                        <td>$12,499.99</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <!-- Órdenes de Presentación 2 -->
-                <h4 class="text-secondary mb-3">Órdenes de Presentación 2</h4>
-                <div class="table-responsive">
-                  <table class="table table-bordered table-striped table-hover">
-                    <thead class="table-secondary">
-                      <tr>
-                        <th>ID Orden</th>
-                        <th>Folio</th>
-                        <th>Total</th>
-                        <th>Pagado</th>
-                        <th>ID Cliente</th>
-                        <th>ID Dirección</th>
-                        <th>ID Estado Orden</th>
-                        <th>ID Tipo Pago</th>
-                        <th>ID Cupón</th>
-                        <th>Cantidad</th>
-                        <th>ID Precio</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>4</td>
-                        <td>82730</td>
-                        <td>$12,499.99</td>
-                        <td class="text-success">Pagado</td>
-                        <td>3</td>
-                        <td>14</td>
-                        <td>2</td>
-                        <td>1</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>3</td>
-                      </tr>
-                      <tr>
-                        <td>5</td>
-                        <td>82731</td>
-                        <td>$24,999.98</td>
-                        <td class="text-danger">No pagado</td>
-                        <td>6</td>
-                        <td>15</td>
-                        <td>3</td>
-                        <td>2</td>
-                        <td>4</td>
-                        <td>2</td>
-                        <td>3</td>
-                      </tr>
-                      <tr>
-                        <td>6</td>
-                        <td>82732</td>
-                        <td>$37,499.97</td>
-                        <td class="text-success">Pagado</td>
-                        <td>5</td>
-                        <td>16</td>
-                        <td>4</td>
-                        <td>3</td>
-                        <td>5</td>
-                        <td>3</td>
-                        <td>3</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <!-- [ sample-page ] end -->
       </div>
