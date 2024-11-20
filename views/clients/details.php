@@ -255,20 +255,30 @@ include_once "../../app/config.php";
                                   </div>
                                   <div>
                                     <p class="mb-1">
-                                      <strong>Calle:</strong> Calle artículo 743, 123
+                                      <strong>Calle:</strong> Calle Lope de Rueda, 32
                                     </p>
                                     <p class="mb-1">
-                                      <strong>Código postal:</strong> 23088
+                                      <strong>Código postal:</strong> 19171
                                     </p>
                                     <p class="mb-1">
-                                      <strong>Ciudad:</strong> La Paz
+                                      <strong>Ciudad:</strong> Cabanillas del Campo
                                     </p>
                                     <p class="mb-1">
-                                      <strong>Provincia:</strong> Baja California Sur
+                                      <strong>Provincia:</strong> Guadalajara
                                     </p>
                                     <p class="mb-0 text-muted">
                                       <em>Tipo:</em> Dirección de facturación
                                     </p>
+                                  </div>
+                                  <div class="d-flex justify-content-end mt-3">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editAdressModal">
+                                      <button class="btn btn-outline-warning btn-sm me-2" title="Edit">
+                                        <i class="ph-duotone ph-pencil"></i>
+                                      </button>
+                                    </a>
+                                    <button class="btn btn-outline-danger btn-sm" title="Delete">
+                                      <i class="ph-duotone ph-trash"></i>
+                                    </button>
                                   </div>
                                 </div>
                               </div>
@@ -296,6 +306,16 @@ include_once "../../app/config.php";
                                     <p class="mb-0 text-muted">
                                       <em>Tipo:</em> Dirección de facturación
                                     </p>
+                                  </div>
+                                  <div class="d-flex justify-content-end mt-3">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editAdressModal">
+                                      <button class="btn btn-outline-warning btn-sm me-2" title="Edit">
+                                        <i class="ph-duotone ph-pencil"></i>
+                                      </button>
+                                    </a>
+                                    <button class="btn btn-outline-danger btn-sm" title="Delete">
+                                      <i class="ph-duotone ph-trash"></i>
+                                    </button>
                                   </div>
                                 </div>
                               </div>
@@ -336,14 +356,7 @@ include_once "../../app/config.php";
           </div>
           <div class="modal-body">
             <form method="POST" enctype="multipart/form-data">
-              <div class="mb-3">
-                <label for="name" class="form-label text-light">Nombre</label>
-                <input type="text" class="form-control bg-dark text-light" id="name" name="name" required>
-              </div>
-              <div class="mb-3">
-                <label for="last_name" class="form-label text-light">Apellido</label>
-                <input type="text" class="form-control bg-dark text-light" id="last_name" name="last_name" required>
-              </div>
+              <!-- TODO: PONER NOMBRE, APELLIDO Y TELEFONO COMO PARAMETROS IMPLICITOS DEL CLIENTE -->
               <div class="mb-3">
                 <label for="streer_and_use_number" class="form-label text-light">Calle y número de calle</label>
                 <input type="text" class="form-control bg-dark text-light" id="streer_and_use_number" name="streer_and_use_number" required>
@@ -361,8 +374,48 @@ include_once "../../app/config.php";
                 <input type="text" class="form-control bg-dark text-light" id="province" name="province" required>
               </div>
               <div class="mb-3">
-                <label for="phone_number" class="form-label text-light">Teléfono</label>
-                <input type="tel" class="form-control bg-dark text-light" id="phone_number" name="phone_number" required>
+                <label for="is_billing_address" class="form-label text-light">¿Se usará para facturación?</label>
+                <select class="form-select bg-dark text-light" id="is_billing_address" name="is_billing_address" required>
+                  <option value="" disabled selected>Seleccione una opción</option>
+                  <option value="yes">Sí</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL EDITAR -->
+    <div class="modal fade" id="editAdressModal" tabindex="-1" aria-labelledby="editAdressModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark text-light">
+          <div class="modal-header">
+            <h5 class="modal-title text-light" id="editAdressModalLabel">Editar Dirección</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" enctype="multipart/form-data">
+              <!-- TODO: PONER NOMBRE, APELLIDO Y TELEFONO COMO PARAMETROS IMPLICITOS DEL CLIENTE -->
+              <div class="mb-3">
+                <label for="streer_and_use_number" class="form-label text-light">Calle y número de calle</label>
+                <input type="text" class="form-control bg-dark text-light" id="streer_and_use_number" name="streer_and_use_number" required>
+              </div>
+              <div class="mb-3">
+                <label for="postal_code" class="form-label text-light">Código postal</label>
+                <input type="text" class="form-control bg-dark text-light" id="postal_code" name="postal_code" required>
+              </div>
+              <div class="mb-3">
+                <label for="city" class="form-label text-light">Ciudad</label>
+                <input type="text" class="form-control bg-dark text-light" id="city" name="city" required>
+              </div>
+              <div class="mb-3">
+                <label for="province" class="form-label text-light">Estado</label>
+                <input type="text" class="form-control bg-dark text-light" id="province" name="province" required>
               </div>
               <div class="mb-3">
                 <label for="is_billing_address" class="form-label text-light">¿Se usará para facturación?</label>
