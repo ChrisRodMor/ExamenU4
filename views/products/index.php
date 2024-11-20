@@ -95,9 +95,22 @@ $tags = $tagController->getTags();
                         <p class="prod-description text-muted mb-2"><?= htmlspecialchars($product['description']) ?></p>
                         <p class="prod-brand text-muted mb-3">Marca: <?= htmlspecialchars($product['brand']['name']) ?></p>
                         <div class="d-grid gap-2">
-                          <a href="detailsProduct?slug=<?= htmlspecialchars($product['slug']) ?>" class="btn btn-primary">Detalles</a>
-                          <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editProductModal">Editar</button>
-
+                          <a href="products/<?= htmlspecialchars($product['slug']) ?>" class="btn btn-primary">Detalles</a>
+                          <button 
+                            type="button" 
+                            class="btn btn-warning" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#editProductModal"
+                            data-id="<?= $product['id'] ?>"
+                            data-name="<?= htmlspecialchars($product['name']) ?>"
+                            data-slug="<?= htmlspecialchars($product['slug']) ?>"
+                            data-description="<?= htmlspecialchars($product['description']) ?>"
+                            data-features="<?= htmlspecialchars($product['features']) ?>"
+                            data-brand_id="<?= $product['brand_id'] ?>"
+                            data-categories='<?= json_encode(array_column($product['categories'], "id")) ?>'
+                            data-tags='<?= json_encode(array_column($product['tags'], "id")) ?>'>
+                            Editar
+                          </button>
                           <!-- Formulario para eliminar producto -->
                           <form action="api-products" method="POST" class="d-grid gap-2">
                             <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($globalToken); ?>">
@@ -112,86 +125,95 @@ $tags = $tagController->getTags();
                 <?php endforeach; ?>
               </div>
 
-
               <!-- MODAL AGREGAR PRODUCTO -->
-<modal class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content bg-dark text-light">
-            <div class="modal-header">
-                <h5 class="modal-title text-light" id="addProductModalLabel">Añadir Producto</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="api-products" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="action" value="addProduct">
-                    <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($globalToken); ?>">
+              <modal class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content bg-dark text-light">
+                          <div class="modal-header">
+                              <h5 class="modal-title text-light" id="addProductModalLabel">Añadir Producto</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              <form action="api-products" method="POST" enctype="multipart/form-data">
+                                  <input type="hidden" name="action" value="addProduct">
+                                  <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($globalToken); ?>">
 
-                    <!-- Nombre del producto -->
-                    <div class="mb-3">
-                        <label for="productName" class="form-label text-light">Nombre</label>
-                        <input type="text" class="form-control bg-dark text-light" id="name" name="name" required>
-                    </div>
+                                  <!-- Nombre del producto -->
+                                  <div class="mb-3">
+                                      <label for="productName" class="form-label text-light">Nombre</label>
+                                      <input type="text" class="form-control bg-dark text-light" id="name" name="name" required>
+                                  </div>
 
-                    <!-- Slug -->
-                    <div class="mb-3">
-                        <label for="productSlug" class="form-label text-light">Slug</label>
-                        <input type="text" class="form-control bg-dark text-light" id="slug" name="slug" required>
-                    </div>
+                                  <!-- Slug -->
+                                  <div class="mb-3">
+                                      <label for="productSlug" class="form-label text-light">Slug</label>
+                                      <input type="text" class="form-control bg-dark text-light" id="slug" name="slug" required>
+                                  </div>
 
-                    <!-- Descripción -->
-                    <div class="mb-3">
-                        <label for="productDescription" class="form-label text-light">Descripción</label>
-                        <textarea class="form-control bg-dark text-light" id="description" name="description" rows="3" required></textarea>
-                    </div>
+                                  <!-- Descripción -->
+                                  <div class="mb-3">
+                                      <label for="productDescription" class="form-label text-light">Descripción</label>
+                                      <textarea class="form-control bg-dark text-light" id="description" name="description" rows="3" required></textarea>
+                                  </div>
 
-                    <!-- Características -->
-                    <div class="mb-3">
-                        <label for="productFeatures" class="form-label text-light">Características</label>
-                        <input type="text" class="form-control bg-dark text-light" id="features" name="features" required>
-                    </div>
+                                  <!-- Características -->
+                                  <div class="mb-3">
+                                      <label for="productFeatures" class="form-label text-light">Características</label>
+                                      <input type="text" class="form-control bg-dark text-light" id="features" name="features" required>
+                                  </div>
 
-                    <!-- Imagen -->
-                    <div class="mb-3">
-                        <label for="productImage" class="form-label text-light">Imagen</label>
-                        <input type="file" class="form-control bg-dark text-light" id="cover" name="cover" accept="image/*" required>
-                    </div>
+                                  <!-- Imagen -->
+                                  <div class="mb-3">
+                                      <label for="productImage" class="form-label text-light">Imagen</label>
+                                      <input type="file" class="form-control bg-dark text-light" id="cover" name="cover" accept="image/*" required>
+                                  </div>
 
-                    <!-- Marca -->
-                    <div class="mb-3">
-                        <label for="productBrand" class="form-label text-light">Marca</label>
-                        <select class="form-control bg-dark text-light" id="brand_id" name="brand_id" required>
-                            <?php foreach ($brands as $brand): ?>
-                                <option value="<?php echo htmlspecialchars($brand['id']); ?>">
-                                    <?php echo htmlspecialchars($brand['name']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
+                                  <!-- Marca -->
+                                  <div class="mb-3">
+                                      <label for="productBrand" class="form-label text-light">Marca</label>
+                                      <select class="form-control bg-dark text-light" id="brand_id" name="brand_id" required>
+                                          <?php foreach ($brands as $brand): ?>
+                                              <option value="<?php echo htmlspecialchars($brand['id']); ?>">
+                                                  <?php echo htmlspecialchars($brand['name']); ?>
+                                              </option>
+                                          <?php endforeach; ?>
+                                      </select>
+                                  </div>
 
-                    <!-- Tags dinámicos -->
-                    <div class="mb-3">
-                        <label class="form-label text-light">Tags</label>
-                        <div id="tagsContainer"></div>
-                        <button type="button" class="btn btn-sm btn-outline-light" onclick="addField('tagsContainer', 'tags')">Agregar etiqueta</button>
-                    </div>
+                                  <div class="mb-3">
+                                    <label for="productTags" class="form-label text-light">Tags</label>
+                                    <select class="form-control bg-dark text-light select-multiple" id="productTags" name="tags[]" multiple style="height: auto; overflow-y: auto; max-height: 150px;">
+                                        <?php foreach ($tags as $tag): ?>
+                                            <option value="<?= htmlspecialchars($tag['id']) ?>">
+                                                <?= htmlspecialchars($tag['name']) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div id="selectedTags" class="selected-items-container mt-3"></div>
 
-                    <!-- Categorías dinámicas -->
-                    <div class="mb-3">
-                        <label class="form-label text-light">Categorías</label>
-                        <div id="categoriesContainer"></div>
-                        <button type="button" class="btn btn-sm btn-outline-light" onclick="addField('categoriesContainer', 'categories')">Agregar categoría</button>
-                    </div>
+                                <div class="mb-3">
+                                    <label for="productCategories" class="form-label text-light">Categories</label>
+                                    <select class="form-control bg-dark text-light select-multiple" id="productCategories" name="categories[]" multiple style="height: auto; overflow-y: auto; max-height: 150px;">
+                                        <?php foreach ($categories as $category): ?>
+                                            <option value="<?= htmlspecialchars($category['id']) ?>">
+                                                <?= htmlspecialchars($category['name']) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div id="selectedCategories" class="selected-items-container mt-3"></div>
 
-                    <!-- Botones de modal -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</modal>
+                                  <!-- Botones de modal -->
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                      <button type="submit" class="btn btn-primary">Guardar</button>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+              </modal>
 
               <!-- MODAL EDITAR PRODUCTO -->
               <modal class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
@@ -202,54 +224,64 @@ $tags = $tagController->getTags();
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                    <form action="api-products" method="POST" enctype="multipart/form-data">
+                      <form action="api-products" method="POST" enctype="multipart/form-data">
+                      <input type="hidden" name="action" value="editProduct">
+                      <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($globalToken); ?>">
+                      <input type="hidden" name="id" id="productId">
                         <div class="mb-3">
                           <label for="productName" class="form-label text-light">Nombre</label>
-                          <input type="text" class="form-control bg-dark text-light" id="name" name="name" required>
+                          <input type="text" class="form-control bg-dark text-light" id="name" name="name">
                         </div>
                         <div class="mb-3">
                           <label for="productSlug" class="form-label text-light">Slug</label>
-                          <input type="text" class="form-control bg-dark text-light" id="slug" name="slug" required>
+                          <input type="text" class="form-control bg-dark text-light" id="slug" name="slug">
                         </div>
                         <div class="mb-3">
                           <label for="productDescription" class="form-label text-light">Descripción</label>
-                          <textarea class="form-control bg-dark text-light" id="description" name="description" rows="3" required></textarea>
-                        </div>
+                          <textarea class="form-control bg-dark text-light" id="description" name="description" rows="3" ></textarea>
+                          </div>
                         <div class="mb-3">
                           <label for="productFeatures" class="form-label text-light">Características</label>
-                          <input type="text" class="form-control bg-dark text-light" id="features" name="features" required>
+                          <input type="text" class="form-control bg-dark text-light" id="features" name="features" >
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                           <label for="productImage" class="form-label text-light">Imagen</label>
-                          <input type="file" class="form-control bg-dark text-light" id="cover" name="cover" accept="image/*" required>
-                        </div>
+                          <input type="file" class="form-control bg-dark text-light" id="cover" name="cover" accept="image/*">
+                        </div> -->
                         <div class="mb-3">
                           <label for="productBrand" class="form-label text-light">Marca</label>
-                          <select class="form-control bg-dark text-light" id="brand_id" name="brand_id" required>
-                            <option value="1">Marca 1</option>
-                            <option value="2">Marca 2</option>
-                            <option value="3">Marca 3</option>
+                          <select class="form-control bg-dark text-light" id="brand_id" name="brand_id">
+                            <?php foreach ($brands as $brand): ?>
+                                <option value="<?php echo htmlspecialchars($brand['id']); ?>">
+                                    <?php echo htmlspecialchars($brand['name']); ?>
+                                </option>
+                            <?php endforeach; ?>
                           </select>
                         </div>
                         <div class="mb-3">
                           <label for="productTags" class="form-label text-light">Tags</label>
-                          <select class="form-control bg-dark text-light select-multiple" id="productTags" style="height: auto; overflow-y: auto; max-height: 150px;">
-                            <option value="1">Muebles</option>
-                            <option value="2">Hogar</option>
+                          <select class="form-control bg-dark text-light select-multiple" id="productTags" name="tags[]" multiple style="height: auto; overflow-y: auto; max-height: 150px;">
+                              <?php foreach ($tags as $tag): ?>
+                                  <option value="<?= htmlspecialchars($tag['id']) ?>">
+                                      <?= htmlspecialchars($tag['name']) ?>
+                                  </option>
+                              <?php endforeach; ?>
                           </select>
-                        </div>
+                      </div>
+                      <div id="selectedTags" class="selected-items-container mt-3"></div>
 
-                        <div id="selectedTags" class="selected-items-container mt-3"></div>
-
-                        <div class="mb-3">
+                      <div class="mb-3">
                           <label for="productCategories" class="form-label text-light">Categories</label>
-                          <select class="form-control bg-dark text-light select-multiple" id="productCategories" style="height: auto; overflow-y: auto; max-height: 150px;">
-                            <option value="3">Cocina y Electrodomésticos</option>
-                            <option value="4">Celulares</option>
+                          <select class="form-control bg-dark text-light select-multiple" id="productCategories" name="categories[]" multiple style="height: auto; overflow-y: auto; max-height: 150px;">
+                              <?php foreach ($categories as $category): ?>
+                                  <option value="<?= htmlspecialchars($category['id']) ?>">
+                                      <?= htmlspecialchars($category['name']) ?>
+                                  </option>
+                              <?php endforeach; ?>
                           </select>
-                        </div>
+                      </div>
+                      <div id="selectedCategories" class="selected-items-container mt-3"></div>
 
-                        <div id="selectedCategories" class="selected-items-container mt-3"></div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                           <button type="submit" class="btn btn-primary">Guardar</button>
@@ -258,6 +290,7 @@ $tags = $tagController->getTags();
                     </div>
                   </div>
                 </div>
+              </modal>
             </div>
           </div>
         </div>
@@ -325,6 +358,46 @@ $tags = $tagController->getTags();
       });
     });
   }
+  
+  // Referencia al modal
+const editProductModal = document.getElementById('editProductModal');
+
+// Evento al abrir el modal
+editProductModal.addEventListener('show.bs.modal', function (event) {
+    const button = event.relatedTarget;
+
+    // Obtener datos del producto desde los atributos data-*
+    const productId = button.getAttribute('data-id');
+    const productName = button.getAttribute('data-name');
+    const productSlug = button.getAttribute('data-slug');
+    const productDescription = button.getAttribute('data-description');
+    const productFeatures = button.getAttribute('data-features');
+    const productBrandId = button.getAttribute('data-brand_id');
+    const productCategories = JSON.parse(button.getAttribute('data-categories'));
+    const productTags = JSON.parse(button.getAttribute('data-tags'));
+
+    // Asignar valores a los campos del formulario
+    document.getElementById('productId').value = productId;
+    document.getElementById('name').value = productName;
+    document.getElementById('slug').value = productSlug;
+    document.getElementById('description').value = productDescription;
+    document.getElementById('features').value = productFeatures;
+    document.getElementById('brand_id').value = productBrandId;
+
+    // Seleccionar categorías
+    const categorySelect = document.getElementById('productCategories');
+    Array.from(categorySelect.options).forEach(option => {
+        option.selected = productCategories.includes(parseInt(option.value));
+    });
+
+    // Seleccionar tags
+    const tagsSelect = document.getElementById('productTags');
+    Array.from(tagsSelect.options).forEach(option => {
+        option.selected = productTags.includes(parseInt(option.value));
+    });
+});
+
+
 
   // Remover elemento seleccionado
   function removeSelectedItem(selectElementId, itemValue) {
