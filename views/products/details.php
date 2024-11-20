@@ -183,15 +183,22 @@ if ($productSlug) {
                   <h2 class="my-3"><?= htmlspecialchars($productDetails['name']) ?></h2>
                   <h3 class="mt-4 mb-sm-3 mb-2 f-w-500">Detalles</h3>
                   <div>
-                    <h4><?= htmlspecialchars($productDetails['description']) ?></h4>
+                      <h4><?= htmlspecialchars($productDetails['description']) ?></h4>
                   </div>
                   <div class="mb-3 row">
-                    <h4 class="col-form-label col-lg-2 col-sm-12">Stock</h4>
-                    <h4 class="col-lg-6 col-md-12 col-sm-12"><?= htmlspecialchars($productDetails['presentations'][0]['stock']) ?></h4>
+                      <h4 class="col-form-label col-lg-2 col-sm-12">Stock</h4>
+                      <h4 class="col-lg-6 col-md-12 col-sm-12">
+                          <?= !empty($productDetails['presentations'][0]['stock']) ? htmlspecialchars($productDetails['presentations'][0]['stock']) : 'No disponible' ?>
+                      </h4>
                   </div>
-                  <h3 class="mb-4"><b>$<?= htmlspecialchars($productDetails['presentations'][0]['price'][0]['amount']) ?>
-                  </b></h3>
-                </div>
+                  <h3 class="mb-4">
+                      <b>
+                          $<?= !empty($productDetails['presentations'][0]['price'][0]['amount']) 
+                              ? htmlspecialchars($productDetails['presentations'][0]['price'][0]['amount']) 
+                              : 'No disponible' ?>
+                      </b>
+                  </h3>
+              </div>
               </div>
             </div>
           </div>
@@ -376,9 +383,52 @@ if ($productSlug) {
                         </table>
                     </div>
 
-                    <!-- Placeholder para las Órdenes (si tienes datos relacionados, añade lógica similar aquí) -->
+                    <!-- Órdenes de la Presentación -->
                     <h4 class="text-secondary mb-3">Órdenes de Presentación <?= $index + 1 ?></h4>
-                    <!-- Aquí podrías agregar otra tabla para mostrar órdenes, iterando sobre un array si está disponible -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th>ID Orden</th>
+                                    <th>Folio</th>
+                                    <th>Total</th>
+                                    <th>Pagado</th>
+                                    <th>ID Cliente</th>
+                                    <th>ID Dirección</th>
+                                    <th>ID Estado Orden</th>
+                                    <th>ID Tipo Pago</th>
+                                    <th>ID Cupón</th>
+                                    <th>Cantidad</th>
+                                    <th>ID Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php if (!empty($productDetails['presentations'][0]['orders'])): ?>
+                              <?php foreach ($productDetails['presentations'][0]['orders'] as $order): ?>
+                                  <tr>
+                                      <td><?= htmlspecialchars($order['id']) ?></td>
+                                      <td><?= htmlspecialchars($order['folio']) ?></td>
+                                      <td>$<?= number_format($order['total'], 2) ?></td>
+                                      <td class="<?= $order['is_paid'] ? 'text-success' : 'text-danger' ?>">
+                                          <?= $order['is_paid'] ? 'Pagado' : 'No Pagado' ?>
+                                      </td>
+                                      <td><?= htmlspecialchars($order['client_id']) ?></td>
+                                      <td><?= htmlspecialchars($order['address_id']) ?></td>
+                                      <td><?= htmlspecialchars($order['order_status_id']) ?></td>
+                                      <td><?= htmlspecialchars($order['payment_type_id']) ?></td>
+                                      <td><?= htmlspecialchars($order['coupon_id'] ?? 'N/A') ?></td>
+                                      <td><?= htmlspecialchars($order['pivot']['quantity']) ?></td>
+                                      <td><?= htmlspecialchars($order['pivot']['price_id']) ?></td>
+                                  </tr>
+                              <?php endforeach; ?>
+                          <?php else: ?>
+                              <tr>
+                                  <td colspan="11">No hay órdenes disponibles para esta presentación.</td>
+                              </tr>
+                          <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 <?php endforeach; ?>
             <?php else: ?>
                 <p>No se encontraron presentaciones para este producto.</p>
