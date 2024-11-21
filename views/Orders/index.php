@@ -1,5 +1,17 @@
 <?php
 include_once "../../app/config.php";
+include_once "../../app/OrderController.php";
+include_once "../../app/ProductController.php";
+include_once "../../app/ClientController.php";
+
+$orderController = new OrderController();
+$orders = $orderController->getOrders();
+
+$productController = new ProductController();
+$products = $productController->getProducts();
+
+$clientController = new ClientController();
+$clients = $clientController->getClients();
 ?>
 
 <!doctype html>
@@ -69,134 +81,95 @@ include_once "../../app/config.php";
 
                 <!-- [ Main Content ] start -->
                 <div class="row">
-                    <!-- ORDERS -->
                     <div class="col-lg-12 col-xxl-12">
                         <div class="tab-content">
                             <div class="tab-pane show active" id="orders" role="tabpanel">
                                 <div class="container my-3">
                                     <div class="row">
-                                        <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                            <div class="border card">
-                                                <div class="p-2 card-body">
-                                                    <h6 class="mb-2">Folio: 82712</h6>
-                                                    <ul class="list-group list-group-flush my-2">
-                                                        <li class="list-group-item px-0 py-2 d-flex justify-content-between">
-                                                            <span>Total:</span>
-                                                            <strong>$8999.99</strong>
-                                                        </li>
-                                                        <li class="list-group-item px-0 py-2 d-flex justify-content-between">
-                                                            <span>Status:</span>
-                                                            <span>Pendiente de pago</span>
-                                                        </li>
-                                                        <li class="list-group-item px-0 py-2 d-flex justify-content-between">
-                                                            <span>Payment:</span>
-                                                            <span>Efectivo</span>
-                                                        </li>
-                                                        <li class="list-group-item px-0 py-2 d-flex justify-content-between">
-                                                            <span>Productos:</span>
-                                                            <span>2</span>
-                                                        </li>
-                                                        <li class="list-group-item px-0 py-2">
-                                                            <strong>Productos incluidos:</strong>
-                                                            <ul class="mb-0 ps-3">
-                                                                <li>Comedor Miguel con 4 Sillas - $450</li>
-                                                                <li>Colchón Matrimonial Zero - $8999.99</li>
+                                        <?php if (!empty($orders)) : ?>
+                                            <?php foreach ($orders as $order) : ?>
+                                                <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                                    <div class="border card">
+                                                        <div class="p-2 card-body">
+                                                            <h6 class="mb-2">Folio: <?= htmlspecialchars($order['folio']); ?></h6>
+                                                            <ul class="list-group list-group-flush my-2">
+                                                                <li class="list-group-item px-0 py-2 d-flex justify-content-between">
+                                                                    <span>Total:</span>
+                                                                    <strong>$<?= number_format($order['total'], 2); ?></strong>
+                                                                </li>
+                                                                <li class="list-group-item px-0 py-2 d-flex justify-content-between">
+                                                                    <span>Status:</span>
+                                                                    <span>
+                                                                        <?= match ($order['order_status_id']) {
+                                                                            6 => 'Pendiente de pago', // Puedes ajustar estos valores según lo que signifiquen
+                                                                            7 => 'Pagada',
+                                                                            8 => 'Cancelada',
+                                                                            default => 'Desconocido',
+                                                                        }; ?>
+                                                                    </span>
+                                                                </li>
+                                                                <li class="list-group-item px-0 py-2 d-flex justify-content-between">
+                                                                    <span>Payment:</span>
+                                                                    <span>
+                                                                        <?= match ($order['payment_type_id']) {
+                                                                            1 => 'Efectivo',
+                                                                            2 => 'Tarjeta',
+                                                                            3 => 'Transferencia',
+                                                                            default => 'Desconocido',
+                                                                        }; ?>
+                                                                    </span>
+                                                                </li>
+                                                                <li class="list-group-item px-0 py-2 d-flex justify-content-between">
+                                                                    <span>Productos:</span>
+                                                                    <span><?= count($order['presentations']); ?></span>
+                                                                </li>
+                                                                <li class="list-group-item px-0 py-2">
+                                                                    <strong>Productos incluidos:</strong>
+                                                                    <ul class="mb-0 ps-3">
+                                                                        <?php foreach ($order['presentations'] as $product) : ?>
+                                                                            <li><?= htmlspecialchars($product['description']) . ' - $' . number_format($product['current_price']['amount'], 2); ?></li>
+                                                                        <?php endforeach; ?>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="list-group-item px-0 py-2">
+                                                                    <strong>Dirección del cliente:</strong>
+                                                                    <p class="mb-0 ps-3">
+                                                                        <?php if (!empty($order['client']) && !empty($order['client']['name']) && !empty($order['client']['email'])): ?>
+                                                                            <?= htmlspecialchars($order['client']['name'] . ' - ' . $order['client']['email']); ?>
+                                                                        <?php else: ?>
+                                                                            <span>No hay clientes</span>
+                                                                        <?php endif; ?>
+                                                                    </p>
+                                                                </li>
+                                                                <li class="list-group-item px-0 py-2 d-flex justify-content-between">
+                                                                    <span>Cupón aplicado:</span>
+                                                                    <span><?= isset($order['coupon_id']) ? 'Sí' : 'No'; ?></span>
+                                                                </li>
                                                             </ul>
-                                                        </li>
-                                                        <li class="list-group-item px-0 py-2">
-                                                            <strong>Dirección del cliente:</strong>
-                                                            <p class="mb-0 ps-3">
-                                                                Calle articulo 743, 123, La Paz, Baja California Sur, 23088
-                                                            </p>
-                                                        </li>
-                                                        <li class="list-group-item px-0 py-2 d-flex justify-content-between">
-                                                            <span>Cupón aplicado:</span>
-                                                            <span>10% off</span>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="d-flex justify-content-end mt-3">
-                                                        <a href="detailsOrder">
-                                                            <button class="btn btn-outline-primary btn-sm mb-1 mx-1 d-flex align-items-center justify-content-center" title="Info">
-                                                                <i class="ph-duotone ph-info"></i>
-                                                            </button>
-                                                        </a>
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#editOrderModal">
-                                                            <button class="btn btn-outline-warning btn-sm mx-1 d-flex align-items-center justify-content-center" title="Edit">
-                                                                <i class="ph-duotone ph-pencil"></i>
-                                                            </button>
-                                                        </a>
-                                                        <a href="">
-                                                            <button class="btn btn-outline-danger btn-sm mx-1 d-flex align-items-center justify-content-center" title="Delete">
-                                                                <i class="ph-duotone ph-trash"></i>
-                                                            </button>
-                                                        </a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Order 2 -->
-                                        <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                            <div class="border card">
-                                                <div class="p-2 card-body">
-                                                    <h6 class="mb-2">Folio: 82718</h6>
-                                                    <ul class="list-group list-group-flush my-2">
-                                                        <li class="list-group-item px-0 py-2 d-flex justify-content-between">
-                                                            <span>Total:</span>
-                                                            <strong>$9599.97</strong>
-                                                        </li>
-                                                        <li class="list-group-item px-0 py-2 d-flex justify-content-between">
-                                                            <span>Status:</span>
-                                                            <span>Cancelada</span>
-                                                        </li>
-                                                        <li class="list-group-item px-0 py-2 d-flex justify-content-between">
-                                                            <span>Payment:</span>
-                                                            <span>Tarjeta</span>
-                                                        </li>
-                                                        <li class="list-group-item px-0 py-2 d-flex justify-content-between">
-                                                            <span>Productos:</span>
-                                                            <span>3</span>
-                                                        </li>
-                                                        <li class="list-group-item px-0 py-2">
-                                                            <strong>Productos incluidos:</strong>
-                                                            <ul class="mb-0 ps-3">
-                                                                <li>Tostador Record 2 Rebanadas - $299.99</li>
-                                                                <li>Escurridor de Acero para Platos Farberware - $6299.99</li>
-                                                                <li>AirPods Pro con Estuche de Carga - $2999.99</li>
-                                                            </ul>
-                                                        </li>
-                                                        <li class="list-group-item px-0 py-2">
-                                                            <strong>Dirección del cliente:</strong>
-                                                            <p class="mb-0 ps-3">
-                                                                Calle Lope de Rueda, 32, Cabanillas del Campo, Guadalajara, 19171
-                                                            </p>
-                                                        </li>
-                                                        <li class="list-group-item px-0 py-2 d-flex justify-content-between">
-                                                            <span>Cupón aplicado:</span>
-                                                            <span>15% off</span>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="d-flex justify-content-end mt-3">
-                                                        <a href="detailsOrder">
-                                                            <button class="btn btn-outline-primary btn-sm mb-1 mx-1 d-flex align-items-center justify-content-center" title="Info">
-                                                                <i class="ph-duotone ph-info"></i>
-                                                            </button>
-                                                        </a>
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#editOrderModal">
-                                                            <button class="btn btn-outline-warning btn-sm mx-1 d-flex align-items-center justify-content-center" title="Edit">
-                                                                <i class="ph-duotone ph-pencil"></i>
-                                                            </button>
-                                                        </a>
-                                                        <a href="">
-                                                            <button class="btn btn-outline-danger btn-sm mx-1 d-flex align-items-center justify-content-center" title="Delete">
-                                                                <i class="ph-duotone ph-trash"></i>
-                                                            </button>
-                                                        </a>
+                                                            <div class="d-flex justify-content-end mt-3">
+                                                                <a href="detailsOrder?order_id=<?= htmlspecialchars($order['id']); ?>">
+                                                                    <button class="btn btn-outline-primary btn-sm mb-1 mx-1 d-flex align-items-center justify-content-center" title="Info">
+                                                                        <i class="ph-duotone ph-info"></i>
+                                                                    </button>
+                                                                </a>
+                                                                <a href="#" data-bs-toggle="modal" data-bs-target="#editOrderModal" data-order-id="<?= htmlspecialchars($order['id']); ?>">
+                                                                    <button class="btn btn-outline-warning btn-sm mx-1 d-flex align-items-center justify-content-center" title="Edit">
+                                                                        <i class="ph-duotone ph-pencil"></i>
+                                                                    </button>
+                                                                </a>
+                                                                <a href="deleteOrder?order_id=<?= htmlspecialchars($order['id']); ?>" onclick="return confirm('¿Seguro que deseas eliminar esta orden?');">
+                                                                    <button class="btn btn-outline-danger btn-sm mx-1 d-flex align-items-center justify-content-center" title="Delete">
+                                                                        <i class="ph-duotone ph-trash"></i>
+                                                                    </button>
+                                                                </a>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            <?php endforeach; ?>
+                                        <?php else : ?>
+                                            <p>No se encontraron órdenes.</p>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -230,18 +203,20 @@ include_once "../../app/config.php";
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" enctype="multipart/form-data">
+                        <form action="api-orders" method="POST">
+                        <input type="hidden" name="action" value="addOrder">
+                        <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($globalToken); ?>">
                             <div class="mb-3">
                                 <label for="folio" class="form-label text-light">Folio</label>
                                 <input type="text" class="form-control bg-dark text-light" id="folio" name="folio" required>
                             </div>
                             <div class="mb-3">
-                                <label for="total" class="form-label text-light">Monto de la orden</label>
-                                <input type="text" class="form-control bg-dark text-light" id="total" name="total" required>
+                                <label for="total" class="form-label text-light">Monto de la Orden</label>
+                                <input type="text" class="form-control bg-dark text-light" id="total" name="total" value="0.00" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="is_paid" class="form-label text-light">¿Ha sido pagada?</label>
-                                <select class="form-select bg-dark text-light" id="is_paid" name="is_paid" required>
+                                <select class="form-select bg-dark text-light" id="is_paid" name="isPaid" required>
                                     <option value="" disabled selected>¿La orden se pagó?</option>
                                     <option value="1">Sí</option>
                                     <option value="0">No</option>
@@ -249,20 +224,20 @@ include_once "../../app/config.php";
                             </div>
                             <div class="mb-3">
                                 <label for="client_id" class="form-label text-light">Cliente</label>
-                                <select class="form-select bg-dark text-light" id="client_id" name="client_id" required>
+                                <select class="form-select bg-dark text-light" id="client_id" name="clientId" required>
                                     <option value="" disabled selected>Seleccione un cliente</option>
-                                    <option value="1">Cliente1</option>
-                                    <option value="2">Cliente2</option>
+                                    <?php foreach ($clients as $client): ?>
+                                        <option value="<?= $client['id'] ?>"><?= htmlspecialchars($client['name']) ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="address_id" class="form-label text-light">ID de la dirección</label>
-                                <input type="text" class="form-control bg-dark text-light" id="address_id" name="address_id" required>
+                                <input type="text" class="form-control bg-dark text-light" id="address_id" name="addressId" required>
                             </div>
-                            </select>
                             <div class="mb-3">
                                 <label for="order_status_id" class="form-label text-light">Estatus de la orden</label>
-                                <select class="form-select bg-dark text-light" id="order_status_id" name="order_status_id" required>
+                                <select class="form-select bg-dark text-light" id="order_status_id" name="orderStatusId" required>
                                     <option value="" disabled selected>Estado de la orden</option>
                                     <option value="1">Pendiente de pago</option>
                                     <option value="2">Pagado</option>
@@ -274,7 +249,7 @@ include_once "../../app/config.php";
                             </div>
                             <div class="mb-3">
                                 <label for="payment_type_id" class="form-label text-light">¿Método de pago?</label>
-                                <select class="form-select bg-dark text-light" id="payment_type_id" name="payment_type_id" required>
+                                <select class="form-select bg-dark text-light" id="payment_type_id" name="paymentTypeId" required>
                                     <option value="" disabled selected>Seleccione un método de pago</option>
                                     <option value="1">Efectivo</option>
                                     <option value="2">Tarjeta</option>
@@ -283,7 +258,7 @@ include_once "../../app/config.php";
                             </div>
                             <div class="mb-3">
                                 <label for="coupon_id" class="form-label text-light">Cupón</label>
-                                <select class="form-select bg-dark text-light" id="coupon_id" name="coupon_id" required>
+                                <select class="form-select bg-dark text-light" id="coupon_id" name="couponId" required>
                                     <option value="" disabled selected>Seleccione un cupón promocional</option>
                                     <option value="1">10% OFF</option>
                                     <option value="2">15% OFF</option>
@@ -297,20 +272,21 @@ include_once "../../app/config.php";
                                 </select>
                             </div>
                             <div id="select-container">
-                                <div id="select-container-1">
-                                    <div class="mb-3">
-                                        <label for="modal1[0][id]" class="form-label text-light">Producto 1</label>
-                                        <select class="form-select bg-dark text-light" id="modal1[0][id]" name="modal1[0][id]" required>
+                                <div id="product-row-1" class="product-row">
+                                    <div id="product-row-1" class="product-row">
+                                        <label for="presentations[0][id]" class="form-label text-light">Producto</label>
+                                        <select class="form-select bg-dark text-light" id="presentations[0][id]" name="presentations[0][id]" required>
                                             <option value="" disabled selected>Seleccione un producto</option>
-                                            <option value="1">Product1</option>
-                                            <option value="2">Product2</option>
+                                            <?php foreach ($products as $product): ?>
+                                                <option value="<?= $product['id'] ?>"><?= htmlspecialchars($product['name']) ?></option>
+                                            <?php endforeach; ?>
                                         </select>
-                                        <label for="modal1[0][quantity]" class="form-label text-light mt-2">Cantidad producto 1</label>
-                                        <input type="text" class="form-control bg-dark text-light" id="modal1[0][quantity]" name="modal1[0][quantity]" required>
+                                        <label for="presentations[0][quantity]" class="form-label text-light mt-2">Cantidad</label>
+                                        <input type="number" class="form-control bg-dark text-light" id="presentations[0][quantity]" name="presentations[0][quantity]" required>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-primary mt-3 add-select-btn" data-container="select-container-1">Agregar otro</button>
-                            </div>
+                                    <button type="button" class="btn btn-primary mt-3 add-select-btn" data-container="select-container">Agregar otro</button>
+                                </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                 <button type="submit" class="btn btn-primary">Guardar</button>
@@ -360,7 +336,6 @@ include_once "../../app/config.php";
                                 <label for="address_id" class="form-label text-light">ID de la dirección</label>
                                 <input type="text" class="form-control bg-dark text-light" id="address_id" name="address_id" required>
                             </div>
-                            </select>
                             <div class="mb-3">
                                 <label for="order_status_id" class="form-label text-light">Estatus de la orden</label>
                                 <select class="form-select bg-dark text-light" id="order_status_id" name="order_status_id" required>
@@ -459,63 +434,62 @@ include_once "../../app/config.php";
     <!-- [Body] end -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Identificar todos los botones con la clase `add-select-btn`
-            const addSelectButtons = document.querySelectorAll('.add-select-btn');
+    // Obtener el botón de agregar producto
+    const addSelectButton = document.querySelector('.add-select-btn');
 
-            // Asociar evento a cada botón
-            addSelectButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const containerId = button.getAttribute('data-container'); // Contenedor asociado
-                    const container = document.getElementById(containerId);
+    // Asociar evento click al botón
+    addSelectButton.addEventListener('click', () => {
+        const containerId = addSelectButton.getAttribute('data-container'); // Contenedor asociado
+        const container = document.getElementById(containerId);
 
-                    // Contar los selects ya existentes dentro del contenedor
-                    const itemCount = container.querySelectorAll('.mb-3').length;
+        // Contar los productos ya existentes
+        const itemCount = container.querySelectorAll('.product-row').length;
 
-                    // Crear un nuevo contenedor para el nuevo conjunto de campos
-                    const newItem = document.createElement('div');
-                    newItem.className = 'mb-3';
+        // Crear un nuevo contenedor para los campos
+        const newItem = document.createElement('div');
+        newItem.className = 'product-row mb-3';
 
-                    // Crear label y select para producto
-                    const productLabel = document.createElement('label');
-                    productLabel.className = 'form-label text-light';
-                    productLabel.for = `${containerId}[${itemCount}][id]`;
-                    productLabel.textContent = `Producto ${itemCount + 1}`;
+        // Crear label y select para producto
+        const productLabel = document.createElement('label');
+        productLabel.className = 'form-label text-light';
+        productLabel.for = `presentations[${itemCount}][id]`;
+        productLabel.textContent = `Producto ${itemCount + 1}`;
 
-                    const newSelect = document.createElement('select');
-                    newSelect.className = 'form-select bg-dark text-light';
-                    newSelect.id = `${containerId}[${itemCount}][id]`;
-                    newSelect.name = `${containerId}[${itemCount}][id]`;
-                    newSelect.required = true;
-                    newSelect.innerHTML = `
-                <option value="" disabled selected>Seleccione un producto</option>
-                <option value="1">Product1</option>
-                <option value="2">Product2</option>
-            `;
+        const newSelect = document.createElement('select');
+        newSelect.className = 'form-select bg-dark text-light';
+        newSelect.id = `presentations[${itemCount}][id]`;
+        newSelect.name = `presentations[${itemCount}][id]`;
+        newSelect.required = true;
+        newSelect.innerHTML = `
+            <option value="" disabled selected>Seleccione un producto</option>
+            <option value="1">Producto 1</option>
+            <option value="2">Producto 2</option>
+        `;
 
-                    // Crear label e input para cantidad
-                    const quantityLabel = document.createElement('label');
-                    quantityLabel.className = 'form-label text-light mt-2';
-                    quantityLabel.for = `${containerId}[${itemCount}][quantity]`;
-                    quantityLabel.textContent = `Cantidad producto ${itemCount + 1}`;
+        // Crear label e input para cantidad
+        const quantityLabel = document.createElement('label');
+        quantityLabel.className = 'form-label text-light mt-2';
+        quantityLabel.for = `presentations[${itemCount}][quantity]`;
+        quantityLabel.textContent = `Cantidad producto ${itemCount + 1}`;
 
-                    const newQuantity = document.createElement('input');
-                    newQuantity.className = 'form-control bg-dark text-light';
-                    newQuantity.id = `${containerId}[${itemCount}][quantity]`;
-                    newQuantity.name = `${containerId}[${itemCount}][quantity]`;
-                    newQuantity.type = 'text';
-                    newQuantity.required = true;
+        const newQuantity = document.createElement('input');
+        newQuantity.className = 'form-control bg-dark text-light';
+        newQuantity.id = `presentations[${itemCount}][quantity]`;
+        newQuantity.name = `presentations[${itemCount}][quantity]`;
+        newQuantity.type = 'number';
+        newQuantity.required = true;
 
-                    // Agregar campos al nuevo contenedor
-                    newItem.appendChild(productLabel);
-                    newItem.appendChild(newSelect);
-                    newItem.appendChild(quantityLabel);
-                    newItem.appendChild(newQuantity);
+        // Agregar los nuevos campos al contenedor
+        newItem.appendChild(productLabel);
+        newItem.appendChild(newSelect);
+        newItem.appendChild(quantityLabel);
+        newItem.appendChild(newQuantity);
 
-                    // Insertar el nuevo conjunto de campos en el contenedor correspondiente
-                    container.appendChild(newItem);
-                });
-            });
-        });
+        // Agregar el nuevo conjunto de campos al contenedor principal
+        container.appendChild(newItem);
+    });
+});
+
     </script>
 
 </html>
