@@ -27,9 +27,9 @@ RewriteRule ^clients/?$ views/clients/index.php
 RewriteRule ^detailsClient/?$ views/clients/details.php
 
 #orders
-RewriteRule ^orders/?$ views/orders/index.php
-# RewriteRule ^orders/([^/]+)/?$ views/orders/details.php
-RewriteRule ^detailsOrder/?$ views/orders/details.php
+RewriteRule ^orders/?$ views/Orders/index.php
+# RewriteRule ^orders/([^/]+)/?$ views/Orders/details.php
+RewriteRule ^detailsOrder/?$ views/Orders/details.php
 
 
 
