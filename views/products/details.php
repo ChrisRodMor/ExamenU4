@@ -5,7 +5,7 @@ include_once "../../app/PresentationController.php";
 
 // Obtener el slug del producto desde la URL amigable
 $requestUri = $_SERVER['REQUEST_URI'];
-$basePath = '/ExamenU4/products/';
+$basePath = '<?= BASE_PATH ?>products/';
 $productSlug = str_replace($basePath, '', $requestUri);
 
 // Eliminar posibles barras finales
