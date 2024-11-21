@@ -3,13 +3,12 @@ include_once "../../app/config.php";
 include_once "../../app/ProductController.php";
 include_once "../../app/PresentationController.php";
 
-// Obtener el slug del producto desde la URL amigable
+// Obtener el slug directamente desde la URL amigable
 $requestUri = $_SERVER['REQUEST_URI'];
-$basePath = '<?= BASE_PATH ?>products/';
-$productSlug = str_replace($basePath, '', $requestUri);
 
-// Eliminar posibles barras finales
-$productSlug = rtrim($productSlug, '/');
+// Extraer la parte correspondiente al slug
+$pathParts = explode('/', trim($requestUri, '/')); // Divide la URL en partes
+$productSlug = end($pathParts); // Obtén el último segmento, que es el slug
 
 // Validar si el slug es válido
 if ($productSlug) {
@@ -21,14 +20,14 @@ if ($productSlug) {
         echo "No se encontró el producto. Verifica que el slug sea válido.";
         exit;
     }
-    $productId = $productDetails['id']; // Asegúrate de que este sea el campo correcto del ID en tu API
-    $presentationController = new PresentationController(); // Instancia del controlador de presentaciones
+    $productId = $productDetails['id'];
+    $presentationController = new PresentationController();
     $presentations = $presentationController->getPresentationsOfProduct($productId);
-
 } else {
     echo "No se especificó el slug del producto.";
     exit;
 }
+
 ?>
 
 
