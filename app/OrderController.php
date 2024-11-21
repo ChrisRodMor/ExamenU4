@@ -208,8 +208,8 @@
         
             $response = curl_exec($curl);
             curl_close($curl);
-        
-            return $response;
+
+            header('Location: ' . BASE_PATH . 'orders');
         }
 
         function editOrder($id, $orderStatusId) {
@@ -240,8 +240,8 @@
             $response = curl_exec($curl);
             curl_close($curl);
         
-            
-            return $response;
+
+            header('Location: ' . BASE_PATH . 'orders');
         }
 
         function deleteOrder($id) {
@@ -269,8 +269,8 @@
         
             $response = curl_exec($curl);
             curl_close($curl);
-        
-            return $response;
+
+            header('Location: ' . BASE_PATH . 'orders');
         }
         
         
