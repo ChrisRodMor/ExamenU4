@@ -18,6 +18,21 @@ $client = [];
 if (isset($_GET['id'])) {
     $client = $clientController->getClientByID($_GET['id']);
 }
+
+if (isset($_GET['client_id'])) {
+    $clientId = intval($_GET['client_id']);
+
+    $clientData = $clientController->getClientByID($clientId);
+
+    if ($clientData) {
+        echo json_encode($clientData);
+    } else {
+        echo json_encode(['error' => 'No se pudo obtener la información del cliente.']);
+    }
+} else {
+    echo json_encode(['error' => 'ID del cliente no especificado.']);
+}
+
 ?>
 
 <!doctype html>
@@ -76,14 +91,14 @@ if (isset($_GET['id'])) {
                     </div>
                 </div>
 
-                <div class="d-flex gap-2" style="margin-top: 15px; margin-bottom: 15px;">
+                <!-- <div class="d-flex gap-2" style="margin-top: 15px; margin-bottom: 15px;">
                     <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addOrderModal">
                         Crear Orden
                     </a>
                     <button class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#dateRangeModal">
                         Seleccionar rango de Fechas
                     </button>
-                </div>
+                </div> -->
 
                 <!-- [ Main Content ] start -->
                 <div class="row">
@@ -107,10 +122,13 @@ if (isset($_GET['id'])) {
                                                                     <span>Status:</span>
                                                                     <span>
                                                                         <?= match ($order['order_status_id']) {
-                                                                            6 => 'Pendiente de pago', // Puedes ajustar estos valores según lo que signifiquen
-                                                                            7 => 'Pagada',
-                                                                            8 => 'Cancelada',
-                                                                            default => 'Desconocido',
+                                                                            1 => 'Pendiente de pago',
+                                                                            2 => 'Pagada',
+                                                                            3 => 'Enviada',
+                                                                            4 => 'Abandonado',
+                                                                            5 => 'Pendiente de enviar',
+                                                                            6 => 'Cancelada',
+                                                                            default => 'N/A',
                                                                         }; ?>
                                                                     </span>
                                                                 </li>
@@ -185,10 +203,10 @@ if (isset($_GET['id'])) {
                                                             </div>
                                                             <div class="modal-body">
                                                                 <form action="api-orders" method="POST">
-                                                                <input type="hidden" name="action" value="editOrder">
-                                                                <input type="hidden" name="global_token" value="<?= htmlspecialchars($globalToken) ?>">
-                                                                <input type="hidden" name="id" id="userId" value="<?= htmlspecialchars($order['id']) ?>">
-                                                                    <div class="mb-3">
+                                                                    <input type="hidden" name="action" value="editOrder">
+                                                                    <input type="hidden" name="global_token" value="<?= htmlspecialchars($globalToken) ?>">
+                                                                    <input type="hidden" name="id" id="userId" value="<?= htmlspecialchars($order['id']) ?>">
+                                                                    <!-- <div class="mb-3">
                                                                         <label for="folio" class="form-label text-light">Folio</label>
                                                                         <input type="text" class="form-control bg-dark text-light" id="folio" value="<?= htmlspecialchars($order['folio']); ?>" name="folio" required>
                                                                     </div>
@@ -209,49 +227,47 @@ if (isset($_GET['id'])) {
                                                                             <option value="1">Sí</option>
                                                                             <option value="0">No</option>
                                                                         </select>
-                                                                    </div>
-                                                                    <div class="mb-3">
+                                                                    </div> -->
+                                                                    <!-- <div class="mb-3">
                                                                         <label for="client_id" class="form-label text-light">Cliente</label>
                                                                         <select class="form-select bg-dark text-light" id="clientId" name="client_id" required>
                                                                             <?php 
-                                                                            $selectedClientName = '';
-                                                                            if (isset($order['client_id'])) {
-                                                                                foreach ($clients as $client) {
-                                                                                    if ($client['id'] == $order['client_id']) {
-                                                                                        $selectedClientName = htmlspecialchars($client['name']);
-                                                                                        break;
+                                                                                $selectedClientName = '';
+                                                                                if (isset($order['client_id'])) {
+                                                                                    foreach ($clients as $client) {
+                                                                                        if ($client['id'] == $order['client_id']) {
+                                                                                            $selectedClientName = htmlspecialchars($client['name']);
+                                                                                            break;
+                                                                                        }
                                                                                     }
                                                                                 }
-                                                                            }
                                                                             ?>
                                                                             <option value="" disabled selected>
                                                                                 <?= !empty($selectedClientName) ? $selectedClientName : 'Seleccione un cliente'; ?>
                                                                             </option>
 
                                                                             <?php foreach ($clients as $client): ?>
-                                                                                <option value="<?= $client['id'] ?>">
-                                                                                    <?= htmlspecialchars($client['name']) ?>
-                                                                                </option>
+                                                                                <option value="<?= $client['id'] ?>"><?= htmlspecialchars($client['name']) ?></option>
                                                                             <?php endforeach; ?>
                                                                         </select>
-                                                                    </div>  
-                                                                    <div class="mb-3">
+                                                                    </div>   -->
+                                                                    <!-- <div class="mb-3">
                                                                         <label for="address_id" class="form-label text-light">Dirección</label>
                                                                         <input type="text" class="form-control bg-dark text-light" id="address_id" name="address_id" readonly>
-                                                                    </div>
+                                                                    </div> -->
                                                                     <div class="mb-3">
                                                                         <label for="order_status_id" class="form-label text-light">Estatus de la orden</label>
-                                                                        <select class="form-select bg-dark text-light" id="order_status_id" value="<?= htmlspecialchars($order['order_status_id']); ?>" name="order_status_id" required>
-                                                                            <option value="" disabled selected>Estado de la orden</option>
+                                                                        <select class="form-select bg-dark text-light" id="order_status_id" name="order_status_id" required>
+                                                                            <option value="<?= $order['order_status']['id'] ?>" disabled selected><?= htmlspecialchars($order['order_status']['name']) ?></option>
                                                                             <option value="1">Pendiente de pago</option>
-                                                                            <option value="2">Pagado</option>
+                                                                            <option value="2">Pagada</option>
                                                                             <option value="3">Enviada</option>
-                                                                            <option value="4">Abonado</option>
+                                                                            <option value="4">Abandonado</option>
                                                                             <option value="5">Pendiente de enviar</option>
                                                                             <option value="6">Cancelada</option>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="mb-3">
+                                                                    <!-- <div class="mb-3">
                                                                         <label for="payment_type_id" class="form-label text-light">¿Método de pago?</label>
                                                                         <select class="form-select bg-dark text-light" id="payment_type_id" value="<?= htmlspecialchars($order['payment_type_id']); ?>" name="payment_type_id" required>
                                                                             <option value="" disabled selected>Seleccione un método de pago</option>
@@ -259,8 +275,8 @@ if (isset($_GET['id'])) {
                                                                             <option value="2">Tarjeta</option>
                                                                             <option value="3">Transferencia</option>
                                                                         </select>
-                                                                    </div>
-                                                                    <div class="mb-3">
+                                                                    </div> -->
+                                                                    <!-- <div class="mb-3">
                                                                         <label for="coupon_id" class="form-label text-light">Cupón</label>
                                                                         <select class="form-select bg-dark text-light" id="coupon_id" value="<?= htmlspecialchars($order['coupon_id']); ?>" name="coupon_id" required>
                                                                             <option value="" disabled selected>Seleccione un cupón promocional</option>
@@ -274,8 +290,8 @@ if (isset($_GET['id'])) {
                                                                             <option value="8">25% OFF (Cupón navideño)</option>
                                                                             <option value="9">200 MXN OFF</option>
                                                                         </select>
-                                                                    </div>
-                                                                    <div id="select-container-2">
+                                                                    </div> -->
+                                                                    <!-- <div id="select-container-2">
                                                                         <div class="mb-3">
                                                                             <label for="modal2[0][id]" class="form-label text-light">Producto 1</label>
                                                                             <select class="form-select bg-dark text-light" id="modal2[0][id]" value="<?= htmlspecialchars($order['presentations[0][id]']); ?>" name="presentations[0][id]" required>
@@ -286,8 +302,8 @@ if (isset($_GET['id'])) {
                                                                             <label for="modal2[0][quantity]" class="form-label text-light mt-2">Cantidad producto 1</label>
                                                                             <input type="text" class="form-control bg-dark text-light" id="modal2[0][quantity]" value="<?= htmlspecialchars($order['presentations[0][quantity]']); ?>" name="presentations[0][quantity]" required>
                                                                         </div>
-                                                                    </div>
-                                                                    <button type="button" class="btn btn-primary mt-3 add-select-btn" data-container="select-container-2">Agregar otro</button>
+                                                                    </div> -->
+                                                                    <!-- <button type="button" class="btn btn-primary mt-3 add-select-btn" data-container="select-container-2">Agregar otro</button> -->
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -301,6 +317,10 @@ if (isset($_GET['id'])) {
                                         <?php else : ?>
                                             <p>No se encontraron órdenes.</p>
                                         <?php endif; ?>
+                                    </div>
+                                    <!-- Contenedor para mostrar las variables -->
+                                    <div class="mt-3">
+                                        <p id="variablesDisplay" style="display: none;" class="text-success"></p>
                                     </div>
                                 </div>
                             </div>
@@ -342,36 +362,12 @@ if (isset($_GET['id'])) {
                                 <label for="folio" class="form-label text-light">Folio</label>
                                 <input type="text" class="form-control bg-dark text-light" name="folio" required>
                             </div>
-
+                            
                             <div class="mb-3">
                                 <label for="total" class="form-label text-light">Monto de la Orden</label>
-                                <input type="number" class="form-control bg-dark text-light" id="total" name="total" step="0.01" required>
+                                <input type="number" class="form-control bg-dark text-light" id="total" name="total" step="10" required>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="is_paid" class="form-label text-light">¿Ha sido pagada?</label>
-                                <select class="form-select bg-dark text-light" id="is_paid" name="is_paid" required>
-                                    <option value="" disabled selected>¿La orden se pagó?</option>
-                                    <option value="1">Sí</option>
-                                    <option value="0">No</option>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="client_id" class="form-label text-light">Cliente</label>
-                                <select class="form-select bg-dark text-light" id="clientId" name="client_id" required>
-                                    <option value="" disabled selected>Seleccione un cliente</option>
-                                    <?php foreach ($clients as $client): ?>
-                                        <option value="<?= $client['id'] ?>"><?= htmlspecialchars($client['name']) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="addressId" class="form-label text-light">Dirección</label>
-                                <input type="text" class="form-control bg-dark text-light" id="addressId" name="address_id" required>
-                            </div>
-
+                            
                             <div class="mb-3">
                                 <label for="order_status_id" class="form-label text-light">Estatus de la orden</label>
                                 <select class="form-select bg-dark text-light" name="order_status_id" required>
@@ -384,7 +380,6 @@ if (isset($_GET['id'])) {
                                     <option value="6">Cancelada</option>
                                 </select>
                             </div>
-
                             <div class="mb-3">
                                 <label for="payment_type_id" class="form-label text-light">¿Método de pago?</label>
                                 <select class="form-select bg-dark text-light" id="paymentTypeId" name="payment_type_id" required>
@@ -394,23 +389,6 @@ if (isset($_GET['id'])) {
                                     <option value="3">Transferencia</option>
                                 </select>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="coupon_id" class="form-label text-light">Cupón</label>
-                                <select class="form-select bg-dark text-light" id="couponId" name="coupon_id">
-                                    <option value="" disabled selected>Seleccione un cupón promocional</option>
-                                    <option value="1">10% OFF</option>
-                                    <option value="2">15% OFF</option>
-                                    <option value="3">100MXN OFF</option>
-                                    <option value="4">50 MXN OFF</option>
-                                    <option value="5">20% OFF</option>
-                                    <option value="6">500MNX OFF</option>
-                                    <option value="7">5% OFF</option>
-                                    <option value="8">25% OFF (Cupón navideño)</option>
-                                    <option value="9">200 MXN OFF</option>
-                                </select>
-                            </div>
-
                             <!-- Productos dinámicos -->
                             <div id="select-container">
                                 <div class="product-row">
@@ -426,8 +404,43 @@ if (isset($_GET['id'])) {
                                 </div>
                             </div>
                             <button type="button" class="btn btn-primary mt-3 add-select-btn">Agregar otro producto</button>
-                        </div>
+                            <div class="mb-3">
+                                <label for="addressId" class="form-label text-light">Dirección</label>
+                                <input type="number" class="form-control bg-dark text-light" min = "1" id="addressId" name="address_id" step="1" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="coupon_id" class="form-label text-light">Cupón</label>
+                                <select class="form-select bg-dark text-light" id="couponId" name="coupon_id">
+                                    <option value="" disabled selected>Seleccione un cupón promocional</option>
+                                    <option value="1">10% OFF</option>
+                                    <option value="2">15% OFF</option>
+                                    <option value="3">100MXN OFF</option>
+                                    <option value="4">50 MXN OFF</option>
+                                    <option value="5">20% OFF</option>
+                                    <option value="6">500MNX OFF</option>
+                                    <option value="7">5% OFF</option>
+                                    <option value="8">25% OFF (Cupón navideño)</option>
+                                </select>
+                            </div>
+                            <!-- <div class="mb-3">
+                                <label for="is_paid" class="form-label text-light">¿Ha sido pagada?</label>
+                                <select class="form-select bg-dark text-light" id="is_paid" name="is_paid" required>
+                                    <option value="" disabled selected>¿La orden se pagó?</option>
+                                    <option value="1">Sí</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div> -->
 
+                            <div class="mb-3">
+                                <label for="client_id" class="form-label text-light">Cliente</label>
+                                <select class="form-select bg-dark text-light" id="clientId" name="client_id" required>
+                                    <option value="" disabled selected>Seleccione un cliente</option>
+                                    <?php foreach ($clients as $client): ?>
+                                        <option value="<?= $client['id'] ?>"><?= htmlspecialchars($client['name']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn btn-primary">Guardar</button>
@@ -448,22 +461,23 @@ if (isset($_GET['id'])) {
                     <div class="modal-body">
                         <form id="dateRangeForm">
                             <div class="mb-3">
-                                <label for="startDate" class="form-label">Fecha Inicial</label>
-                                <input type="date" class="form-control" id="startDate" required>
+                                <label for="startDate" class="form-label">Fecha Inicial (Formato: YYYY-MM-DD)</label>
+                                <input type="text" class="form-control" id="startDate" placeholder="Ejemplo: 2022-10-04" required>
                             </div>
                             <div class="mb-3">
-                                <label for="endDate" class="form-label">Fecha Final</label>
-                                <input type="date" class="form-control" id="endDate" required>
+                                <label for="endDate" class="form-label">Fecha Final (Formato: YYYY-MM-DD)</label>
+                                <input type="text" class="form-control" id="endDate" placeholder="Ejemplo: 2042-10-25" required>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" id="generateLinkButton">Generar Enlace</button>
+                        <button type="button" class="btn btn-primary" id="generateLinkButton">Guardar Fechas</button>
                     </div>
                 </div>
             </div>
         </div>
+        
 
         <?php
 
@@ -556,6 +570,46 @@ document.getElementById('clientId').addEventListener('change', function() {
             document.getElementById('address_id').value = 'Error al cargar las direcciones';
         });
 });
+
+// Variables globales para almacenar las fechas
+let startDateGlobal = null;
+    let endDateGlobal = null;
+
+    // Manejo del botón para guardar fechas
+    document.getElementById('generateLinkButton').addEventListener('click', function () {
+        const startDate = document.getElementById('startDate').value.trim();
+        const endDate = document.getElementById('endDate').value.trim();
+
+        // Validación básica del formato de fecha (YYYY-MM-DD)
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+        if (!startDate.match(dateRegex) || !endDate.match(dateRegex)) {
+            alert('Por favor, introduce las fechas en el formato correcto (YYYY-MM-DD).');
+            return;
+        }
+
+        if (new Date(startDate) > new Date(endDate)) {
+            alert('La fecha inicial no puede ser mayor que la fecha final.');
+            return;
+        }
+
+        // Asignar las fechas a las variables globales
+        startDateGlobal = startDate;
+        endDateGlobal = endDate;
+
+        // Mostrar las variables en pantalla
+        const variablesDisplay = document.getElementById('variablesDisplay');
+        variablesDisplay.style.display = 'block';
+        variablesDisplay.innerHTML = `
+            <strong>Fecha Inicial:</strong> ${startDateGlobal}<br>
+            <strong>Fecha Final:</strong> ${endDateGlobal}
+        `;
+
+        // Opcional: cerrar el modal después de guardar
+        const modalElement = document.getElementById('dateRangeModal');
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        modal.hide();
+    });
 
     </script>
 
