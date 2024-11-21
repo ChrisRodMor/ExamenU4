@@ -377,7 +377,10 @@ if ($productSlug) {
                                     <td><?= htmlspecialchars($presentation['stock']) ?></td>
                                     <td><?= htmlspecialchars($presentation['stock_min']) ?></td>
                                     <td><?= htmlspecialchars($presentation['stock_max']) ?></td>
-                                    <td><?= htmlspecialchars($presentation['amount']) ?></td>
+                                    <td>$<?= !empty($productDetails['presentations'][0]['price'][0]['amount']) 
+                                        ? htmlspecialchars($productDetails['presentations'][0]['price'][0]['amount']) 
+                                        : 'No disponible' ?>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
