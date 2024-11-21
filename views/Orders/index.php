@@ -18,22 +18,6 @@ $client = [];
 if (isset($_GET['id'])) {
     $client = $clientController->getClientByID($_GET['id']);
 }
-
-if (isset($_GET['client_id'])) {
-    $clientId = intval($_GET['client_id']);
-    $controller = new YourController(); // Cambia "YourController" por el nombre real de tu clase
-
-    $clientData = $controller->getClientByID($clientId);
-
-    if ($clientData) {
-        echo json_encode($clientData);
-    } else {
-        echo json_encode(['error' => 'No se pudo obtener la información del cliente.']);
-    }
-} else {
-    echo json_encode(['error' => 'ID del cliente no especificado.']);
-}
-
 ?>
 
 <!doctype html>
