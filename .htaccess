@@ -1,6 +1,7 @@
 Options +FollowSymLinks -MultiViews -Indexes
 RewriteEngine on
 RewriteBase  /
+
 #páginas
 RewriteRule ^$ index.php [L]
 
@@ -36,7 +37,7 @@ RewriteRule ^detailsOrder/?$ views/orders/details.php
 
 #controladores
 RewriteRule ^adress?$ app/AdressController.php
-RewriteRule ^auth?$ app/AuthController.php
+RewriteRule ^auth?$ ./app/AuthController.php
 RewriteRule ^brands?$ app/BrandController.php
 RewriteRule ^categories?$ app/CategoryController.php
 RewriteRule ^api-clients?$ app/ClientController.php
