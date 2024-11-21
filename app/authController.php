@@ -85,7 +85,7 @@ class AuthController
         $_SESSION['id'] = $id;
 
         // echo "Bienvenido, $name $lastname con el token: $token";
-        header('Location: ' . BASE_PATH . 'home');
+        header('Location: ' . BASE_PATH . 'products');
     }
 
     public function getUserByID($id) {
