@@ -7,7 +7,6 @@ RewriteRule ^$ index.php [L]
 
 #auth
 RewriteRule ^login?$ index.php
-RewriteRule ^home/?$ views/auth/home.php
 RewriteRule ^profile/?$ views/auth/profile.php
 RewriteRule ^register/?$ views/auth/register.php
 

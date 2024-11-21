@@ -54,7 +54,7 @@ if (isset($_GET['id'])) {
             <div class="row align-items-center">
               <div class="col-md-12">
                 <ul class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="home">Home</a></li>
+                  <li class="breadcrumb-item"><a href="products">Home</a></li>
                   <li class="breadcrumb-item">Application</li>
                   <li class="breadcrumb-item" aria-current="page">Client profile</li>
                 </ul>

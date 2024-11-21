@@ -32,7 +32,7 @@ if (!$order) {
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="home">Home</a></li>
+                                <li class="breadcrumb-item"><a href="products">Home</a></li>
                                 <li class="breadcrumb-item"><a href="javascript: void(0)">Detail Order</a></li>
                             </ul>
                         </div>

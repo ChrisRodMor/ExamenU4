@@ -57,7 +57,7 @@ $tags = $tagController->getTags();
           <div class="row align-items-center row">
             <div class="col-md-12">
               <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                <li class="breadcrumb-item"><a href="products">Home</a></li>
                 <li class="breadcrumb-item"><a href="/application/ecom_product#">E-commerce</a></li>
                 <li class="breadcrumb-item" aria-current="page">Products</li>
               </ul>

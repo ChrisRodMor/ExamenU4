@@ -23,7 +23,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] != null) {
 <nav class="pc-sidebar">
   <div class="navbar-wrapper">
     <div class="m-header">
-      <a href="home" class="b-brand text-primary">
+      <a href="products" class="b-brand text-primary">
         <!-- ========   Change your logo from here   ============ -->
         <img src="../assets/images/logo-dark.svg" alt="logo image" class="logo-lg" />
         <span class="badge bg-brand-color-2 rounded-pill ms-2 theme-version">v1.2.0</span>
